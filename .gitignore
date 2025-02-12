@@ -67,6 +67,12 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+# Ignore FishNet generated code
+/[Aa]ssets/FishNet/Generated/
+
+# Ignore ParrelSync Clones
+/Clones/
+
 # Packed Addressables
 /[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
 
