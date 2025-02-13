@@ -4,6 +4,7 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 using UnityEngine.InputSystem;
 using TMPro;
+using UnityEngine.UI;
 
 public class GameStateManager : MonoBehaviour
 {
@@ -22,6 +23,9 @@ public class GameStateManager : MonoBehaviour
 
     [Header("UI")]
     public TMP_Text timerText;
+
+    [Header("Break phase")]
+    public GameObject questionBoard;
 
     private void Awake()
     {
@@ -45,7 +49,7 @@ public class GameStateManager : MonoBehaviour
     private async UniTaskVoid RunGameStateLoop(){
         // delay before starting the loop
         await UniTask.Delay(500);
-        
+
         while(true){
             await StartFightingPhase();
             await StartBreakPhase();
@@ -71,12 +75,14 @@ public class GameStateManager : MonoBehaviour
         // pre phase logic
         gameState = GameState.Break;
         Debug.Log("Break phase started");
+        questionBoard.SetActive(true);
 
         // wait for phase end
         await WaitForPhaseEnd(breakPhaseLength, "Break");
 
         // post phase logic
         Debug.Log("Break phase ended");
+        questionBoard.SetActive(false);
 
         // delay before next phase, prevent instant phase switch that cause crash
         await UniTask.Delay(500);
