@@ -43,6 +43,9 @@ public class GameStateManager : MonoBehaviour
 
 
     private async UniTaskVoid RunGameStateLoop(){
+        // delay before starting the loop
+        await UniTask.Delay(500);
+        
         while(true){
             await StartFightingPhase();
             await StartBreakPhase();
