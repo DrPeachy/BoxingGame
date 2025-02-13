@@ -54,7 +54,7 @@ public class LocalModeGameManager : MonoBehaviour
         Debug.Log($"接收到 玩家 {playerIndex} 的输入：{hand} 手 {action}");
         // **处理游戏逻辑（例如：攻击、移动等）**+
         // get punch state
-        int handIndex = hand == "left" ? 0 : 1;
+        int handIndex = hand == "l" ? 0 : 1;
         PlayerState playerState = playerStates[playerIndex];
         PunchState punchState = playerState.punchStates[handIndex];
         // get opponent's punch state
@@ -64,7 +64,7 @@ public class LocalModeGameManager : MonoBehaviour
 
 
         /// handle action
-        if(punchState != PunchState.Idle && (action == "Punch" || action == "Charge")) return;
+        if(punchState != PunchState.Idle && (action == "Charge")) return;
 
         // handle punch charge
         if(punchState == PunchState.Idle && action == "Charge"){
@@ -82,11 +82,14 @@ public class LocalModeGameManager : MonoBehaviour
         }
 
         // handle land a punch
-        if(punchState == PunchState.Idle && action == "Punch"){
+        if(action == "Punch"){
             // if charge is not complete, do straight punch
-            if(playerStates[playerIndex].punchStates[handIndex] == PunchState.HookCharge){
+            if(playerStates[playerIndex].punchStates[handIndex] == PunchState.HookCharge || playerStates[playerIndex].punchStates[handIndex] == PunchState.Idle){
                 playerStates[playerIndex].punchStates[handIndex] = PunchState.StraightPunch;
                 Debug.Log($"玩家 {playerIndex} 的 {hand} 手发动了直拳");
+
+                NotifyAllPlayers($"{playerIndex}-{hand}-Straight", straightPunchWindup * 0.9f);
+
                 await UniTask.Delay((int)(straightPunchWindup * 1000));
 
                 // dealing damage
@@ -99,6 +102,7 @@ public class LocalModeGameManager : MonoBehaviour
                 }
 
                 // recovery
+                NotifyAllPlayers($"{playerIndex}-{hand}-Recovery", straightPunchRecovery * 0.9f);
                 playerStates[playerIndex].punchStates[handIndex] = PunchState.Recovery;
                 await UniTask.Delay((int)(straightPunchRecovery * 1000));
 
@@ -107,6 +111,10 @@ public class LocalModeGameManager : MonoBehaviour
             }else if(playerStates[playerIndex].punchStates[handIndex] == PunchState.HookChargeComplete){
                 playerStates[playerIndex].punchStates[handIndex] = PunchState.HookPunch;
                 Debug.Log($"玩家 {playerIndex} 的 {hand} 手发动了钩拳");
+
+                NotifyAllPlayers($"{playerIndex}-{hand}-Hook", hookPunchWindup * 0.9f);
+
+                // windup
                 await UniTask.Delay((int)(hookPunchWindup * 1000));
 
                 // dealing damage
@@ -119,6 +127,7 @@ public class LocalModeGameManager : MonoBehaviour
                 }
 
                 // recovery
+                NotifyAllPlayers($"{playerIndex}-{hand}-Recovery", hookPunchRecovery * 0.9f);
                 playerStates[playerIndex].punchStates[handIndex] = PunchState.Recovery;
                 await UniTask.Delay((int)(hookPunchRecovery * 1000));
 
@@ -128,8 +137,9 @@ public class LocalModeGameManager : MonoBehaviour
         }
 
         // handle block
-        if(punchState == PunchState.Idle && action == "Block"){
+        else if(punchState == PunchState.Idle && action == "Block"){
             playerStates[playerIndex].punchStates[handIndex] = PunchState.Block;
+            NotifyAllPlayers($"{playerIndex}-{hand}-Block");
             Debug.Log($"玩家 {playerIndex} 的 {hand} 手举起了防御");
             _= StartParry(playerIndex, handIndex);
             // holding block
@@ -139,17 +149,19 @@ public class LocalModeGameManager : MonoBehaviour
         }
 
         // handle end charge
-        if((punchState == PunchState.HookCharge || punchState == PunchState.HookChargeComplete) && 
-            action == "EndCharge"
+        else if((punchState == PunchState.HookCharge || punchState == PunchState.HookChargeComplete) && 
+            action == "CancelCharge"
         ){
             playerStates[playerIndex].punchStates[handIndex] = PunchState.Recovery;
+            NotifyAllPlayers($"{playerIndex}-{hand}-Recovery", blockRecovery * 0.9f);
             await UniTask.Delay((int)(blockRecovery * 1000));
             playerStates[playerIndex].punchStates[handIndex] = PunchState.Idle;
         }
 
         // handle end block
-        if((punchState == PunchState.Block || punchState == PunchState.Parry) && action == "EndBlock"){
+        else if((punchState == PunchState.Block || punchState == PunchState.Parry) && action == "CancelBlock"){
             playerStates[playerIndex].punchStates[handIndex] = PunchState.Recovery;
+            NotifyAllPlayers($"{playerIndex}-{hand}-Recovery", blockRecovery * 0.9f);
             await UniTask.Delay((int)(blockRecovery * 1000));
             playerStates[playerIndex].punchStates[handIndex] = PunchState.Idle;
         }
@@ -158,11 +170,11 @@ public class LocalModeGameManager : MonoBehaviour
     }
 
     // **通知所有玩家（广播事件）**
-    public void NotifyAllPlayers(string message)
+    public void NotifyAllPlayers(string message, float d = 0)
     {
         foreach (var player in players.Values)
         {
-            //player.ReceiveGameEvent(message);
+            _= player.ReceiveGameEvent(message, d);
         }
     }
 
@@ -184,5 +196,10 @@ public class LocalModeGameManager : MonoBehaviour
         {
             playerStates[player].punchStates[hand] = PunchState.Block;
         }
+    }
+
+    private async UniTaskVoid Interrupt(int player, int hand){
+        // TODO: interrupt the punch
+        return;
     }
 }

@@ -259,17 +259,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f90eb7fe4c87ceb4da7df659148d9fc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  straightPunchWindup: 0.5
-  straightPunchRecovery: 0.3
+  straightPunchWindup: 0.7
+  straightPunchRecovery: 0.2
   straightPunchDamage: 5
   straightInterruptTime: 0.5
-  hookChargeDuration: 0.8
-  hookPunchWindup: 0.7
-  hookPunchRecovery: 0.4
+  hookChargeDuration: 0.5
+  hookPunchWindup: 0.35
+  hookPunchRecovery: 0.3
   hookPunchDamage: 7
-  blockRecovery: 0.25
-  parryDuration: 0.25
-  parryRecovery: 0.9
+  blockRecovery: 0.1
+  parryDuration: 0.3
+  parryRecovery: 2
   blockDamageReduction: 5
 --- !u!4 &1077387751
 Transform:

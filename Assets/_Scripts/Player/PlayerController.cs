@@ -8,11 +8,12 @@ using DG.Tweening;
 using UnityEngine.SceneManagement;
 using TMPro;
 using Cysharp.Threading.Tasks.CompilerServices;
+using FishNet.Demo.AdditiveScenes;
 
 public class PlayerController : MonoBehaviour
 {
     public int PlayerIndex { get; private set; }
-    private PlayerViewer playerViewer;
+    private PlayerView playerView;
 
     private readonly Dictionary<Vector2, string> directionMap = new Dictionary<Vector2, string>
     {
@@ -92,13 +93,13 @@ public class PlayerController : MonoBehaviour
         inputSequences["r"] = new List<string>();
 
         // get player viewer
-        playerViewer = GetComponent<PlayerViewer>();
+        playerView = GetComponent<PlayerView>();
 
         // register player
         LocalModeGameManager.Instance.RegisterPlayer(this);
 
         // set player transform
-        playerViewer.SetPlayerTransform(PlayerIndex);
+        playerView.SetPlayerTransform(PlayerIndex);
     }
 
     private void OnEnable()
@@ -173,31 +174,13 @@ public class PlayerController : MonoBehaviour
             string[] strInputs = buttonMappings[key].Split('-');
             string hand = strInputs[0];
             string action = strInputs[1];
-            Vector2 input = context.ReadValue<Vector2>();
-            string direction = GetDirection(input);
-
-            // store input sequence
-            if (inputSequences[hand].Count == 0 || inputSequences[hand][inputSequences[hand].Count - 1] != direction)
-            {
-                inputSequences[hand].Add(direction);
-            }
-
-            // process input
             if (action == "punch")
             {
-                if ((hand == "left" && (direction == "Left" || direction == "LeftDown")) ||
-                    (hand == "right" && (direction == "Right" || direction == "RightDown")))
-                {
-                    EndPunch(hand);
-                }
+                EndPunch(hand);
             }
             else if (action == "block")
             {
-                if ((hand == "left" && (direction == "Left" || direction == "LeftDown")) ||
-                    (hand == "right" && (direction == "Right" || direction == "RightDown")))
-                {
-                    EndBlock(hand);
-                }
+                EndBlock(hand);
             }
         }
     }
@@ -216,7 +199,7 @@ public class PlayerController : MonoBehaviour
 
     private void EndPunch(string hand)
     {
-        _ = LocalModeGameManager.Instance.HandlePlayerAction(PlayerIndex, hand, "EndPunch");
+        _ = LocalModeGameManager.Instance.HandlePlayerAction(PlayerIndex, hand, "CancelCharge");
     }
 
     private void StartBlock(string hand)
@@ -226,181 +209,7 @@ public class PlayerController : MonoBehaviour
 
     private void EndBlock(string hand)
     {
-        _ = LocalModeGameManager.Instance.HandlePlayerAction(PlayerIndex, hand, "EndBlock");
-    }
-
-
-
-
-
-
-
-
-
-
-
-    private void OnLeftPunchPerformed(InputAction.CallbackContext context)
-    {
-        HandlePunchInput(context, "Left").Forget();
-    }
-
-    private void OnRightPunchPerformed(InputAction.CallbackContext context)
-    {
-        HandlePunchInput(context, "Right").Forget();
-    }
-
-    private void OnLeftPunchCanceled(InputAction.CallbackContext context)
-    {
-        HandlePunchCancel("Left").Forget();
-    }
-
-    private void OnRightPunchCanceled(InputAction.CallbackContext context)
-    {
-        HandlePunchCancel("Right").Forget();
-    }
-
-    private void OnLeftBlockPerformed(InputAction.CallbackContext context)
-    {
-        HandleBlockInput("Left").Forget();
-    }
-
-    private void OnRightBlockPerformed(InputAction.CallbackContext context)
-    {
-        HandleBlockInput("Right").Forget();
-    }
-
-    private async UniTaskVoid HandlePunchInput(InputAction.CallbackContext context, string hand)
-    {
-        if (punchStates[hand] != PunchState.Idle && punchStates[hand] != PunchState.HookCharge) return;
-
-        Vector2 input = context.ReadValue<Vector2>();
-        string direction = GetDirection(input);
-
-        if (direction == "Neutral" ||
-            (hand == "Left" && direction == "Right") ||
-            (hand == "Right" && direction == "Left") ||
-            (direction == "Down") ||
-            (hand == "Left" && direction == "RightDown") ||
-            (hand == "Right" && direction == "LeftDown"))
-        {
-            return;
-        }
-
-        // Add direction to the sequence
-        if (inputSequences[hand].Count == 0 || inputSequences[hand][inputSequences[hand].Count - 1] != direction)
-        {
-            inputSequences[hand].Add(direction);
-            //UIManager.Instance.AddArrow(hand, direction);
-        }
-
-        Debug.Log($"{hand} Input Sequence: {string.Join(", ", inputSequences[hand])}");
-
-        // 判断是否触发蓄力
-        if ((direction == "Left" || direction == "LeftDown") && hand == "Left" && punchStates[hand] == PunchState.Idle)
-        {
-            StartHookCharge(hand, input);
-        }
-        else if ((direction == "Right" || direction == "RightDown") && hand == "Right" && punchStates[hand] == PunchState.Idle)
-        {
-            StartHookCharge(hand, input);
-        }
-
-        // 勾拳蓄力显示
-        if (((direction == "Left" || direction == "LeftDown") && hand == "Left") || ((direction == "Right" || direction == "RightDown") && hand == "Right"))
-        {
-            //OnPunchPerformed?.Invoke(new PunchAction(hand, "HookCharge", input, 0f));
-        }
-
-        // Check for punch end
-        if (direction == "Up" || direction == "RightUp" || direction == "LeftUp")
-        {
-            if (inputSequences[hand].Count == 1 && punchStates[hand] == PunchState.Idle)
-            { // straight punch
-                await PerformStraightPunch(hand);
-            }
-            else if (punchStates[hand] == PunchState.HookCharge &&
-                (hand == "Left" && (direction == "Up" || direction == "RightUp")) ||
-                (hand == "Right" && (direction == "Up" || direction == "LeftUp"))
-            )
-            { // hook punch
-                if (MatchesCombo(inputSequences[hand], hand == "Left" ? leftHookCombo : rightHookCombo))
-                {
-                    await PerformHookPunch(hand, input);
-                }
-                else
-                {
-                    Debug.LogWarning($"{hand} Input did not match any combo");
-                    //OnPunchPerformed?.Invoke(new PunchAction(hand, "Idle", Vector2.zero, 0, 0.001f));
-                    //UIManager.Instance.AddArrow(hand, "Neutral");
-                }
-
-                inputSequences[hand].Clear();
-            }
-        }
-    }
-
-    private async UniTaskVoid HandleBlockInput(string hand)
-    {
-        if (punchStates[hand] != PunchState.Idle && punchStates[hand] != PunchState.HookCharge) return;
-        Debug.Log($"{hand} Block!");
-        //OnPunchPerformed?.Invoke(new PunchAction(hand, "Block", Vector2.zero));
-
-        await PerformBlock(hand);
-
-    }
-
-    private void StartHookCharge(string hand, Vector2 input)
-    {
-        punchStates[hand] = PunchState.HookCharge;
-        //OnPunchPerformed?.Invoke(new PunchAction(hand, "HookCharge", input, Time.time));
-        Debug.Log($"{hand} Hook Charge Started");
-        // punchStates[hand] = PunchState.HookChargeComplete;
-    }
-
-    private async UniTaskVoid HandlePunchCancel(string hand)
-    {
-        Debug.Log($"{hand} Stick Canceled");
-        if (punchStates[hand] != PunchState.HookCharge)
-        {
-            return;
-        }
-        // 设置状态为 Idle
-        punchStates[hand] = PunchState.Idle;
-
-        // UI 箭头显示为中立
-        //UIManager.Instance.AddArrow(hand, "Neutral");
-
-        // 通知外部切换到 Idle 动画
-        //OnPunchPerformed?.Invoke(new PunchAction(hand, "Idle", Vector2.zero, 0, 0.001f));
-
-        // 清空输入序列
-        inputSequences[hand].Clear();
-
-        await UniTask.Yield(); // 确保异步流程完成
-    }
-
-    private async UniTask PerformStraightPunch(string hand)
-    {
-        punchStates[hand] = PunchState.StraightPunch;
-
-        Debug.Log($"{hand} Straight Punch!");
-
-    }
-
-    private async UniTask PerformHookPunch(string hand, Vector2 input)
-    {
-        punchStates[hand] = PunchState.HookPunch;
-
-        Debug.Log($"{hand} Hook Punch!");
-
-    }
-
-    private async UniTask PerformBlock(string hand)
-    {
-        punchStates[hand] = PunchState.Block;
-
-        Debug.Log($"{hand} Block!");
-
+        _ = LocalModeGameManager.Instance.HandlePlayerAction(PlayerIndex, hand, "CancelBlock");
     }
 
     private string GetDirection(Vector2 input)
@@ -435,5 +244,31 @@ public class PlayerController : MonoBehaviour
         }
 
         return true;
+    }
+
+    public async UniTaskVoid ReceiveGameEvent(string message, float d = 0){
+        Debug.Log($"Player {PlayerIndex} received message: {message}");
+        string[] msg = message.Split('-');
+        // example string "p0-l-recovery"
+        string pIndex = msg[0];
+        if(pIndex != $"{PlayerIndex}") return;
+        string hand = msg[1];
+        string action = msg[2];
+
+        if(action == "Recovery"){
+            punchStates[hand] = PunchState.Recovery;
+            playerView.AnimateRecovery(hand, d);
+        }else if(action == "Straight"){
+            punchStates[hand] = PunchState.StraightPunch;
+            playerView.AnimatePunch(hand, d);
+        }else if(action == "Hook"){
+            punchStates[hand] = PunchState.HookPunch;
+            playerView.AnimatePunch(hand, d);
+        }else if(action == "Block"){
+            punchStates[hand] = PunchState.Block;
+            playerView.AnimateBlock(hand);
+        }
+
+        await UniTask.Yield();
     }
 }
