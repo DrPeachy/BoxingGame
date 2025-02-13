@@ -1,0 +1,11 @@
+Model Information:
+* title:	boxing_gloves_c4d
+* source:	https://sketchfab.com/3d-models/boxing-gloves-c4d-0cf1334acd974a83bc187129e32c19f5
+* author:	tech.service.allwe (https://sketchfab.com/tech.service.allwe)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "boxing_gloves_c4d" (https://sketchfab.com/3d-models/boxing-gloves-c4d-0cf1334acd974a83bc187129e32c19f5) by tech.service.allwe (https://sketchfab.com/tech.service.allwe) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
