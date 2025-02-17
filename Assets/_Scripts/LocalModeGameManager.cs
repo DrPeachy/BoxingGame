@@ -45,8 +45,32 @@ public class LocalModeGameManager : MonoBehaviour
 
             // 初始化玩家状态
             playerStates[player.PlayerIndex] = new PlayerState(PunchState.Idle, PunchState.Idle);
+
+            // update game state
+            GameStateManager.Instance.PlayerJoined();
         }
     }
+
+    // enable player's input
+    public void EnablePlayersInput()
+    {
+        // loop over player controllers and enable input
+        foreach (PlayerController player in players.Values)
+        {
+            player.enabled = true;
+        }
+    }
+
+    // disable player's input
+    public void DisablePlayersInput()
+    {
+        // loop over player controllers and disable input
+        foreach (PlayerController player in players.Values)
+        {
+            player.enabled = false;
+        }
+    }
+
 
     // **处理玩家输入**
     public async UniTaskVoid HandlePlayerAction(int playerIndex, string hand, string action)
