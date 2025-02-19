@@ -4,14 +4,10 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using FishNet.Object;
 using Cysharp.Threading.Tasks;
-using UnityEditor.SceneManagement;
-using System.Data.Common;
 
 public class PlayerControllerNetwork : NetworkBehaviour
 {
     public int PlayerIndex;
-    private PlayerView playerView;
-
     private readonly Dictionary<Vector2, string> directionMap = new Dictionary<Vector2, string>
     {
         { Vector2.left, "Left" },
@@ -27,10 +23,10 @@ public class PlayerControllerNetwork : NetworkBehaviour
     // Button mappings
     private Dictionary<string, string> buttonMappings = new Dictionary<string, string>
     {
-        { "leftStick", "l-punch" },
-        { "rightStick", "r-punch" },
-        { "leftTrigger", "l-block" },
-        { "rightTrigger", "r-block" }
+        { "leftStick", "l-stick" },
+        { "rightStick", "r-stick" },
+        { "leftTrigger", "l-trigger" },
+        { "rightTrigger", "r-trigger" }
     };
 
     private Dictionary<string, PunchState> punchStates = new Dictionary<string, PunchState>
@@ -44,8 +40,6 @@ public class PlayerControllerNetwork : NetworkBehaviour
         { "Left", new List<string>() },
         { "Right", new List<string>() }
     };
-
-    //public event Action<PunchAction> OnPunchPerformed;
 
     [Header("Straight Punch Settings")]
     public float straightPunchWindup = 0.5f;
@@ -74,14 +68,26 @@ public class PlayerControllerNetwork : NetworkBehaviour
     private readonly string[] leftHookCombo = { "Left", "LeftUp", "Up" };
     private readonly string[] rightHookCombo = { "Right", "RightUp", "Up" };
 
+    // Components
     private ControllerAction playerControl;
+    private PlayerView playerView;
 
     public override void OnStartNetwork()
     {
         base.OnStartNetwork();
-        Debug.Log($"Player {OwnerId} is initialized");
+        InitializePlayer();
+    }
+
+    public override void OnStopClient()
+    {
+        base.OnStopClient();
+        DisableInput();
+    }
+
+    private void InitializePlayer(){
         // set player index
         PlayerIndex = OwnerId;
+        Debug.Log($"Client: Player[{PlayerIndex}] started network");
 
         // set player controller
         playerControl = new ControllerAction();
@@ -104,17 +110,11 @@ public class PlayerControllerNetwork : NetworkBehaviour
         {
             // enable player input
             EnableInput();
-        }else{
-            Debug.Log("Player is not local client");
+        }
+        else
+        {
             DisableInput();
         }
-
-    }
-
-    public override void OnStopClient()
-    {
-        base.OnStopClient();
-        DisableInput();
     }
 
     private void EnableInput()
@@ -147,9 +147,9 @@ public class PlayerControllerNetwork : NetworkBehaviour
 
     private void OnInputPerformed(InputAction.CallbackContext context)
     {
-        if(!base.Owner.IsLocalClient){
-            return;
-        }
+        // early return
+        if (!base.Owner.IsLocalClient) return;
+
         string key = context.control.name;
         if (buttonMappings.ContainsKey(key))
         {
@@ -158,11 +158,11 @@ public class PlayerControllerNetwork : NetworkBehaviour
             string action = strInputs[1];
             Vector2 input = Vector2.zero;
             string direction = "";
-            if (action == "punch")
+            if (action == "stick")
             {
                 input = context.ReadValue<Vector2>();
                 direction = GetDirection(input);
-                // store input sequence
+                // store input sequence(if empty / current input is different from last input)
                 if (inputSequences[hand].Count == 0 || inputSequences[hand][inputSequences[hand].Count - 1] != direction)
                 {
                     inputSequences[hand].Add(direction);
@@ -178,7 +178,7 @@ public class PlayerControllerNetwork : NetworkBehaviour
                     }
                 }
             }
-            else if (action == "block")
+            else if (action == "trigger")
             {
                 StartBlock(hand);
             }
@@ -187,9 +187,9 @@ public class PlayerControllerNetwork : NetworkBehaviour
 
     private void OnInputCanceled(InputAction.CallbackContext context)
     {
-        if(!base.Owner.IsLocalClient){
-            return;
-        }
+        // early return
+        if (!base.Owner.IsLocalClient) return;
+
         string key = context.control.name;
         if (buttonMappings.ContainsKey(key))
         {
@@ -210,28 +210,32 @@ public class PlayerControllerNetwork : NetworkBehaviour
 
     private void StartCharge(string hand)
     {
-        OnlineModeGameManager.Instance.HandlePlayerAction(PlayerIndex, hand, "Charge");
+        if (IsOwner)
+            OnlineModeGameManager.Instance.HandlePlayerAction(PlayerIndex, hand, "Charge");
     }
 
     private void StartPunch(string hand)
     {
-        OnlineModeGameManager.Instance.HandlePlayerAction(PlayerIndex, hand, "Punch");
-
-    }
-
-    private void EndPunch(string hand)
-    {
-        OnlineModeGameManager.Instance.HandlePlayerAction(PlayerIndex, hand, "CancelCharge");
+        if (IsOwner)
+            OnlineModeGameManager.Instance.HandlePlayerAction(PlayerIndex, hand, "Punch");
     }
 
     private void StartBlock(string hand)
     {
-        OnlineModeGameManager.Instance.HandlePlayerAction(PlayerIndex, hand, "Block");
+        if (IsOwner)
+            OnlineModeGameManager.Instance.HandlePlayerAction(PlayerIndex, hand, "Block");
+    }
+
+    private void EndPunch(string hand)
+    {
+        if (IsOwner)
+            OnlineModeGameManager.Instance.HandlePlayerAction(PlayerIndex, hand, "CancelCharge");
     }
 
     private void EndBlock(string hand)
     {
-        OnlineModeGameManager.Instance.HandlePlayerAction(PlayerIndex, hand, "CancelBlock");
+        if (IsOwner)
+            OnlineModeGameManager.Instance.HandlePlayerAction(PlayerIndex, hand, "CancelBlock");
     }
 
     private string GetDirection(Vector2 input)
@@ -271,16 +275,16 @@ public class PlayerControllerNetwork : NetworkBehaviour
     [ObserversRpc]
     public void ReceiveGameEvent(string message, float d = 0)
     {
-        if(!base.Owner.IsLocalClient){
-            return;
-        }
+        // early return
+        if (!base.Owner.IsLocalClient) return;
+        
         _ = ProcessReceiveGameEvent(message, d);
     }
 
 
     public async UniTaskVoid ProcessReceiveGameEvent(string message, float d = 0)
     {
-        Debug.Log($"Player {PlayerIndex} received message: {message}");
+        Debug.Log($"Client: Player[{PlayerIndex}] Received Game Event: {message}");
         string[] msg = message.Split('-');
         // example string "p0-l-recovery"
         string pIndex = msg[0];

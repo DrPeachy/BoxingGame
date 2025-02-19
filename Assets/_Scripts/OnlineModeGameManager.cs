@@ -43,7 +43,7 @@ public class OnlineModeGameManager : NetworkBehaviour
         if (!players.ContainsKey(player.PlayerIndex))
         {
             players[player.PlayerIndex] = player;
-            Debug.Log($"玩家 {player.PlayerIndex} 加入游戏");
+            Debug.Log($"Server: Player[{player.PlayerIndex}] joined the game");
 
             // 初始化玩家状态
             playerStates[player.PlayerIndex] = new PlayerState(PunchState.Idle, PunchState.Idle);
@@ -77,12 +77,12 @@ public class OnlineModeGameManager : NetworkBehaviour
     // **处理玩家输入**
     [ServerRpc(RequireOwnership = false)]
     public void HandlePlayerAction(int playerIndex, string hand, string action){
-        _= ProcessHandlePlayerAction(playerIndex, hand, action);
+        ProcessHandlePlayerAction(playerIndex, hand, action).Forget();
     }
 
     private async UniTaskVoid ProcessHandlePlayerAction(int playerIndex, string hand, string action)
     {
-        Debug.Log($"接收到 玩家 {playerIndex} 的输入：{hand} 手 {action}");
+        Debug.Log($"Server: Player[{playerIndex}] hand[{hand}] action[{action}]");
         // **处理游戏逻辑（例如：攻击、移动等）**+
         // get punch state
         int handIndex = hand == "l" ? 0 : 1;
@@ -122,7 +122,7 @@ public class OnlineModeGameManager : NetworkBehaviour
             if (playerStates[playerIndex].punchStates[handIndex] == PunchState.HookCharge || playerStates[playerIndex].punchStates[handIndex] == PunchState.Idle)
             {
                 playerStates[playerIndex].punchStates[handIndex] = PunchState.StraightPunch;
-                Debug.Log($"玩家 {playerIndex} 的 {hand} 手发动了直拳");
+                Debug.Log($"Server: Player[{playerIndex}] hand[{hand}] landed a straight punch");
 
                 NotifyAllPlayers($"{playerIndex}-{hand}-Straight", straightPunchWindup * 0.9f);
 
@@ -153,7 +153,7 @@ public class OnlineModeGameManager : NetworkBehaviour
             else if (playerStates[playerIndex].punchStates[handIndex] == PunchState.HookChargeComplete)
             {
                 playerStates[playerIndex].punchStates[handIndex] = PunchState.HookPunch;
-                Debug.Log($"玩家 {playerIndex} 的 {hand} 手发动了钩拳");
+                Debug.Log($"Server: Player[{playerIndex}] hand[{hand}] landed a hook punch");
 
                 NotifyAllPlayers($"{playerIndex}-{hand}-Hook", hookPunchWindup * 0.9f);
 
@@ -185,12 +185,12 @@ public class OnlineModeGameManager : NetworkBehaviour
         }
 
         // handle block
-        else if (punchState == PunchState.Idle && action == "Block")
+        else if (action == "Block" && punchState == PunchState.Idle)
         {
             playerStates[playerIndex].punchStates[handIndex] = PunchState.Block;
             NotifyAllPlayers($"{playerIndex}-{hand}-Block");
-            Debug.Log($"玩家 {playerIndex} 的 {hand} 手举起了防御");
-            _ = StartParry(playerIndex, handIndex);
+            Debug.Log($"Server: Player[{playerIndex}]'s hand[{hand}] is blocking");
+            StartParry(playerIndex, handIndex).Forget();
             // holding block
             while (playerStates[playerIndex].punchStates[handIndex] == PunchState.Block)
             {
@@ -199,8 +199,8 @@ public class OnlineModeGameManager : NetworkBehaviour
         }
 
         // handle end charge
-        else if ((punchState == PunchState.HookCharge || punchState == PunchState.HookChargeComplete) &&
-            action == "CancelCharge"
+        else if (action == "CancelCharge" &&
+            (punchState == PunchState.HookCharge || punchState == PunchState.HookChargeComplete)
         )
         {
             playerStates[playerIndex].punchStates[handIndex] = PunchState.Recovery;
@@ -254,6 +254,6 @@ public class OnlineModeGameManager : NetworkBehaviour
     private async UniTaskVoid Interrupt(int player, int hand)
     {
         // TODO: interrupt the punch
-        return;
+        await UniTask.Yield();
     }
 }
