@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
-using Cysharp.Threading.Tasks.CompilerServices;
+using FishNet.Object;
+using Cysharp.Threading.Tasks;
+using UnityEditor.SceneManagement;
+using System.Data.Common;
 
-public class PlayerController : MonoBehaviour
+public class PlayerControllerNetwork : NetworkBehaviour
 {
-    public int PlayerIndex { get; private set; }
+    public int PlayerIndex;
     private PlayerView playerView;
 
     private readonly Dictionary<Vector2, string> directionMap = new Dictionary<Vector2, string>
@@ -73,16 +74,17 @@ public class PlayerController : MonoBehaviour
     private readonly string[] leftHookCombo = { "Left", "LeftUp", "Up" };
     private readonly string[] rightHookCombo = { "Right", "RightUp", "Up" };
 
-    private PlayerInput playerInput;
-    private InputActionMap actionMap;
+    private ControllerAction playerControl;
 
-    private void Awake()
+    public override void OnStartNetwork()
     {
-        playerInput = GetComponent<PlayerInput>(); // ✅ 获取当前 Player 的 PlayerInput 组件
-        actionMap = playerInput.actions.FindActionMap("PlayerControl"); // ✅ 获取 PlayerControls ActionMap
-
+        base.OnStartNetwork();
+        Debug.Log($"Player {OwnerId} is initialized");
         // set player index
-        PlayerIndex = playerInput.playerIndex;
+        PlayerIndex = OwnerId;
+
+        // set player controller
+        playerControl = new ControllerAction();
 
         // initialize input sequences
         inputSequences["l"] = new List<string>();
@@ -92,41 +94,62 @@ public class PlayerController : MonoBehaviour
         playerView = GetComponent<PlayerView>();
 
         // register player
-        LocalModeGameManager.Instance.RegisterPlayer(this);
+        OnlineModeGameManager.Instance.RegisterPlayer(this);
 
         // set player transform
         playerView.SetPlayerTransform(PlayerIndex);
+
+        // check if player is local
+        if (base.Owner.IsLocalClient)
+        {
+            // enable player input
+            EnableInput();
+        }else{
+            Debug.Log("Player is not local client");
+            DisableInput();
+        }
+
     }
 
-    private void OnEnable()
+    public override void OnStopClient()
     {
-
-        actionMap.Enable();
-        actionMap.FindAction("LStick").performed += OnInputPerformed;
-        actionMap.FindAction("RStick").performed += OnInputPerformed;
-        actionMap.FindAction("LStick").canceled += OnInputCanceled;
-        actionMap.FindAction("RStick").canceled += OnInputCanceled;
-        actionMap.FindAction("LTrigger").performed += OnInputPerformed;
-        actionMap.FindAction("RTrigger").performed += OnInputPerformed;
-        actionMap.FindAction("LTrigger").canceled += OnInputCanceled;
-        actionMap.FindAction("RTrigger").canceled += OnInputCanceled;
+        base.OnStopClient();
+        DisableInput();
     }
 
-    private void OnDisable()
+    private void EnableInput()
     {
-        actionMap.Disable();
-        actionMap.FindAction("LStick").performed -= OnInputPerformed;
-        actionMap.FindAction("RStick").performed -= OnInputPerformed;
-        actionMap.FindAction("LStick").canceled -= OnInputCanceled;
-        actionMap.FindAction("RStick").canceled -= OnInputCanceled;
-        actionMap.FindAction("LTrigger").performed -= OnInputPerformed;
-        actionMap.FindAction("RTrigger").performed -= OnInputPerformed;
-        actionMap.FindAction("LTrigger").canceled -= OnInputCanceled;
-        actionMap.FindAction("RTrigger").canceled -= OnInputCanceled;
+        // enable player input
+        playerControl.Enable();
+        playerControl.PlayerControl.LStick.performed += OnInputPerformed;
+        playerControl.PlayerControl.RStick.performed += OnInputPerformed;
+        playerControl.PlayerControl.LStick.canceled += OnInputCanceled;
+        playerControl.PlayerControl.RStick.canceled += OnInputCanceled;
+        playerControl.PlayerControl.LTrigger.performed += OnInputPerformed;
+        playerControl.PlayerControl.RTrigger.performed += OnInputPerformed;
+        playerControl.PlayerControl.LTrigger.canceled += OnInputCanceled;
+        playerControl.PlayerControl.RTrigger.canceled += OnInputCanceled;
+    }
+
+    private void DisableInput()
+    {
+        // disable player input
+        playerControl.Disable();
+        playerControl.PlayerControl.LStick.performed -= OnInputPerformed;
+        playerControl.PlayerControl.RStick.performed -= OnInputPerformed;
+        playerControl.PlayerControl.LStick.canceled -= OnInputCanceled;
+        playerControl.PlayerControl.RStick.canceled -= OnInputCanceled;
+        playerControl.PlayerControl.LTrigger.performed -= OnInputPerformed;
+        playerControl.PlayerControl.RTrigger.performed -= OnInputPerformed;
+        playerControl.PlayerControl.LTrigger.canceled -= OnInputCanceled;
+        playerControl.PlayerControl.RTrigger.canceled -= OnInputCanceled;
     }
 
     private void OnInputPerformed(InputAction.CallbackContext context)
     {
+        if(!base.Owner.IsLocalClient){
+            return;
+        }
         string key = context.control.name;
         if (buttonMappings.ContainsKey(key))
         {
@@ -164,6 +187,9 @@ public class PlayerController : MonoBehaviour
 
     private void OnInputCanceled(InputAction.CallbackContext context)
     {
+        if(!base.Owner.IsLocalClient){
+            return;
+        }
         string key = context.control.name;
         if (buttonMappings.ContainsKey(key))
         {
@@ -184,28 +210,28 @@ public class PlayerController : MonoBehaviour
 
     private void StartCharge(string hand)
     {
-        _ = LocalModeGameManager.Instance.HandlePlayerAction(PlayerIndex, hand, "Charge");
+        OnlineModeGameManager.Instance.HandlePlayerAction(PlayerIndex, hand, "Charge");
     }
 
     private void StartPunch(string hand)
     {
-        _ = LocalModeGameManager.Instance.HandlePlayerAction(PlayerIndex, hand, "Punch");
+        OnlineModeGameManager.Instance.HandlePlayerAction(PlayerIndex, hand, "Punch");
 
     }
 
     private void EndPunch(string hand)
     {
-        _ = LocalModeGameManager.Instance.HandlePlayerAction(PlayerIndex, hand, "CancelCharge");
+        OnlineModeGameManager.Instance.HandlePlayerAction(PlayerIndex, hand, "CancelCharge");
     }
 
     private void StartBlock(string hand)
     {
-        _ = LocalModeGameManager.Instance.HandlePlayerAction(PlayerIndex, hand, "Block");
+        OnlineModeGameManager.Instance.HandlePlayerAction(PlayerIndex, hand, "Block");
     }
 
     private void EndBlock(string hand)
     {
-        _ = LocalModeGameManager.Instance.HandlePlayerAction(PlayerIndex, hand, "CancelBlock");
+        OnlineModeGameManager.Instance.HandlePlayerAction(PlayerIndex, hand, "CancelBlock");
     }
 
     private string GetDirection(Vector2 input)
@@ -242,25 +268,43 @@ public class PlayerController : MonoBehaviour
         return true;
     }
 
-    public async UniTaskVoid ReceiveGameEvent(string message, float d = 0){
+    [ObserversRpc]
+    public void ReceiveGameEvent(string message, float d = 0)
+    {
+        if(!base.Owner.IsLocalClient){
+            return;
+        }
+        _ = ProcessReceiveGameEvent(message, d);
+    }
+
+
+    public async UniTaskVoid ProcessReceiveGameEvent(string message, float d = 0)
+    {
         Debug.Log($"Player {PlayerIndex} received message: {message}");
         string[] msg = message.Split('-');
         // example string "p0-l-recovery"
         string pIndex = msg[0];
-        if(pIndex != $"{PlayerIndex}") return;
+        if (pIndex != $"{PlayerIndex}") return;
         string hand = msg[1];
         string action = msg[2];
 
-        if(action == "Recovery"){
+        if (action == "Recovery")
+        {
             punchStates[hand] = PunchState.Recovery;
             playerView.AnimateRecovery(hand, d);
-        }else if(action == "Straight"){
+        }
+        else if (action == "Straight")
+        {
             punchStates[hand] = PunchState.StraightPunch;
             playerView.AnimatePunch(hand, d);
-        }else if(action == "Hook"){
+        }
+        else if (action == "Hook")
+        {
             punchStates[hand] = PunchState.HookPunch;
             playerView.AnimatePunch(hand, d);
-        }else if(action == "Block"){
+        }
+        else if (action == "Block")
+        {
             punchStates[hand] = PunchState.Block;
             playerView.AnimateBlock(hand);
         }
