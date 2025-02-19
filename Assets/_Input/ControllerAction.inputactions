@@ -1,0 +1,114 @@
+{
+    "name": "ControllerAction",
+    "maps": [
+        {
+            "name": "PlayerControl",
+            "id": "8a55b0b2-20d5-42c2-ad67-45b1d391ac85",
+            "actions": [
+                {
+                    "name": "LStick",
+                    "type": "Value",
+                    "id": "3612da34-c741-442f-bb79-cd55e28d0783",
+                    "expectedControlType": "Stick",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "RStick",
+                    "type": "Value",
+                    "id": "1a0bea58-2c5d-4d19-b51e-bf385a2949f4",
+                    "expectedControlType": "Stick",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "LTrigger",
+                    "type": "Button",
+                    "id": "93df799f-2026-46ec-9950-010fb7960a42",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RTrigger",
+                    "type": "Button",
+                    "id": "fe413b59-b497-4ef2-a13a-9be4827b6b1c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Dpad",
+                    "type": "Value",
+                    "id": "10eb60b0-19c1-4265-a54a-b66560b9cf59",
+                    "expectedControlType": "Dpad",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "57ea0908-8e8d-4bb1-bcfc-0615c137522f",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LStick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e9c91fc8-850a-4aaa-99c6-9da01d514967",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RStick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9c8371aa-ad3d-4409-96c1-a92ec13cbf87",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LTrigger",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5e0159cc-6285-4524-baa5-bfa15517a675",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RTrigger",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "de7f31d0-6358-4053-96fa-ae8ba957a775",
+                    "path": "<Gamepad>/dpad",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dpad",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

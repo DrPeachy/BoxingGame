@@ -856,7 +856,7 @@ PlayerSettings:
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
   metroPackageName: BoxingGame
-  metroPackageVersion: 
+  metroPackageVersion: 1.0.0.0
   metroCertificatePath: 
   metroCertificatePassword: 
   metroCertificateSubject: 
@@ -864,7 +864,7 @@ PlayerSettings:
   metroCertificateNotAfter: 0000000000000000
   metroApplicationDescription: BoxingGame
   wsaImages: {}
-  metroTileShortName: 
+  metroTileShortName: BoxingGame
   metroTileShowName: 0
   metroMediumTileShowName: 0
   metroLargeTileShowName: 0
@@ -932,11 +932,11 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: 6c044835-f200-4998-ae32-4d51a141b7ff
+  cloudProjectId: 
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: BoxingGame
-  organizationId: p1067838263
+  projectName: 
+  organizationId: 
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}
