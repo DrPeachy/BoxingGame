@@ -70,11 +70,11 @@ public class PlayerControllerNetwork : NetworkBehaviour
 
     // Components
     private ControllerAction playerControl;
-    private PlayerView playerView;
+    private PlayerViewNetwork playerView;
 
-    public override void OnStartNetwork()
+    public override void OnStartClient()
     {
-        base.OnStartNetwork();
+        base.OnStartClient();
         InitializePlayer();
     }
 
@@ -97,7 +97,7 @@ public class PlayerControllerNetwork : NetworkBehaviour
         inputSequences["r"] = new List<string>();
 
         // get player viewer
-        playerView = GetComponent<PlayerView>();
+        playerView = GetComponent<PlayerViewNetwork>();
 
         // register player
         OnlineModeGameManager.Instance.RegisterPlayer(this);
@@ -114,6 +114,7 @@ public class PlayerControllerNetwork : NetworkBehaviour
         else
         {
             DisableInput();
+            playerView.DisableCamera();
         }
     }
 
@@ -196,11 +197,11 @@ public class PlayerControllerNetwork : NetworkBehaviour
             string[] strInputs = buttonMappings[key].Split('-');
             string hand = strInputs[0];
             string action = strInputs[1];
-            if (action == "punch")
+            if (action == "stick")
             {
                 EndPunch(hand);
             }
-            else if (action == "block")
+            else if (action == "trigger")
             {
                 EndBlock(hand);
             }
@@ -210,8 +211,9 @@ public class PlayerControllerNetwork : NetworkBehaviour
 
     private void StartCharge(string hand)
     {
-        if (IsOwner)
+        if (IsOwner){
             OnlineModeGameManager.Instance.HandlePlayerAction(PlayerIndex, hand, "Charge");
+        }
     }
 
     private void StartPunch(string hand)
@@ -274,10 +276,7 @@ public class PlayerControllerNetwork : NetworkBehaviour
 
     [ObserversRpc]
     public void ReceiveGameEvent(string message, float d = 0)
-    {
-        // early return
-        if (!base.Owner.IsLocalClient) return;
-        
+    {   
         _ = ProcessReceiveGameEvent(message, d);
     }
 
@@ -286,7 +285,7 @@ public class PlayerControllerNetwork : NetworkBehaviour
     {
         Debug.Log($"Client: Player[{PlayerIndex}] Received Game Event: {message}");
         string[] msg = message.Split('-');
-        // example string "p0-l-recovery"
+        // example string "0-1-recovery"
         string pIndex = msg[0];
         if (pIndex != $"{PlayerIndex}") return;
         string hand = msg[1];
@@ -296,6 +295,15 @@ public class PlayerControllerNetwork : NetworkBehaviour
         {
             punchStates[hand] = PunchState.Recovery;
             playerView.AnimateRecovery(hand, d);
+        }
+        else if (action == "Charge")
+        {
+            punchStates[hand] = PunchState.HookCharge;
+            playerView.AnimateCharge(hand, d);
+        }
+        else if (action == "ChargeComplete")
+        {
+            punchStates[hand] = PunchState.HookChargeComplete;
         }
         else if (action == "Straight")
         {
@@ -311,6 +319,10 @@ public class PlayerControllerNetwork : NetworkBehaviour
         {
             punchStates[hand] = PunchState.Block;
             playerView.AnimateBlock(hand);
+        }
+        else if (action == "Idle"){
+            punchStates[hand] = PunchState.Idle;
+            playerView.ResetGloves(hand);
         }
 
         await UniTask.Yield();

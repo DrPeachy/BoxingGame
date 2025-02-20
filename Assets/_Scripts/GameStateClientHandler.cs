@@ -56,4 +56,10 @@ public class GameStateClientHandler : MonoBehaviour
     public void ShowQuestionBoard(bool show){
         questionBoard.SetActive(show);
     }
+
+    // end phase ui logic
+    public void ShowEndGameScreen(string txt){
+        // show end game screen
+        timerText.text = txt;
+    }
 }

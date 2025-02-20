@@ -15,7 +15,8 @@ public class GameStateManager : NetworkBehaviour
     public enum GameState{
         Matching,
         Fighting,
-        Break
+        Break,
+        End
     }
 
     public static GameStateManager Instance { get; private set; }
@@ -68,10 +69,12 @@ public class GameStateManager : NetworkBehaviour
 
         await PlayerGatheringPhase();
 
-        while(true){
+        while(!OnlineModeGameManager.Instance.CheckEndGame()){
             await StartFightingPhase();
             await StartBreakPhase();
         }
+
+        await StartEndPhase();
     }
     public void PlayerJoined(){
         playerCount++;
@@ -131,6 +134,14 @@ public class GameStateManager : NetworkBehaviour
         await UniTask.Delay(500);
     }
 
+    private async UniTask StartEndPhase(){
+        // pre phase logic
+        gameState = GameState.End;
+        Debug.Log("End phase started");
+
+        ShowEndGameScreen($"Player {OnlineModeGameManager.Instance.GetWinner() + 1} wins!");
+    }
+
     private async UniTask WaitForPhaseEnd(float phaseLength, string phaseName = ""){
         float elapsedTime = 0f;
 
@@ -162,6 +173,11 @@ public class GameStateManager : NetworkBehaviour
     [ObserversRpc]
     public void ShowQuestionBoard(bool show){
         GameStateClientHandler.Instance.ShowQuestionBoard(show);
+    }
+
+    [ObserversRpc]
+    public void ShowEndGameScreen(string txt){
+        GameStateClientHandler.Instance.ShowEndGameScreen(txt);
     }
 
 

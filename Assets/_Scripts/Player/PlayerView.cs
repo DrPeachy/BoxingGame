@@ -12,6 +12,7 @@ public class PlayerView : MonoBehaviour
     private Vector3 rGloveOrgPos;
     private Quaternion lGloveOrgRot;
     private Quaternion rGloveOrgRot;
+    private Transform selfCamera;
     void Awake()
     {
         // get player controller
@@ -27,6 +28,8 @@ public class PlayerView : MonoBehaviour
         rGloveOrgPos = rGlove.localPosition;
         lGloveOrgRot = lGlove.localRotation;
         rGloveOrgRot = rGlove.localRotation;
+
+        selfCamera = transform.Find("playerCam");
     }
 
 
@@ -43,6 +46,17 @@ public class PlayerView : MonoBehaviour
             transform.position = new Vector3(0f, 0, -2);
             transform.rotation = Quaternion.Euler(0, 0, 0);
         }
+    }
+
+    public void DisableCamera()
+    {
+        selfCamera.gameObject.SetActive(false);
+    }
+
+    public void AnimateCharge(string hand, float duration)
+    {
+        Transform glove = hand == "l" ? lGlove : rGlove;
+        glove.DOLocalMoveZ(-1f, duration).SetEase(Ease.InBack);
     }
 
     public void AnimatePunch(string hand, float duration)
