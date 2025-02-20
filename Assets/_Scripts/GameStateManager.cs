@@ -7,8 +7,10 @@ using TMPro;
 using UnityEngine.UI;
 using System.Threading.Tasks;
 using UnityEngine.SocialPlatforms;
+using FishNet.Object;
+using FishNet.Object.Synchronizing;
 
-public class GameStateManager : MonoBehaviour
+public class GameStateManager : NetworkBehaviour
 {
     public enum GameState{
         Matching,
@@ -18,8 +20,10 @@ public class GameStateManager : MonoBehaviour
 
     public static GameStateManager Instance { get; private set; }
 
+    //[SyncVar(OnChange = nameof(OnGameStateChange))]
     public GameState gameState = GameState.Matching;
-    private int playerCount = 0;
+
+    public int playerCount = 0;
 
     [Header("phase length")]
     public float fightingPhaseLength = 30f;
@@ -33,18 +37,26 @@ public class GameStateManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        // if (Instance == null)
+        // {
+        //     Instance = this;
+        //     DontDestroyOnLoad(gameObject);
+        // }
+        // else
+        // {
+        //     Destroy(gameObject);
+        // }
     }
 
     private void Start(){
+        //RunGameStateLoop().Forget();
+    }
+
+    public override void OnStartServer(){
+        if(Instance == null) Instance = this;
+
+        base.OnStartServer();
+        gameState = GameState.Matching;
         RunGameStateLoop().Forget();
     }
 
@@ -64,11 +76,12 @@ public class GameStateManager : MonoBehaviour
     public void PlayerJoined(){
         playerCount++;
     }
+
     private async UniTask PlayerGatheringPhase(){
         // pre phase logic
         gameState = GameState.Matching;
         Debug.Log("Player gathering phase started");
-        timerText.text = "Waiting for players...";
+        //timerText.text = "Waiting for players..."; // debug
 
         // wait for phase end
         await UniTask.WaitUntil(() => playerCount == 2);
@@ -79,18 +92,20 @@ public class GameStateManager : MonoBehaviour
         // delay before next phase, prevent instant phase switch that cause crash
         await UniTask.Delay(500);
     }
+
     private async UniTask StartFightingPhase(){
         // pre phase logic
         gameState = GameState.Fighting;
         Debug.Log("Fighting phase started");
-        LocalModeGameManager.Instance.EnablePlayersInput();
+        //LocalModeGameManager.Instance.EnablePlayersInput();
+        ChangeState(GameState.Fighting, fightingPhaseLength);
 
         // wait for phase end
         await WaitForPhaseEnd(fightingPhaseLength, "Fighting");
 
         // post phase logic
         Debug.Log("Fighting phase ended");
-        LocalModeGameManager.Instance.DisablePlayersInput();
+        //LocalModeGameManager.Instance.DisablePlayersInput();
 
         // delay before next phase, prevent instant phase switch that cause crash
         await UniTask.Delay(500);
@@ -100,14 +115,17 @@ public class GameStateManager : MonoBehaviour
         // pre phase logic
         gameState = GameState.Break;
         Debug.Log("Break phase started");
-        questionBoard.SetActive(true);
+        //questionBoard.SetActive(true);
+        ShowQuestionBoard(true);
+        ChangeState(GameState.Break, breakPhaseLength);
 
         // wait for phase end
         await WaitForPhaseEnd(breakPhaseLength, "Break");
 
         // post phase logic
         Debug.Log("Break phase ended");
-        questionBoard.SetActive(false);
+        //questionBoard.SetActive(false);
+        ShowQuestionBoard(false);
 
         // delay before next phase, prevent instant phase switch that cause crash
         await UniTask.Delay(500);
@@ -117,22 +135,34 @@ public class GameStateManager : MonoBehaviour
         float elapsedTime = 0f;
 
         while(elapsedTime < phaseLength){
-            if (timerText != null)
-                timerText.text = $"{phaseName} {phaseLength - elapsedTime:0.0}";
+            // if (timerText != null)
+            //     timerText.text = $"{phaseName} {phaseLength - elapsedTime:0.0}";
 
-            // debug - space key to skip phase
-            if(Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame){
-                Debug.Log("Phase skipped");
-                if (timerText != null)
-                    timerText.text = "Phase Skipped!";
-                return;
-            }
+            // // debug - space key to skip phase
+            // if(Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame){
+            //     Debug.Log("Phase skipped");
+            //     if (timerText != null)
+            //         timerText.text = "Phase Skipped!";
+            //     return;
+            // }
 
             elapsedTime += Time.deltaTime;
             await UniTask.Yield();
         }
 
-        if (timerText != null)
-            timerText.text = $"{phaseName} ended!";
+        // if (timerText != null)
+        //     timerText.text = $"{phaseName} ended!";
     }
+
+    [ObserversRpc]
+    public void ChangeState(GameState state, float phaseLength){
+        GameStateClientHandler.Instance.StartNewPhase(phaseLength, state.ToString());
+    }
+
+    [ObserversRpc]
+    public void ShowQuestionBoard(bool show){
+        GameStateClientHandler.Instance.ShowQuestionBoard(show);
+    }
+
+
 }

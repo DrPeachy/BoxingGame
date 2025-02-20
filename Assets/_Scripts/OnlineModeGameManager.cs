@@ -49,7 +49,7 @@ public class OnlineModeGameManager : NetworkBehaviour
             playerStates[player.PlayerIndex] = new PlayerState(PunchState.Idle, PunchState.Idle);
 
             // update game state
-            //GameStateManager.Instance.PlayerJoined();
+            GameStateManager.Instance.PlayerJoined();
         }
     }
 
