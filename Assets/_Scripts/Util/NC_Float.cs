@@ -47,7 +47,7 @@ public class NC_Float
     public override int GetHashCode() => finalValue.GetHashCode();
 
     public override string ToString() =>
-        $"Base: {BaseValue}, Additional: {AdditionalValue}, Percentage: {PercentageValue * 100}%, Final: {FinalValue}";
+        $"Base: {baseValue}, Additional: {additionalValue}, Percentage: {percentageValue * 100}%, Final: {finalValue}";
 
     // overload math operators for NC_Float, only the base value is used
     public static NC_Float operator +(NC_Float a, NC_Float b) {return new NC_Float(a.baseValue + b.baseValue, 0, 0);}
