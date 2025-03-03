@@ -95,3 +95,7 @@ crashlytics-build.properties
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/unity,visualstudiocode
+
+# fishnet
+DefaultPrefabObjects.asset
+DefaultPrefabObjects.asset.meta
