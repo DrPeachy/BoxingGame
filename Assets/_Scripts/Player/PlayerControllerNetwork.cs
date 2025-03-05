@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using FishNet.Object;
 using Cysharp.Threading.Tasks;
+using Unity.VisualScripting;
 
 public class PlayerControllerNetwork : NetworkBehaviour
 {
@@ -29,17 +30,18 @@ public class PlayerControllerNetwork : NetworkBehaviour
         { "rightTrigger", "r-trigger" }
     };
 
-    private Dictionary<string, PunchState> punchStates = new Dictionary<string, PunchState>
-    {
-        { "Left", PunchState.Idle },
-        { "Right", PunchState.Idle }
-    };
+    // private Dictionary<string, PunchState> punchStates = new Dictionary<string, PunchState>
+    // {
+    //     { "Left", PunchState.Idle },
+    //     { "Right", PunchState.Idle }
+    // };
 
     private Dictionary<string, List<string>> inputSequences = new Dictionary<string, List<string>>
     {
         { "Left", new List<string>() },
         { "Right", new List<string>() }
     };
+    PlayerState myState;
 
     [Header("Straight Punch Settings")]
     public float straightPunchWindup = 0.5f;
@@ -69,12 +71,12 @@ public class PlayerControllerNetwork : NetworkBehaviour
     private readonly string[] rightHookCombo = { "Right", "RightUp", "Up" };
 
     // Components
-    private ControllerAction playerControl;
-    private PlayerView playerView;
+    private ControllerAction playerControlAction;
+    private PlayerViewNetwork playerView;
 
-    public override void OnStartNetwork()
+    public override void OnStartClient()
     {
-        base.OnStartNetwork();
+        base.OnStartClient();
         InitializePlayer();
     }
 
@@ -90,14 +92,17 @@ public class PlayerControllerNetwork : NetworkBehaviour
         Debug.Log($"Client: Player[{PlayerIndex}] started network");
 
         // set player controller
-        playerControl = new ControllerAction();
+        playerControlAction = new ControllerAction();
 
         // initialize input sequences
         inputSequences["l"] = new List<string>();
         inputSequences["r"] = new List<string>();
 
+        // initialize my state
+        myState = new PlayerState(PunchState.Idle, PunchState.Idle);
+
         // get player viewer
-        playerView = GetComponent<PlayerView>();
+        playerView = GetComponent<PlayerViewNetwork>();
 
         // register player
         OnlineModeGameManager.Instance.RegisterPlayer(this);
@@ -114,35 +119,36 @@ public class PlayerControllerNetwork : NetworkBehaviour
         else
         {
             DisableInput();
+            playerView.DisableCamera();
         }
     }
 
     private void EnableInput()
     {
         // enable player input
-        playerControl.Enable();
-        playerControl.PlayerControl.LStick.performed += OnInputPerformed;
-        playerControl.PlayerControl.RStick.performed += OnInputPerformed;
-        playerControl.PlayerControl.LStick.canceled += OnInputCanceled;
-        playerControl.PlayerControl.RStick.canceled += OnInputCanceled;
-        playerControl.PlayerControl.LTrigger.performed += OnInputPerformed;
-        playerControl.PlayerControl.RTrigger.performed += OnInputPerformed;
-        playerControl.PlayerControl.LTrigger.canceled += OnInputCanceled;
-        playerControl.PlayerControl.RTrigger.canceled += OnInputCanceled;
+        playerControlAction.Enable();
+        playerControlAction.PlayerControl.LStick.performed += OnInputPerformed;
+        playerControlAction.PlayerControl.RStick.performed += OnInputPerformed;
+        playerControlAction.PlayerControl.LStick.canceled += OnInputCanceled;
+        playerControlAction.PlayerControl.RStick.canceled += OnInputCanceled;
+        playerControlAction.PlayerControl.LTrigger.performed += OnInputPerformed;
+        playerControlAction.PlayerControl.RTrigger.performed += OnInputPerformed;
+        playerControlAction.PlayerControl.LTrigger.canceled += OnInputCanceled;
+        playerControlAction.PlayerControl.RTrigger.canceled += OnInputCanceled;
     }
 
     private void DisableInput()
     {
         // disable player input
-        playerControl.Disable();
-        playerControl.PlayerControl.LStick.performed -= OnInputPerformed;
-        playerControl.PlayerControl.RStick.performed -= OnInputPerformed;
-        playerControl.PlayerControl.LStick.canceled -= OnInputCanceled;
-        playerControl.PlayerControl.RStick.canceled -= OnInputCanceled;
-        playerControl.PlayerControl.LTrigger.performed -= OnInputPerformed;
-        playerControl.PlayerControl.RTrigger.performed -= OnInputPerformed;
-        playerControl.PlayerControl.LTrigger.canceled -= OnInputCanceled;
-        playerControl.PlayerControl.RTrigger.canceled -= OnInputCanceled;
+        playerControlAction.Disable();
+        playerControlAction.PlayerControl.LStick.performed -= OnInputPerformed;
+        playerControlAction.PlayerControl.RStick.performed -= OnInputPerformed;
+        playerControlAction.PlayerControl.LStick.canceled -= OnInputCanceled;
+        playerControlAction.PlayerControl.RStick.canceled -= OnInputCanceled;
+        playerControlAction.PlayerControl.LTrigger.performed -= OnInputPerformed;
+        playerControlAction.PlayerControl.RTrigger.performed -= OnInputPerformed;
+        playerControlAction.PlayerControl.LTrigger.canceled -= OnInputCanceled;
+        playerControlAction.PlayerControl.RTrigger.canceled -= OnInputCanceled;
     }
 
     private void OnInputPerformed(InputAction.CallbackContext context)
@@ -196,11 +202,11 @@ public class PlayerControllerNetwork : NetworkBehaviour
             string[] strInputs = buttonMappings[key].Split('-');
             string hand = strInputs[0];
             string action = strInputs[1];
-            if (action == "punch")
+            if (action == "stick")
             {
                 EndPunch(hand);
             }
-            else if (action == "block")
+            else if (action == "trigger")
             {
                 EndBlock(hand);
             }
@@ -210,32 +216,88 @@ public class PlayerControllerNetwork : NetworkBehaviour
 
     private void StartCharge(string hand)
     {
-        if (IsOwner)
+        if (IsOwner){
             OnlineModeGameManager.Instance.HandlePlayerAction(PlayerIndex, hand, "Charge");
+            playerView.AnimateCharge(hand, 0.1f);
+            _= StartChargeTimer(hand);
+        }
     }
 
     private void StartPunch(string hand)
     {
-        if (IsOwner)
+        if (IsOwner){
             OnlineModeGameManager.Instance.HandlePlayerAction(PlayerIndex, hand, "Punch");
+            playerView.AnimatePunch(hand, straightPunchWindup);
+
+            // do animation
+            int handIndex = hand == "l" ? 0 : 1;
+            if(myState.punchStates[handIndex] == PunchState.HookChargeComplete){
+                myState.punchStates[handIndex] = PunchState.HookPunch;
+                playerView.AnimatePunch(hand, hookPunchWindup);
+            }else{
+                myState.punchStates[handIndex] = PunchState.StraightPunch;
+                playerView.AnimatePunch(hand, straightPunchWindup);
+            }
+        }
     }
 
-    private void StartBlock(string hand)
+    private async UniTask StartBlock(string hand)
     {
-        if (IsOwner)
+        if (IsOwner){
             OnlineModeGameManager.Instance.HandlePlayerAction(PlayerIndex, hand, "Block");
+            // update state
+            int handIndex = hand == "l" ? 0 : 1;
+            myState.punchStates[handIndex] = PunchState.Block;
+            // do animation
+            playerView.AnimateBlock(hand);
+        }
     }
 
-    private void EndPunch(string hand)
+    private async UniTask EndPunch(string hand)
     {
-        if (IsOwner)
+        if (IsOwner){
             OnlineModeGameManager.Instance.HandlePlayerAction(PlayerIndex, hand, "CancelCharge");
+            int handIndex = hand == "l" ? 0 : 1;
+            // do animation & update state
+            if (myState.punchStates[handIndex] == PunchState.StraightPunch){
+                myState.punchStates[handIndex] = PunchState.Recovery;
+                playerView.AnimateRecovery(hand, straightPunchRecovery);
+            }else if(myState.punchStates[handIndex] == PunchState.HookPunch){
+                myState.punchStates[handIndex] = PunchState.Recovery;
+                playerView.AnimateRecovery(hand, hookPunchRecovery);
+            }
+
+        }
+
     }
 
     private void EndBlock(string hand)
     {
-        if (IsOwner)
+        if (IsOwner){
             OnlineModeGameManager.Instance.HandlePlayerAction(PlayerIndex, hand, "CancelBlock");
+            int handIndex = hand == "l" ? 0 : 1;
+            // do animation & update state
+            if (myState.punchStates[handIndex] == PunchState.Block){
+                myState.punchStates[handIndex] = PunchState.Recovery;
+                playerView.AnimateRecovery(hand, blockRecovery);
+            }
+        }
+    }
+
+    private async UniTask StartChargeTimer(string hand)
+    {
+        int handIndex = hand == "l" ? 0 : 1;
+        if(myState.punchStates[handIndex] == PunchState.Idle){
+            myState.punchStates[handIndex] = PunchState.HookCharge;
+            while(myState.chargeTimes[handIndex] < hookChargeDuration && 
+                myState.punchStates[handIndex] == PunchState.HookCharge)
+            {
+                myState.chargeTimes[handIndex] += Time.deltaTime;
+                await UniTask.Yield();
+            }
+            if(myState.punchStates[handIndex] == PunchState.HookCharge)
+                myState.punchStates[handIndex] = PunchState.HookChargeComplete;
+        }
     }
 
     private string GetDirection(Vector2 input)
@@ -274,10 +336,7 @@ public class PlayerControllerNetwork : NetworkBehaviour
 
     [ObserversRpc]
     public void ReceiveGameEvent(string message, float d = 0)
-    {
-        // early return
-        if (!base.Owner.IsLocalClient) return;
-        
+    {   
         _ = ProcessReceiveGameEvent(message, d);
     }
 
@@ -286,7 +345,7 @@ public class PlayerControllerNetwork : NetworkBehaviour
     {
         Debug.Log($"Client: Player[{PlayerIndex}] Received Game Event: {message}");
         string[] msg = message.Split('-');
-        // example string "p0-l-recovery"
+        // example string "0-1-recovery"
         string pIndex = msg[0];
         if (pIndex != $"{PlayerIndex}") return;
         string hand = msg[1];
@@ -294,23 +353,36 @@ public class PlayerControllerNetwork : NetworkBehaviour
 
         if (action == "Recovery")
         {
-            punchStates[hand] = PunchState.Recovery;
-            playerView.AnimateRecovery(hand, d);
+            //punchStates[hand] = PunchState.Recovery;
+            //playerView.AnimateRecovery(hand, d);
+        }
+        else if (action == "Charge")
+        {
+            //punchStates[hand] = PunchState.HookCharge;
+            //playerView.AnimateCharge(hand, d);
+        }
+        else if (action == "ChargeComplete")
+        {
+            //punchStates[hand] = PunchState.HookChargeComplete;
         }
         else if (action == "Straight")
         {
-            punchStates[hand] = PunchState.StraightPunch;
-            playerView.AnimatePunch(hand, d);
+            //punchStates[hand] = PunchState.StraightPunch;
+            //playerView.AnimatePunch(hand, d);
         }
         else if (action == "Hook")
         {
-            punchStates[hand] = PunchState.HookPunch;
-            playerView.AnimatePunch(hand, d);
+            //punchStates[hand] = PunchState.HookPunch;
+            //playerView.AnimatePunch(hand, d);
         }
         else if (action == "Block")
         {
-            punchStates[hand] = PunchState.Block;
-            playerView.AnimateBlock(hand);
+            //punchStates[hand] = PunchState.Block;
+            //playerView.AnimateBlock(hand);
+        }
+        else if (action == "Idle"){
+            //punchStates[hand] = PunchState.Idle;
+            //playerView.ResetGloves(hand);
         }
 
         await UniTask.Yield();

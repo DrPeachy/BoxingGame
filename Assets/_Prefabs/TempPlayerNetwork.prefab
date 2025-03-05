@@ -283,7 +283,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3015632811280586176}
   - component: {fileID: 8293387890376929055}
-  - component: {fileID: 8231730124029782845}
+  - component: {fileID: 5206085939299346287}
   - component: {fileID: 1928944270317740360}
   m_Layer: 0
   m_Name: TempPlayerNetwork
@@ -327,6 +327,7 @@ MonoBehaviour:
   _componentIndexCache: 255
   _addedNetworkObject: {fileID: 1928944270317740360}
   _networkObjectCache: {fileID: 0}
+  PlayerIndex: 0
   straightPunchWindup: 0.5
   straightPunchRecovery: 0.3
   straightPunchDamage: 5
@@ -341,7 +342,7 @@ MonoBehaviour:
   blockDamageReduction: 5
   punchMovementFactor: 15
   stageMovingFactor: 0.1
---- !u!114 &8231730124029782845
+--- !u!114 &5206085939299346287
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -350,9 +351,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 4311673345782775121}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f55753cf92e1cec4895935865e141795, type: 3}
+  m_Script: {fileID: 11500000, guid: 54dee274952519047a5e46577f64374b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 1928944270317740360}
+  _networkObjectCache: {fileID: 0}
+  selfCamera: {fileID: 5163633902855675043}
 --- !u!114 &1928944270317740360
 MonoBehaviour:
   m_ObjectHideFlags: 0
