@@ -93,10 +93,11 @@ public class LocalModeGameManager : MonoBehaviour
         // handle punch charge
         if(punchState == PunchState.Idle && action == "Charge"){
             playerStates[playerIndex].punchStates[handIndex] = PunchState.HookCharge;
-            playerStates[playerIndex].chargeTime = 0;
+            playerStates[playerIndex].chargeTimes[handIndex] = 0;
 
-            while(playerStates[playerIndex].punchStates[handIndex] == PunchState.HookCharge && playerStates[playerIndex].chargeTime < hookChargeDuration){
-                playerStates[playerIndex].chargeTime += Time.deltaTime;
+            while(playerStates[playerIndex].punchStates[handIndex] == PunchState.HookCharge && 
+                playerStates[playerIndex].chargeTimes[handIndex] < hookChargeDuration){
+                playerStates[playerIndex].chargeTimes[handIndex] += Time.deltaTime;
                 await UniTask.Yield();
             }
 

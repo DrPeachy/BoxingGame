@@ -103,13 +103,14 @@ public class OnlineModeGameManager : NetworkBehaviour
         if (punchState == PunchState.Idle && action == "Charge")
         {
             playerStates[playerIndex].punchStates[handIndex] = PunchState.HookCharge;
-            playerStates[playerIndex].chargeTime = 0;
+            playerStates[playerIndex].chargeTimes[handIndex] = 0;
             NotifyAllPlayers($"{playerIndex}-{hand}-Charge");
 
             // start charge
-            while (playerStates[playerIndex].punchStates[handIndex] == PunchState.HookCharge && playerStates[playerIndex].chargeTime < hookChargeDuration)
+            while (playerStates[playerIndex].punchStates[handIndex] == PunchState.HookCharge && 
+                    playerStates[playerIndex].chargeTimes[handIndex] < hookChargeDuration)
             {
-                playerStates[playerIndex].chargeTime += Time.deltaTime;
+                playerStates[playerIndex].chargeTimes[handIndex] += Time.deltaTime;
                 await UniTask.Yield();
             }
 
