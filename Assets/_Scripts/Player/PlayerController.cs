@@ -86,6 +86,9 @@ public class PlayerController : MonoBehaviour
         // set player index
         PlayerIndex = playerInput.playerIndex;
 
+        // initialize player state
+        myState = new PlayerState(PunchState.Idle, PunchState.Idle);
+
         // initialize input sequences
         inputSequences["l"] = new List<string>();
         inputSequences["r"] = new List<string>();
