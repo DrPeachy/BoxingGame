@@ -136,6 +136,7 @@ public class GameStateManager : NetworkBehaviour
         Debug.Log("Break phase started");
         //questionBoard.SetActive(true);
         ShowQuestionBoard(true);
+        CursorController.Instance.ResetCursors();
         Button correctAnswer = questionBoard.GetComponent<QuestionGenerator>().GenerateQuestion();
         ChangeState(GameState.Break, breakPhaseLength);
 
@@ -151,8 +152,8 @@ public class GameStateManager : NetworkBehaviour
         bool player1Correct = result.Item1;
         bool player2Correct = result.Item2;
         Debug.Log($"Player 1: {player1Correct}, Player 2: {player2Correct}");
-        if (!player1Correct) LocalModeGameManager.Instance.AddDamageToPlayer(0, 30);
-        if (!player2Correct) LocalModeGameManager.Instance.AddDamageToPlayer(1, 30);
+        if (!player1Correct) LocalModeGameManager.Instance.AddDamageToPlayer(0, 50);
+        if (!player2Correct) LocalModeGameManager.Instance.AddDamageToPlayer(1, 50);
 
         // delay before next phase, prevent instant phase switch that cause crash
         await UniTask.Delay(500);
@@ -168,7 +169,8 @@ public class GameStateManager : NetworkBehaviour
         if(winner == 0) ShowEndGameScreen("It's a draw!");
         else ShowEndGameScreen($"Player {winner} wins!");
 
-        await UniTask.Yield();
+        await UniTask.Delay(5000);
+        SceneLoader.Instance.StartLoadingSceneAsync("MainMenu");
     }
 
     private async UniTask WaitForPhaseEnd(float phaseLength, string phaseName, CancellationToken token){

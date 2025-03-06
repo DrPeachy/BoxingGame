@@ -19,6 +19,8 @@ public class CursorController : MonoBehaviour
 
     private Vector2 cursorLeftPosition;
     private Vector2 cursorRightPosition;
+    private Vector2 cursorLeftOrigin;
+    private Vector2 cursorRightOrigin;
 
     public Button buttonLeftClicked;
     public Button buttonRightClicked;
@@ -43,6 +45,8 @@ public class CursorController : MonoBehaviour
     {
         cursorLeftPosition = cursorLeft.anchoredPosition;
         cursorRightPosition = cursorRight.anchoredPosition;
+        cursorLeftOrigin = cursorLeft.anchoredPosition;
+        cursorRightOrigin = cursorRight.anchoredPosition;
     }
 
     private void Update()
@@ -77,6 +81,17 @@ public class CursorController : MonoBehaviour
             }
         }
         
+    }
+
+    public void ResetCursors(){
+        Debug.Log($"cursorLeftOrigin: {cursorLeftOrigin}");
+        Debug.Log($"cursorRightOrigin: {cursorRightOrigin}");
+        Debug.Log($"cursorLeft.anchoredPosition: {cursorLeft.anchoredPosition}");
+        Debug.Log($"cursorRight.anchoredPosition: {cursorRight.anchoredPosition}");
+        cursorLeft.anchoredPosition = cursorLeftOrigin;
+        cursorRight.anchoredPosition = cursorRightOrigin;
+        cursorLeftPosition = cursorLeftOrigin;
+        cursorRightPosition = cursorRightOrigin;
     }
 
     public void UpdateCursorPosition(Vector2 leftStick, Vector2 rightStick){

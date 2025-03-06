@@ -857,9 +857,9 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 22662525}
   - {fileID: 1485669323}
   - {fileID: 885033063}
-  - {fileID: 22662525}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1332,7 +1332,7 @@ MonoBehaviour:
   gameState: 0
   playerCount: 0
   roundCount: 0
-  fightingPhaseLength: 20
+  fightingPhaseLength: 2
   breakPhaseLength: 5
   timerText: {fileID: 885033064}
   questionBoard: {fileID: 1485669322}
