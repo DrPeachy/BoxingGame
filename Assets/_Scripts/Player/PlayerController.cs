@@ -32,11 +32,13 @@ public class PlayerController : MonoBehaviour
         { "rightTrigger", "r-block" }
     };
 
-    private Dictionary<string, PunchState> punchStates = new Dictionary<string, PunchState>
-    {
-        { "Left", PunchState.Idle },
-        { "Right", PunchState.Idle }
-    };
+    // private Dictionary<string, PunchState> punchStates = new Dictionary<string, PunchState>
+    // {
+    //     { "Left", PunchState.Idle },
+    //     { "Right", PunchState.Idle }
+    // };
+
+    private PlayerState myState;
 
     private Dictionary<string, List<string>> inputSequences = new Dictionary<string, List<string>>
     {
@@ -245,24 +247,28 @@ public class PlayerController : MonoBehaviour
     public async UniTaskVoid ReceiveGameEvent(string message, float d = 0){
         Debug.Log($"Player {PlayerIndex} received message: {message}");
         string[] msg = message.Split('-');
-        // example string "p0-l-recovery"
+        // example string "0-1-recovery"
         string pIndex = msg[0];
         if(pIndex != $"{PlayerIndex}") return;
         string hand = msg[1];
+        int handIndex = hand == "l" ? 0 : 1;
         string action = msg[2];
 
         if(action == "Recovery"){
-            punchStates[hand] = PunchState.Recovery;
+            myState.punchStates[handIndex] = PunchState.Recovery;
             playerView.AnimateRecovery(hand, d);
         }else if(action == "Straight"){
-            punchStates[hand] = PunchState.StraightPunch;
+            myState.punchStates[handIndex] = PunchState.StraightPunch;
             playerView.AnimatePunch(hand, d);
         }else if(action == "Hook"){
-            punchStates[hand] = PunchState.HookPunch;
+            myState.punchStates[handIndex] = PunchState.HookPunch;
             playerView.AnimatePunch(hand, d);
         }else if(action == "Block"){
-            punchStates[hand] = PunchState.Block;
+            myState.punchStates[handIndex] = PunchState.Block;
             playerView.AnimateBlock(hand);
+        }else if(action == "Charge"){
+            myState.punchStates[handIndex] = PunchState.HookCharge;
+            playerView.AnimateCharge(hand, d);
         }
 
         await UniTask.Yield();
