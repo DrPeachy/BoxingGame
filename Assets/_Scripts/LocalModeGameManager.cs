@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using FishNet.Demo.AdditiveScenes;
 using UnityEngine;
+using TMPro;
 
 public class LocalModeGameManager : MonoBehaviour
 {
@@ -11,6 +12,10 @@ public class LocalModeGameManager : MonoBehaviour
     private Dictionary<int, PlayerState> playerStates = new Dictionary<int, PlayerState>();
     public int PlayerCount => players.Count;
     public bool isGameModeLocal = true;
+
+    [Header("UI")]
+    public Transform playerStateTexts;
+    private Dictionary<int, TMP_Text> playerStateTextsDict = new Dictionary<int, TMP_Text>();
 
     [Header("Straight Punch Settings")]
     public float straightPunchWindup = 0.5f;
@@ -49,6 +54,17 @@ public class LocalModeGameManager : MonoBehaviour
 
             // update game state
             GameStateManager.Instance.PlayerJoined();
+
+            // if player size is 2, initialize tmp texts
+            if (players.Count == 2)
+            {
+                foreach (Transform child in playerStateTexts)
+                {
+                    TMP_Text text = child.GetComponent<TMP_Text>();
+                    playerStateTextsDict[int.Parse(child.name)] = text;
+                }
+                
+            }
         }
     }
 
@@ -165,13 +181,7 @@ public class LocalModeGameManager : MonoBehaviour
                     playerStates[opponentIndex].damageTaken += hookPunchDamage - blockDamageReduction;
                 }
 
-                // recovery
-                NotifyAllPlayers($"{playerIndex}-{hand}-Recovery", hookPunchRecovery * 0.9f);
-                playerStates[playerIndex].punchStates[handIndex] = PunchState.Recovery;
-                await UniTask.Delay((int)(hookPunchRecovery * 1000));
-
-                // idle
-                playerStates[playerIndex].punchStates[handIndex] = PunchState.Idle;
+                _ = SetToRecovery(playerIndex, handIndex, hookPunchRecovery);
             }
         }
 
@@ -214,6 +224,12 @@ public class LocalModeGameManager : MonoBehaviour
         foreach (var player in players.Values)
         {
             _= player.ReceiveGameEvent(message, d);
+        }
+
+        // put game state on tmp text
+        foreach (var pair in playerStates)
+        {
+            playerStateTextsDict[pair.Key].text = $"Player {pair.Key} - {pair.Value.punchStates[0]} - {pair.Value.punchStates[1]}";
         }
     }
 

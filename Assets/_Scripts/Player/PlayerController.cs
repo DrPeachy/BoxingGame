@@ -26,10 +26,10 @@ public class PlayerController : MonoBehaviour
     // Button mappings
     private Dictionary<string, string> buttonMappings = new Dictionary<string, string>
     {
-        { "leftStick", "l-punch" },
-        { "rightStick", "r-punch" },
-        { "leftTrigger", "l-block" },
-        { "rightTrigger", "r-block" }
+        { "leftStick", "l-stick" },
+        { "rightStick", "r-stick" },
+        { "leftTrigger", "l-trigger" },
+        { "rightTrigger", "r-trigger" }
     };
 
     // private Dictionary<string, PunchState> punchStates = new Dictionary<string, PunchState>
@@ -140,7 +140,7 @@ public class PlayerController : MonoBehaviour
             string action = strInputs[1];
             Vector2 input = Vector2.zero;
             string direction = "";
-            if (action == "punch")
+            if (action == "stick")
             {
                 input = context.ReadValue<Vector2>();
                 direction = GetDirection(input);
@@ -160,7 +160,7 @@ public class PlayerController : MonoBehaviour
                     }
                 }
             }
-            else if (action == "block")
+            else if (action == "trigger")
             {
                 StartBlock(hand);
             }
@@ -175,11 +175,11 @@ public class PlayerController : MonoBehaviour
             string[] strInputs = buttonMappings[key].Split('-');
             string hand = strInputs[0];
             string action = strInputs[1];
-            if (action == "punch")
+            if (action == "stick")
             {
                 EndPunch(hand);
             }
-            else if (action == "block")
+            else if (action == "trigger")
             {
                 EndBlock(hand);
             }
