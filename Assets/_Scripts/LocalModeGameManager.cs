@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using FishNet.Demo.AdditiveScenes;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using TMPro;
 
 public class LocalModeGameManager : MonoBehaviour
@@ -10,6 +11,7 @@ public class LocalModeGameManager : MonoBehaviour
     public static LocalModeGameManager Instance { get; private set; }
     private Dictionary<int, PlayerController> players = new Dictionary<int, PlayerController>();
     private Dictionary<int, PlayerState> playerStates = new Dictionary<int, PlayerState>();
+    public Dictionary<int, PlayerInput> playerInputs = new Dictionary<int, PlayerInput>();
     public int PlayerCount => players.Count;
     public bool isGameModeLocal = true;
 
@@ -47,6 +49,8 @@ public class LocalModeGameManager : MonoBehaviour
         if (!players.ContainsKey(player.PlayerIndex))
         {
             players[player.PlayerIndex] = player;
+            playerInputs[player.PlayerIndex] = player.GetComponent<PlayerInput>();
+            CursorController.Instance.AddPlayerInput(player.PlayerIndex, playerInputs[player.PlayerIndex]);
             Debug.Log($"玩家 {player.PlayerIndex} 加入游戏");
 
             // 初始化玩家状态
