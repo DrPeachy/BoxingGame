@@ -56,7 +56,7 @@ public class PlayerView : MonoBehaviour
     public void AnimateCharge(string hand, float duration)
     {
         Transform glove = hand == "l" ? lGlove : rGlove;
-        glove.DOLocalMoveZ(-1f, duration).SetEase(Ease.InBack);
+        glove.DOLocalMoveZ((hand == "l" ? lGloveOrgPos.z : rGloveOrgPos.z) - 0.2f, duration).SetEase(Ease.InBack);
     }
 
     public void AnimatePunch(string hand, float duration)

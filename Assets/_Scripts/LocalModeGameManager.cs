@@ -220,6 +220,10 @@ public class LocalModeGameManager : MonoBehaviour
 
     public void AddDamageToPlayer(int playerIndex, float damage){
         playerStates[playerIndex].damageTaken += damage;
+        foreach (var pair in playerStates)
+        {
+            playerStateTextsDict[pair.Key].text = $"Player {pair.Key + 1} - {pair.Value.punchStates[0]} - {pair.Value.punchStates[1]}\n DamageTaken: {pair.Value.damageTaken}";
+        }
     }
 
     public int GetPlayerWithLessDamageTaken(){

@@ -146,7 +146,7 @@ public class CursorController : MonoBehaviour
     }
 
     public Tuple<bool, bool> CheckAnswerCorrectness(Button correctAnswer){
-        return new Tuple<bool, bool>(buttonLeftClicked == correctAnswer, buttonRightClicked == correctAnswer);
+        return new Tuple<bool, bool>(buttonLeftClicked==null? false : correctAnswer, buttonRightClicked == null? false: correctAnswer);
     }
 
 }
