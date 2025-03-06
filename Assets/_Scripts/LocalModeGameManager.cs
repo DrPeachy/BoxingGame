@@ -83,8 +83,9 @@ public class LocalModeGameManager : MonoBehaviour
         PunchState punchState = playerState.punchStates[handIndex];
         // get opponent's punch state
         int opponentIndex = playerIndex == 0 ? 1 : 0;
+        int opponentHandIndex = handIndex == 0 ? 1 : 0;
         if (!playerStates.ContainsKey(opponentIndex)) return;
-        PunchState opponentPunchState = playerStates[opponentIndex].punchStates[handIndex];
+        PunchState opponentPunchState = playerStates[opponentIndex].punchStates[opponentHandIndex];
 
 
         /// handle action
@@ -94,15 +95,19 @@ public class LocalModeGameManager : MonoBehaviour
         if(punchState == PunchState.Idle && action == "Charge"){
             playerStates[playerIndex].punchStates[handIndex] = PunchState.HookCharge;
             playerStates[playerIndex].chargeTimes[handIndex] = 0;
+            NotifyAllPlayers($"{playerIndex}-{hand}-Charge");
 
+            // start charge
             while(playerStates[playerIndex].punchStates[handIndex] == PunchState.HookCharge && 
                 playerStates[playerIndex].chargeTimes[handIndex] < hookChargeDuration){
                 playerStates[playerIndex].chargeTimes[handIndex] += Time.deltaTime;
                 await UniTask.Yield();
             }
 
+            // charge complete
             if(playerStates[playerIndex].punchStates[handIndex] == PunchState.HookCharge){
                 playerStates[playerIndex].punchStates[handIndex] = PunchState.HookChargeComplete;
+                NotifyAllPlayers($"{playerIndex}-{hand}-ChargeComplete");
             }
         }
 
@@ -120,11 +125,16 @@ public class LocalModeGameManager : MonoBehaviour
                 // dealing damage
                 if(opponentPunchState != PunchState.Block && opponentPunchState != PunchState.Parry){
                     // take damage
+                    playerStates[opponentIndex].damageTaken += straightPunchDamage;
                 }else if(opponentPunchState == PunchState.Parry){
                     // parry
+                    _= Interrupt(opponentIndex, handIndex);
                 }else{
                     // block
+                    playerStates[opponentIndex].damageTaken += straightPunchDamage - blockDamageReduction;
                 }
+
+                _= Interrupt(opponentIndex, opponentHandIndex);
 
                 // recovery
                 NotifyAllPlayers($"{playerIndex}-{hand}-Recovery", straightPunchRecovery * 0.9f);
@@ -145,10 +155,13 @@ public class LocalModeGameManager : MonoBehaviour
                 // dealing damage
                 if(opponentPunchState != PunchState.Block && opponentPunchState != PunchState.Parry){
                     // take damage
+                    playerStates[opponentIndex].damageTaken += hookPunchDamage;
                 }else if(opponentPunchState == PunchState.Parry){
                     // parry
+                    _= Interrupt(opponentIndex, handIndex);
                 }else{
                     // block
+                    playerStates[opponentIndex].damageTaken += hookPunchDamage - blockDamageReduction;
                 }
 
                 // recovery
@@ -223,8 +236,30 @@ public class LocalModeGameManager : MonoBehaviour
         }
     }
 
+    private async UniTask SetToRecovery(int player, int hand, float duration)
+    {
+        // set recovery state
+        playerStates[player].punchStates[hand] = PunchState.Recovery;
+        NotifyAllPlayers($"{player}-{hand}-Recovery", duration * 0.9f);
+        await UniTask.Delay((int)(duration * 1000));
+
+        // set to idle
+        playerStates[player].punchStates[hand] = PunchState.Idle;
+        NotifyAllPlayers($"{player}-{hand}-Idle");
+
+    }
+
     private async UniTaskVoid Interrupt(int player, int hand){
-        // TODO: interrupt the punch
-        return;
+        // interrupt player's hook charge
+        if(playerStates[player].punchStates[hand] == PunchState.HookCharge || playerStates[player].punchStates[hand] == PunchState.HookChargeComplete){
+            await SetToRecovery(player, hand, straightInterruptTime);
+        }
+
+        // target player's being interrupted by parring
+        else if(playerStates[player].punchStates[hand] == PunchState.HookPunch || playerStates[player].punchStates[hand] == PunchState.StraightPunch){
+            await SetToRecovery(player, hand, parryRecovery);
+        }
+        
+        await UniTask.Yield();
     }
 }
