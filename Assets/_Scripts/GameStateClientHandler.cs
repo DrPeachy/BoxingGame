@@ -21,6 +21,7 @@ public class GameStateClientHandler : MonoBehaviour
     private void Awake()
     {
         if (Instance == null) Instance = this;
+        else Destroy(gameObject);
     }
 
     public void StartNewPhase(float phaseLength, string phaseName = "")

@@ -21,6 +21,8 @@ public class GameStateManager : NetworkBehaviour
 
     public static GameStateManager Instance { get; private set; }
 
+    public bool isGameModeLocal = true;
+
     //[SyncVar(OnChange = nameof(OnGameStateChange))]
     public GameState gameState = GameState.Matching;
 
@@ -38,19 +40,19 @@ public class GameStateManager : NetworkBehaviour
 
     private void Awake()
     {
-        // if (Instance == null)
-        // {
-        //     Instance = this;
-        //     DontDestroyOnLoad(gameObject);
-        // }
-        // else
-        // {
-        //     Destroy(gameObject);
-        // }
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void Start(){
-        //RunGameStateLoop().Forget();
+        //this.enabled = true;
+        RunGameStateLoop().Forget();
     }
 
     public override void OnStartServer(){
@@ -69,7 +71,7 @@ public class GameStateManager : NetworkBehaviour
 
         await PlayerGatheringPhase();
 
-        while(!OnlineModeGameManager.Instance.CheckEndGame()){
+        while(true){
             await StartFightingPhase();
             await StartBreakPhase();
         }
@@ -165,18 +167,33 @@ public class GameStateManager : NetworkBehaviour
         //     timerText.text = $"{phaseName} ended!";
     }
 
-    [ObserversRpc]
+    // local
     public void ChangeState(GameState state, float phaseLength){
         GameStateClientHandler.Instance.StartNewPhase(phaseLength, state.ToString());
     }
 
-    [ObserversRpc]
     public void ShowQuestionBoard(bool show){
         GameStateClientHandler.Instance.ShowQuestionBoard(show);
     }
 
-    [ObserversRpc]
     public void ShowEndGameScreen(string txt){
+        GameStateClientHandler.Instance.ShowEndGameScreen(txt);
+    }
+
+
+    // networked
+    [ObserversRpc]
+    public void ChangeStateRPC(GameState state, float phaseLength){
+        GameStateClientHandler.Instance.StartNewPhase(phaseLength, state.ToString());
+    }
+
+    [ObserversRpc]
+    public void ShowQuestionBoardRPC(bool show){
+        GameStateClientHandler.Instance.ShowQuestionBoard(show);
+    }
+
+    [ObserversRpc]
+    public void ShowEndGameScreenRPC(string txt){
         GameStateClientHandler.Instance.ShowEndGameScreen(txt);
     }
 

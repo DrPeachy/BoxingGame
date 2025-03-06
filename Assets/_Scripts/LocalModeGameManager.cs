@@ -10,6 +10,7 @@ public class LocalModeGameManager : MonoBehaviour
     private Dictionary<int, PlayerController> players = new Dictionary<int, PlayerController>();
     private Dictionary<int, PlayerState> playerStates = new Dictionary<int, PlayerState>();
     public int PlayerCount => players.Count;
+    public bool isGameModeLocal = true;
 
     [Header("Straight Punch Settings")]
     public float straightPunchWindup = 0.5f;
