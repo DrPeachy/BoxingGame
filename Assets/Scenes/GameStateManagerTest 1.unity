@@ -199,6 +199,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &46524911
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 46524913}
+  - component: {fileID: 46524912}
+  m_Layer: 0
+  m_Name: UIManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &46524912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 46524911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b6eb83ad0f7f854a997214f34f1d5b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  questionBoard: {fileID: 1485669322}
+--- !u!4 &46524913
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 46524911}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 883.883, y: 505.82083, z: -6.0897393}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &133670152
 GameObject:
   m_ObjectHideFlags: 0
@@ -608,8 +653,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 885033063}
   - {fileID: 1485669323}
+  - {fileID: 885033063}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -872,6 +917,56 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 521155762}
   m_CullTransparentMesh: 1
+--- !u!1 &736986602
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 736986604}
+  - component: {fileID: 736986603}
+  m_Layer: 0
+  m_Name: CursorInputManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &736986603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 736986602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5eed2b26140b3447bad10d364590784, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cursorLeft: {fileID: 1169848284}
+  cursorRight: {fileID: 1863403042}
+  cursorSpeed: 100
+  mainCamera: {fileID: 160059514}
+  buttonLeftClicked: {fileID: 0}
+  buttonRightClicked: {fileID: 0}
+--- !u!4 &736986604
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 736986602}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 946.3442, y: 504.41965, z: -6.906818}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &744788514
 GameObject:
   m_ObjectHideFlags: 0
@@ -908,8 +1003,8 @@ MonoBehaviour:
   isGameModeLocal: 1
   gameState: 0
   playerCount: 0
-  fightingPhaseLength: 10
-  breakPhaseLength: 10
+  fightingPhaseLength: 2
+  breakPhaseLength: 20
   timerText: {fileID: 885033064}
   questionBoard: {fileID: 1485669322}
 --- !u!4 &744788516
@@ -990,7 +1085,7 @@ GameObject:
   - component: {fileID: 857276328}
   - component: {fileID: 857276327}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: MiddleText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1068,7 +1163,7 @@ MonoBehaviour:
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 36
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -1169,7 +1264,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Timer
+  m_text: Press any button to join...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1196,7 +1291,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 58.3
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1665,13 +1760,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 1485669322}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5eed2b26140b3447bad10d364590784, type: 3}
+  m_Script: {fileID: 11500000, guid: 8fe7869e887f3d0419598ed8e93ab0dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cursorLeft: {fileID: 1169848284}
-  cursorRight: {fileID: 1863403042}
-  cursorSpeed: 100
-  mainCamera: {fileID: 160059514}
+  questionBoard: {fileID: 1485669322}
+  questionText: {fileID: 521155764}
+  buttonTexts:
+  - {fileID: 1510952650}
+  - {fileID: 857276327}
+  - {fileID: 1702295539}
+  buttons:
+  - {fileID: 1803623346}
+  - {fileID: 135588166}
+  - {fileID: 473276762}
 --- !u!1 &1510952648
 GameObject:
   m_ObjectHideFlags: 0
@@ -1684,7 +1785,7 @@ GameObject:
   - component: {fileID: 1510952651}
   - component: {fileID: 1510952650}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: LeftText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1818,7 +1919,7 @@ GameObject:
   - component: {fileID: 1702295540}
   - component: {fileID: 1702295539}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: RightText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1896,7 +1997,7 @@ MonoBehaviour:
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 36
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -2148,3 +2249,5 @@ SceneRoots:
   - {fileID: 133670154}
   - {fileID: 3424039}
   - {fileID: 1252815364}
+  - {fileID: 46524913}
+  - {fileID: 736986604}

@@ -61,6 +61,7 @@ public class GameStateClientHandler : MonoBehaviour
     // end phase ui logic
     public void ShowEndGameScreen(string txt){
         // show end game screen
+        
         timerText.text = txt;
     }
 }

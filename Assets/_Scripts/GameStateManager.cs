@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 using UnityEngine.SocialPlatforms;
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
+using System;
+using Cysharp.Threading.Tasks.CompilerServices;
+using System.Threading;
 
 public class GameStateManager : NetworkBehaviour
 {
@@ -38,6 +41,8 @@ public class GameStateManager : NetworkBehaviour
     [Header("Break phase")]
     public GameObject questionBoard;
 
+    private CancellationTokenSource cts;
+
     private void Awake()
     {
         if (Instance == null)
@@ -64,20 +69,25 @@ public class GameStateManager : NetworkBehaviour
     }
 
 
-
     private async UniTaskVoid RunGameStateLoop(){
         // delay before starting the loop
         await UniTask.Delay(500);
+        cts = new CancellationTokenSource();
 
         await PlayerGatheringPhase();
+        
+                DebugEndGame().Forget(); // end game after 5 seconds
 
-        while(true){
-            await StartFightingPhase();
-            await StartBreakPhase();
+        while(!cts.Token.IsCancellationRequested){
+            await StartFightingPhase(cts.Token);
+            if(cts.Token.IsCancellationRequested) break;
+            await StartBreakPhase(cts.Token);
+            if(cts.Token.IsCancellationRequested) break;
         }
 
         await StartEndPhase();
     }
+    
     public void PlayerJoined(){
         playerCount++;
     }
@@ -98,7 +108,7 @@ public class GameStateManager : NetworkBehaviour
         await UniTask.Delay(500);
     }
 
-    private async UniTask StartFightingPhase(){
+    private async UniTask StartFightingPhase(CancellationToken token){
         // pre phase logic
         gameState = GameState.Fighting;
         Debug.Log("Fighting phase started");
@@ -106,7 +116,8 @@ public class GameStateManager : NetworkBehaviour
         ChangeState(GameState.Fighting, fightingPhaseLength);
 
         // wait for phase end
-        await WaitForPhaseEnd(fightingPhaseLength, "Fighting");
+        await WaitForPhaseEnd(fightingPhaseLength, "Fighting", token);
+        //if(token.IsCancellationRequested) return;
 
         // post phase logic
         Debug.Log("Fighting phase ended");
@@ -116,21 +127,27 @@ public class GameStateManager : NetworkBehaviour
         await UniTask.Delay(500);
     }
 
-    private async UniTask StartBreakPhase(){
+    private async UniTask StartBreakPhase(CancellationToken token){
         // pre phase logic
         gameState = GameState.Break;
         Debug.Log("Break phase started");
         //questionBoard.SetActive(true);
         ShowQuestionBoard(true);
+        Button correctAnswer = questionBoard.GetComponent<QuestionGenerator>().GenerateQuestion();
         ChangeState(GameState.Break, breakPhaseLength);
 
         // wait for phase end
-        await WaitForPhaseEnd(breakPhaseLength, "Break");
+        await WaitForPhaseEnd(breakPhaseLength, "Break", token);
+        //if(token.IsCancellationRequested) return;
 
         // post phase logic
         Debug.Log("Break phase ended");
         //questionBoard.SetActive(false);
         ShowQuestionBoard(false);
+        Tuple<bool, bool> result = CursorController.Instance.CheckAnswerCorrectness(correctAnswer);
+        bool player1Correct = result.Item1;
+        bool player2Correct = result.Item2;
+        Debug.Log($"Player 1: {player1Correct}, Player 2: {player2Correct}");
 
         // delay before next phase, prevent instant phase switch that cause crash
         await UniTask.Delay(500);
@@ -141,10 +158,11 @@ public class GameStateManager : NetworkBehaviour
         gameState = GameState.End;
         Debug.Log("End phase started");
 
-        ShowEndGameScreen($"Player {OnlineModeGameManager.Instance.GetWinner() + 1} wins!");
+        //ShowEndGameScreen($"Player {OnlineModeGameManager.Instance.GetWinner() + 1} wins!");
+        ShowEndGameScreen($"Player ??? wins!");
     }
 
-    private async UniTask WaitForPhaseEnd(float phaseLength, string phaseName = ""){
+    private async UniTask WaitForPhaseEnd(float phaseLength, string phaseName, CancellationToken token){
         float elapsedTime = 0f;
 
         while(elapsedTime < phaseLength){
@@ -159,6 +177,8 @@ public class GameStateManager : NetworkBehaviour
             //     return;
             // }
 
+            if(token.IsCancellationRequested) return;
+
             elapsedTime += Time.deltaTime;
             await UniTask.Yield();
         }
@@ -167,13 +187,25 @@ public class GameStateManager : NetworkBehaviour
         //     timerText.text = $"{phaseName} ended!";
     }
 
+    public void EndGame(){
+        if(cts != null && !cts.Token.IsCancellationRequested){
+            cts.Cancel();
+            Debug.Log("Game ended");
+        }
+    }
+
+    public async UniTaskVoid DebugEndGame(){
+        await UniTask.Delay(5000);
+        EndGame();
+    }
+
     // local
     public void ChangeState(GameState state, float phaseLength){
         GameStateClientHandler.Instance.StartNewPhase(phaseLength, state.ToString());
     }
 
     public void ShowQuestionBoard(bool show){
-        GameStateClientHandler.Instance.ShowQuestionBoard(show);
+        UIManager.Instance.ToggleQuestionBoard(show);
     }
 
     public void ShowEndGameScreen(string txt){
@@ -189,7 +221,7 @@ public class GameStateManager : NetworkBehaviour
 
     [ObserversRpc]
     public void ShowQuestionBoardRPC(bool show){
-        GameStateClientHandler.Instance.ShowQuestionBoard(show);
+        UIManager.Instance.ToggleQuestionBoard(show);
     }
 
     [ObserversRpc]

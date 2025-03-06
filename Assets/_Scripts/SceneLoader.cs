@@ -45,4 +45,9 @@ public class SceneLoader : MonoBehaviour
         loadOperation.allowSceneActivation = true; // Allow auto-switching to the new scene
         isLoadingSceneAsync = false;
     }
+
+    public void QuitApplication(){
+        Debug.Log("Quitting application...");
+        Application.Quit();
+    }
 }
