@@ -368,7 +368,7 @@ MonoBehaviour:
   blockRecovery: 0.25
   parryDuration: 0.25
   parryRecovery: 0.9
-  blockDamageReduction: 5
+  blockDamageReduction: 4
   punchMovementFactor: 15
   stageMovingFactor: 0.1
 --- !u!114 &3611601327931221639

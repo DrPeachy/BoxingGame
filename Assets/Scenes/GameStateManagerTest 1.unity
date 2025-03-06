@@ -305,7 +305,7 @@ MonoBehaviour:
   blockRecovery: 0.1
   parryDuration: 0.3
   parryRecovery: 2
-  blockDamageReduction: 5
+  blockDamageReduction: 4
 --- !u!4 &133670154
 Transform:
   m_ObjectHideFlags: 0

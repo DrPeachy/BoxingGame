@@ -33,7 +33,7 @@ public class LocalModeGameManager : MonoBehaviour
     public float blockRecovery = 0.25f;
     public float parryDuration = 0.25f;
     public float parryRecovery = 0.9f;
-    public float blockDamageReduction = 5f;
+    public float blockDamageReduction = 4f;
 
     private void Awake()
     {
@@ -152,7 +152,8 @@ public class LocalModeGameManager : MonoBehaviour
                     return;
                 }else if(opponentPunchState == PunchState.Block){
                     // block
-                    playerStates[opponentIndex].damageTaken += straightPunchDamage - blockDamageReduction;
+                    playerStates[opponentIndex].damageTaken += (straightPunchDamage - blockDamageReduction);
+                    Debug.Log($"====blockdamage===={blockDamageReduction}");
                     AudioManager.Instance.PlayPunch();
                 }
 
@@ -183,7 +184,8 @@ public class LocalModeGameManager : MonoBehaviour
                     return;
                 }else if(opponentPunchState == PunchState.Block){
                     // block
-                    playerStates[opponentIndex].damageTaken += hookPunchDamage - blockDamageReduction;
+                    playerStates[opponentIndex].damageTaken += (hookPunchDamage - blockDamageReduction);
+                    Debug.Log($"====blockdamage===={blockDamageReduction}");
                     AudioManager.Instance.PlayPunch();
                 }
 
@@ -237,7 +239,7 @@ public class LocalModeGameManager : MonoBehaviour
         // put game state on tmp text
         foreach (var pair in playerStates)
         {
-            playerStateTextsDict[pair.Key].text = $"Player {pair.Key} - {pair.Value.punchStates[0]} - {pair.Value.punchStates[1]}";
+            playerStateTextsDict[pair.Key].text = $"Player {pair.Key + 1} - {pair.Value.punchStates[0]} - {pair.Value.punchStates[1]}\n DamageTaken: {pair.Value.damageTaken}";
         }
     }
 
