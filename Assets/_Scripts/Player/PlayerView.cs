@@ -89,12 +89,18 @@ public class PlayerView : MonoBehaviour
         }
     }
 
-    public void ResetGloves()
+    public void ResetGloves(string hand)
     {
-        lGlove.localPosition = lGloveOrgPos;
-        rGlove.localPosition = rGloveOrgPos;
-        lGlove.localRotation = lGloveOrgRot;
-        rGlove.localRotation = rGloveOrgRot;
+        if(hand == "l")
+        {
+            lGlove.localPosition = lGloveOrgPos;
+            lGlove.localRotation = lGloveOrgRot;
+        }
+        else
+        {
+            rGlove.localPosition = rGloveOrgPos;
+            rGlove.localRotation = rGloveOrgRot;
+        }
     }
 
 

@@ -149,6 +149,7 @@ public class LocalModeGameManager : MonoBehaviour
                     // parry
                     _= SetToRecovery(playerIndex, hand, parryRecovery);
                     AudioManager.Instance.PlayParry();
+                    return;
                 }else if(opponentPunchState == PunchState.Block){
                     // block
                     playerStates[opponentIndex].damageTaken += straightPunchDamage - blockDamageReduction;
@@ -179,6 +180,7 @@ public class LocalModeGameManager : MonoBehaviour
                     // parry
                     _= SetToRecovery(playerIndex, hand, parryRecovery);
                     AudioManager.Instance.PlayParry();
+                    return;
                 }else if(opponentPunchState == PunchState.Block){
                     // block
                     playerStates[opponentIndex].damageTaken += hookPunchDamage - blockDamageReduction;
@@ -192,7 +194,7 @@ public class LocalModeGameManager : MonoBehaviour
         // handle block
         else if(punchState == PunchState.Idle && action == "Block"){
             playerStates[playerIndex].punchStates[handIndex] = PunchState.Parry;
-            NotifyAllPlayers($"{playerIndex}-{hand}-Block");
+            NotifyAllPlayers($"{playerIndex}-{hand}-Parry");
             Debug.Log($"玩家 {playerIndex} 的 {hand} 手举起了防御");
             _= StartParry(playerIndex, hand);
         }
@@ -234,8 +236,6 @@ public class LocalModeGameManager : MonoBehaviour
     private async UniTaskVoid StartParry(int player, string hand)
     {
         var handIndex = hand == "l" ? 0 : 1;
-        NotifyAllPlayers($"{player}-{hand}-Parry", parryDuration * 0.9f);
-
         await UniTask.Delay((int)(parryDuration * 1000));
 
         if (playerStates[player].punchStates[handIndex] == PunchState.Parry)

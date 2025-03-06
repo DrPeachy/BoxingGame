@@ -266,12 +266,15 @@ public class PlayerController : MonoBehaviour
         }else if(action == "Hook"){
             myState.punchStates[handIndex] = PunchState.HookPunch;
             playerView.AnimatePunch(hand, d);
-        }else if(action == "Block"){
-            myState.punchStates[handIndex] = PunchState.Block;
+        }else if(action == "Parry"){
+            myState.punchStates[handIndex] = PunchState.Parry;
             playerView.AnimateBlock(hand);
         }else if(action == "Charge"){
             myState.punchStates[handIndex] = PunchState.HookCharge;
             playerView.AnimateCharge(hand, d);
+        }else if(action == "Idle"){
+            myState.punchStates[handIndex] = PunchState.Idle;
+            playerView.ResetGloves(hand);
         }
 
         await UniTask.Yield();
