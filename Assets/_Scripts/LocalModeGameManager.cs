@@ -210,8 +210,20 @@ public class LocalModeGameManager : MonoBehaviour
         else if((punchState == PunchState.Block || punchState == PunchState.Parry) && action == "CancelBlock"){
             _ = SetToRecovery(playerIndex, hand, blockRecovery);
         }
+    }
 
+    public void AddDamageToPlayer(int playerIndex, float damage){
+        playerStates[playerIndex].damageTaken += damage;
+    }
 
+    public int GetPlayerWithLessDamageTaken(){
+        if(playerStates[0].damageTaken < playerStates[1].damageTaken){
+            return 0;
+        }else if(playerStates[0].damageTaken > playerStates[1].damageTaken){
+            return 1;
+        }else{
+            return -1;
+        }
     }
 
     // **通知所有玩家（广播事件）**

@@ -15,7 +15,7 @@ public enum PunchState
 public class PlayerState{
     public List<PunchState> punchStates;
     public List<float> chargeTimes;
-    public float damageTaken;
+    public NC_Float damageTaken;
     public PlayerState(PunchState lPunch, PunchState rPunch, float chargeTime = 0){
         punchStates = new List<PunchState>(){lPunch, rPunch};
         this.chargeTimes = new List<float>(){chargeTime, chargeTime};
