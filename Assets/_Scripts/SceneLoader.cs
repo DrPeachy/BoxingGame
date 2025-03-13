@@ -66,12 +66,16 @@ public class SceneLoader : MonoBehaviour
         Button[] buttons = FindObjectsOfType<Button>();
         foreach (Button button in buttons)
         {
-            button.onClick.RemoveAllListeners();
+            // if button name started with LOAD, add a listener to load the scene
+            // format: LOAD_<SCENE_NAME>
+            if (button.name.StartsWith("LOAD_"))
+            {
+                string sceneName = button.name.Replace("LOAD_", "");
+                button.onClick.RemoveAllListeners();
+                button.onClick.AddListener(() => StartLoadingSceneAsync(sceneName));
+            }
             if(button.name == "Quit"){
                 button.onClick.AddListener(QuitApplication);
-            }
-            else{
-                button.onClick.AddListener(() => StartLoadingSceneAsync(button.name));
             }
         }
     }

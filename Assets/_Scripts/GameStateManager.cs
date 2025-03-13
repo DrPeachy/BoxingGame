@@ -106,6 +106,7 @@ public class GameStateManager : NetworkBehaviour
 
         // post phase logic
         Debug.Log("Player gathering phase ended");
+        LocalModeGameManager.Instance.DisablePlayersInput(); // disable input while transitioning to next phase
 
         // delay before next phase, prevent instant phase switch that cause crash
         await UniTask.Delay(500);
@@ -115,8 +116,12 @@ public class GameStateManager : NetworkBehaviour
         // pre phase logic
         gameState = GameState.Fighting;
         Debug.Log("Fighting phase started");
+        GameStateClientHandler.Instance.timerText.text = "Fighting!";
+        AudioManager.Instance.PlayStartEnd();
+        await UniTask.Delay(1500); // delay before starting the phase
         LocalModeGameManager.Instance.EnablePlayersInput();
         ChangeState(GameState.Fighting, fightingPhaseLength);
+        
 
         // wait for phase end
         await WaitForPhaseEnd(fightingPhaseLength, "Fighting", token);
@@ -125,9 +130,10 @@ public class GameStateManager : NetworkBehaviour
         // post phase logic
         Debug.Log("Fighting phase ended");
         LocalModeGameManager.Instance.DisablePlayersInput();
+        AudioManager.Instance.PlayStartEnd();
 
         // delay before next phase, prevent instant phase switch that cause crash
-        await UniTask.Delay(500);
+        await UniTask.Delay(1500); // longer delay for creating a gap between phases
     }
 
     private async UniTask StartBreakPhase(CancellationToken token){
@@ -156,7 +162,7 @@ public class GameStateManager : NetworkBehaviour
         if (!player2Correct) LocalModeGameManager.Instance.AddDamageToPlayer(1, 50);
 
         // delay before next phase, prevent instant phase switch that cause crash
-        await UniTask.Delay(500);
+        await UniTask.Delay(1500);
     }
 
     private async UniTask StartEndPhase(){

@@ -8,6 +8,7 @@ public class UIManager : MonoBehaviour
 
     [Header("UI Elements")]
     public GameObject questionBoard;
+    public GameObject pauseMenu;
 
     private void Awake()
     {
@@ -24,6 +25,11 @@ public class UIManager : MonoBehaviour
     public void ToggleQuestionBoard(bool show)
     {
         questionBoard.SetActive(show);
+    }
+
+    public void TogglePauseMenu(bool show)
+    {
+        pauseMenu.SetActive(show);
     }
 
 

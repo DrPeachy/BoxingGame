@@ -6,6 +6,8 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance { get; private set; }
 
+    [Header("Audio Sources")]
+    [SerializeField] private AudioSource general;
     [SerializeField] private AudioSource wave;
     [SerializeField] private AudioSource punch;
     [SerializeField] private AudioSource charge;
@@ -13,6 +15,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource punchBlocked;
 
 
+    [Header("Audio Clips")]
+    public AudioClip startEndClip;
     public List<AudioClip> punchClipsList;
     public List<AudioClip> punchBlockedClipsList;
     public AudioClip chargingClip;
@@ -28,6 +32,18 @@ public class AudioManager : MonoBehaviour
         {
             Instance = this;
         }
+    }
+
+    public void PlayGeneral(AudioClip clip, float volume = 1f)
+    {
+        general.volume = volume;
+        general.clip = clip;
+        general.Play();
+    }
+
+    public void PlayStartEnd()
+    {
+        PlayGeneral(startEndClip, 0.2f);
     }
 
 
