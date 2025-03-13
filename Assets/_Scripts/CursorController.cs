@@ -29,6 +29,9 @@ public class CursorController : MonoBehaviour
     private Gamepad gamepadLeft;
     private Gamepad gamepadRight;
 
+    private Color transparentRed = new Color(1, 0, 0, 0.5f);
+    private Color transparentBlue = new Color(0, 0, 1, 0.5f);
+
     private void Awake()
     {
         if (Instance == null)
@@ -65,22 +68,73 @@ public class CursorController : MonoBehaviour
         UpdateCursorPosition(leftStick, rightStick);
 
         // check if a button was clicked
+        // left player red cursor
         if(gamepadLeft.leftShoulder.wasPressedThisFrame || gamepadLeft.rightShoulder.wasPressedThisFrame){
-            buttonLeftClicked = GetButtonUnderCursor(cursorLeft);
+            Button currentClickedButtonLeft = GetButtonUnderCursor(cursorLeft);
+            if(currentClickedButtonLeft == buttonLeftClicked) return;
+
             // show button pressed effect
-            if(buttonLeftClicked != null){
-                buttonLeftClicked.onClick.Invoke();
+            if(currentClickedButtonLeft != null){
+                Debug.Log($"Button clicked: {currentClickedButtonLeft.name}");
+                SetButtonColor(currentClickedButtonLeft, transparentRed, transparentBlue, true);
+                if(buttonLeftClicked != null){
+                    ResetButtonColor(buttonLeftClicked, transparentRed);
+                }
+                buttonLeftClicked = currentClickedButtonLeft;
             }
         }
 
+        // right player blue cursor
         if(gamepadRight.leftShoulder.wasPressedThisFrame || gamepadRight.rightShoulder.wasPressedThisFrame){
-            buttonRightClicked = GetButtonUnderCursor(cursorRight);
+            Button currentClickedButtonRight = GetButtonUnderCursor(cursorRight);
+            if(currentClickedButtonRight == buttonRightClicked) return;
+
             // show button pressed effect
-            if(buttonRightClicked != null){
-                buttonRightClicked.onClick.Invoke();
+            if(currentClickedButtonRight != null){
+                Debug.Log($"Button clicked: {currentClickedButtonRight.name}");
+                SetButtonColor(currentClickedButtonRight, transparentBlue, transparentRed, false);
+                if(buttonRightClicked != null){
+                    ResetButtonColor(buttonRightClicked, transparentBlue);
+                }
+                buttonRightClicked = currentClickedButtonRight;
             }
         }
         
+    }
+
+    private void SetButtonColor(Button button, Color myColor, Color otherColor, bool isLeft){
+        Image leftHalf = button.transform.Find("Left").GetComponent<Image>();
+        Image rightHalf = button.transform.Find("Right").GetComponent<Image>();
+        if(isLeft){
+            leftHalf.color = myColor;
+            if(rightHalf.color != otherColor){
+                rightHalf.color = myColor;
+            }
+        }else{
+            rightHalf.color = myColor;
+            if(leftHalf.color != otherColor){
+                leftHalf.color = myColor;
+            }
+        }
+    }
+
+    private void ResetButtonColor(Button button, Color removedColor){
+        Image leftHalf = button.transform.Find("Left").GetComponent<Image>();
+        Image rightHalf = button.transform.Find("Right").GetComponent<Image>();
+        Color transparentWhite = new Color(1, 1, 1, 0);
+        if(leftHalf.color == removedColor){
+            leftHalf.color = transparentWhite;
+        }
+        if(rightHalf.color == removedColor){
+            rightHalf.color = transparentWhite;
+        }
+        // set the color to other half if the other half is not transparent
+        if(leftHalf.color != transparentWhite){
+            rightHalf.color = leftHalf.color;
+        }
+        if(rightHalf.color != transparentWhite){
+            leftHalf.color = rightHalf.color;
+        }
     }
 
     public void ResetCursors(){

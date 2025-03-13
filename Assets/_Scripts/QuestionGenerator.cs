@@ -27,6 +27,14 @@ public class QuestionGenerator : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        buttonTexts = new List<TMP_Text>();
+        foreach(Button button in buttons){
+            buttonTexts.Add(button.GetComponentInChildren<TMP_Text>());
+        }
+    }
+
     public Button GenerateQuestion(){
         if(questionBoard == null || !questionBoard.activeSelf) return null;
 
