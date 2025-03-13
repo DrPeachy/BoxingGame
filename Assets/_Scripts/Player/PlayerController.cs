@@ -99,6 +99,9 @@ public class PlayerController : MonoBehaviour
         // register player
         LocalModeGameManager.Instance.RegisterPlayer(this);
 
+        // set cull off layer
+        playerView.SetCullLayer(PlayerIndex);
+
         // set player transform
         playerView.SetPlayerTransform(PlayerIndex);
     }
@@ -148,8 +151,8 @@ public class PlayerController : MonoBehaviour
                 if (inputSequences[hand].Count == 0 || inputSequences[hand][inputSequences[hand].Count - 1] != direction)
                 {
                     inputSequences[hand].Add(direction);
-                    if ((hand == "l" && (direction == "Left" || direction == "LeftDown")) ||
-                        (hand == "r" && (direction == "Right" || direction == "RightDown")))
+                    if ((hand == "l" && (direction == "Left" || direction == "LeftDown" || direction == "Down")) ||
+                        (hand == "r" && (direction == "Right" || direction == "RightDown" || direction == "Down")))
                     {
                         StartCharge(hand);
                     }
@@ -272,6 +275,9 @@ public class PlayerController : MonoBehaviour
         }else if(action == "Charge"){
             myState.punchStates[handIndex] = PunchState.HookCharge;
             playerView.AnimateCharge(hand, d);
+        }else if(action == "ChargeComplete"){
+            myState.punchStates[handIndex] = PunchState.HookChargeComplete;
+            playerView.AnimateChargeComplete(hand);
         }else if(action == "Idle"){
             myState.punchStates[handIndex] = PunchState.Idle;
             playerView.ResetGloves(hand);
