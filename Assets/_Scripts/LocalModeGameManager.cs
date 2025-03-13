@@ -117,6 +117,7 @@ public class LocalModeGameManager : MonoBehaviour
             playerStates[playerIndex].punchStates[handIndex] = PunchState.HookCharge;
             playerStates[playerIndex].chargeTimes[handIndex] = 0;
             NotifyAllPlayers($"{playerIndex}-{hand}-Charge");
+            AudioManager.Instance.PlayCharge(); // play charge sound
 
             // start charge
             while(playerStates[playerIndex].punchStates[handIndex] == PunchState.HookCharge && 
@@ -129,6 +130,7 @@ public class LocalModeGameManager : MonoBehaviour
             if(playerStates[playerIndex].punchStates[handIndex] == PunchState.HookCharge){
                 playerStates[playerIndex].punchStates[handIndex] = PunchState.HookChargeComplete;
                 NotifyAllPlayers($"{playerIndex}-{hand}-ChargeComplete");
+                AudioManager.Instance.PlayChargeComplete();
             }
         }
 
@@ -140,6 +142,7 @@ public class LocalModeGameManager : MonoBehaviour
                 Debug.Log($"玩家 {playerIndex} 的 {handIndex} 手发动了直拳");
                 AudioManager.Instance.PlayWave();
                 NotifyAllPlayers($"{playerIndex}-{hand}-Straight", straightPunchWindup * 0.9f);
+                AudioManager.Instance.StopCharge();
 
                 await UniTask.Delay((int)(straightPunchWindup * 1000));
                 opponentPunchState = playerStates[opponentIndex].punchStates[opponentHandIndex];
@@ -158,7 +161,7 @@ public class LocalModeGameManager : MonoBehaviour
                     // block
                     playerStates[opponentIndex].damageTaken += (straightPunchDamage - blockDamageReduction);
                     Debug.Log($"====blockdamage===={blockDamageReduction}");
-                    AudioManager.Instance.PlayPunch();
+                    AudioManager.Instance.PlayPunchBlocked();
                 }
 
                 //_= Interrupt(opponentIndex, opponentHandIndex == 0 ? "l" : "r");
@@ -190,7 +193,7 @@ public class LocalModeGameManager : MonoBehaviour
                     // block
                     playerStates[opponentIndex].damageTaken += (hookPunchDamage - blockDamageReduction);
                     Debug.Log($"====blockdamage===={blockDamageReduction}");
-                    AudioManager.Instance.PlayPunch();
+                    AudioManager.Instance.PlayPunchBlocked();
                 }
 
                 _ = SetToRecovery(playerIndex, hand, hookPunchRecovery);
@@ -209,6 +212,7 @@ public class LocalModeGameManager : MonoBehaviour
         else if((punchState == PunchState.HookCharge || punchState == PunchState.HookChargeComplete) && 
             action == "CancelCharge"
         ){
+            AudioManager.Instance.StopCharge();
             _ = SetToRecovery(playerIndex, hand, blockRecovery);
         }
 
