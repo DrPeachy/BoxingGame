@@ -12,7 +12,25 @@ public class PlayerView : MonoBehaviour
     private Vector3 rGloveOrgPos;
     private Quaternion lGloveOrgRot;
     private Quaternion rGloveOrgRot;
+    private Sequence leftGloveSequence;
+    private Sequence rightGloveSequence;
     private Transform selfCamera;
+
+    [Header("Punch states Transform")]
+    public Transform lBlockPos;
+    public Transform rBlockPos;
+    public Transform lPunchPos;
+    public Transform rPunchPos;
+    public Transform lChargePos;
+    public Transform rChargePos;
+    [Header("Punch states Rotation")]
+    public Quaternion lBlockRot;
+    public Quaternion rBlockRot;
+    public Quaternion lPunchRot;
+    public Quaternion rPunchRot;
+    public Quaternion lChargeRot;
+    public Quaternion rChargeRot;
+
     void Awake()
     {
         // get player controller
@@ -29,8 +47,25 @@ public class PlayerView : MonoBehaviour
         lGloveOrgRot = lGlove.localRotation;
         rGloveOrgRot = rGlove.localRotation;
 
+        // dotween sequence
+        leftGloveSequence = DOTween.Sequence();
+        rightGloveSequence = DOTween.Sequence();
+
         selfCamera = transform.Find("playerCam");
     }
+
+    private Sequence GetOrResetSequence(string hand)
+    {
+        Sequence sequence = hand == "l" ? leftGloveSequence : rightGloveSequence;
+
+        if (sequence.IsActive() && !sequence.IsComplete())
+        {
+            sequence.Kill(); // 终止当前的动画序列
+        }
+
+        return DOTween.Sequence(); // 创建新的序列
+    }
+
 
 
     public void SetPlayerTransform(int playerIndex)
@@ -38,12 +73,12 @@ public class PlayerView : MonoBehaviour
         Debug.Log("SetPlayerTransform");
         if (playerIndex == 0)
         {
-            transform.position = new Vector3(0f, 0, 2);
+            transform.position = new Vector3(0f, 0, 1);
             transform.rotation = Quaternion.Euler(0, 180, 0);
         }
         else if (playerIndex == 1)
         {
-            transform.position = new Vector3(0f, 0, -2);
+            transform.position = new Vector3(0f, 0, -1);
             transform.rotation = Quaternion.Euler(0, 0, 0);
         }
     }
@@ -55,38 +90,73 @@ public class PlayerView : MonoBehaviour
 
     public void AnimateCharge(string hand, float duration)
     {
+        Sequence sequence = GetOrResetSequence(hand);
         Transform glove = hand == "l" ? lGlove : rGlove;
-        glove.DOLocalMoveZ((hand == "l" ? lGloveOrgPos.z : rGloveOrgPos.z) - 0.2f, duration).SetEase(Ease.InBack);
+        Vector3 targetPos = hand == "l" ? lChargePos.localPosition : rChargePos.localPosition;
+        Quaternion targetRot = hand == "l" ? lChargeRot : rChargeRot;
+
+        sequence.Append(
+            glove.DOLocalMove(
+                targetPos, 
+                duration
+            ).SetEase(Ease.InBack));
+        sequence.Join(
+            glove.DOLocalRotateQuaternion(
+                targetRot, 
+                duration
+            ).SetEase(Ease.InBack));
+    
     }
 
     public void AnimatePunch(string hand, float duration)
     {
+        Sequence sequence = GetOrResetSequence(hand);
         Transform glove = hand == "l" ? lGlove : rGlove;
-        glove.DOLocalMoveZ(2f, duration).SetEase(Ease.InBack);
+        Vector3 targetPos = hand == "l" ? lPunchPos.localPosition : rPunchPos.localPosition;
+        Quaternion targetRot = hand == "l" ? lPunchRot : rPunchRot;
+
+        sequence.Append(
+            glove.DOLocalMove(
+                targetPos, 
+                duration
+            ).SetEase(Ease.InBack));
+        sequence.Join(
+            glove.DOLocalRotateQuaternion(
+                targetRot, 
+                duration
+            ).SetEase(Ease.InBack));
     }
 
     public void AnimateBlock(string hand)
     {
+        Sequence sequence = GetOrResetSequence(hand);
         Transform glove = hand == "l" ? lGlove : rGlove;
-        // rotate around y axis without using dotween
-        glove.RotateAround(glove.position, Vector3.up, (hand == "l" ? 1 : -1) * 90);
+        Vector3 targetPos = hand == "l" ? lBlockPos.localPosition : rBlockPos.localPosition;
+        Quaternion targetRot = hand == "l" ? lBlockRot : rBlockRot;
+        
+        // set block position and rotation without animation
+        glove.localPosition = targetPos;
+        glove.localRotation = targetRot;
 
     }
 
     public void AnimateRecovery(string hand, float duration)
     {
+        Sequence sequence = GetOrResetSequence(hand);
         Transform glove = hand == "l" ? lGlove : rGlove;
-        // reset all glove properties
-        if(hand == "l")
-        {
-            lGlove.DOLocalMove(lGloveOrgPos, duration).SetEase(Ease.OutBack);
-            lGlove.DOLocalRotateQuaternion(lGloveOrgRot, duration).SetEase(Ease.OutBack);
-        }
-        else
-        {
-            rGlove.DOLocalMove(rGloveOrgPos, duration).SetEase(Ease.OutBack);
-            rGlove.DOLocalRotateQuaternion(rGloveOrgRot, duration).SetEase(Ease.OutBack);
-        }
+        Vector3 targetPos = hand == "l" ? lGloveOrgPos : rGloveOrgPos;
+        Quaternion targetRot = hand == "l" ? lGloveOrgRot : rGloveOrgRot;
+
+        sequence.Append(
+            glove.DOLocalMove(
+                targetPos, 
+                duration
+            ).SetEase(Ease.InBack));
+        sequence.Join(
+            glove.DOLocalRotateQuaternion(
+                targetRot, 
+                duration
+            ).SetEase(Ease.InBack));
     }
 
     public void ResetGloves(string hand)
