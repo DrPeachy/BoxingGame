@@ -29,6 +29,7 @@ public class QuestionGenerator : MonoBehaviour
 
     void Start()
     {
+        if(buttonTexts != null || buttonTexts.Count != 0) return;
         buttonTexts = new List<TMP_Text>();
         foreach(Button button in buttons){
             buttonTexts.Add(button.GetComponentInChildren<TMP_Text>());
@@ -89,7 +90,10 @@ public class QuestionGenerator : MonoBehaviour
 
         questionText.text = $"{a} {(operation == 0 ? "+" : operation == 1 ? "-" : "*")} {b} = ?";
         int correctAnswerIndex = UnityEngine.Random.Range(0, 3); // 0, 1, 2
+        Debug.Log($"Correct answer index: {correctAnswerIndex}");
+        Debug.Log($"buttonTexts.Count: {buttonTexts.Count}");
         buttonTexts[correctAnswerIndex].text = answer.ToString();
+        
 
         int wrongAnswerIndex1 = -1;
         int wrongAnswerIndex2 = -1;
