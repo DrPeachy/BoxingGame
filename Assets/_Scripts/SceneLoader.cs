@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Cysharp.Threading.Tasks;
+using UnityEngine.UI;
 
 public class SceneLoader : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class SceneLoader : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
         else
         {
@@ -49,5 +51,28 @@ public class SceneLoader : MonoBehaviour
     public void QuitApplication(){
         Debug.Log("Quitting application...");
         Application.Quit();
+    }
+
+    public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Debug.Log("Scene loaded: " + scene.name);
+        // reassign buttons
+        ReassignButtons();
+    }
+
+    private void ReassignButtons()
+    {
+        // Reassign buttons
+        Button[] buttons = FindObjectsOfType<Button>();
+        foreach (Button button in buttons)
+        {
+            button.onClick.RemoveAllListeners();
+            if(button.name == "Quit"){
+                button.onClick.AddListener(QuitApplication);
+            }
+            else{
+                button.onClick.AddListener(() => StartLoadingSceneAsync(button.name));
+            }
+        }
     }
 }

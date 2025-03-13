@@ -1332,8 +1332,8 @@ MonoBehaviour:
   gameState: 0
   playerCount: 0
   roundCount: 0
-  fightingPhaseLength: 20
-  breakPhaseLength: 5
+  fightingPhaseLength: 1
+  breakPhaseLength: 1
   timerText: {fileID: 885033064}
   questionBoard: {fileID: 1485669322}
 --- !u!4 &744788516

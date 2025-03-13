@@ -15,7 +15,7 @@ EditorBuildSettings:
     path: Assets/Scenes/GameStateManagerTest.unity
     guid: a62ea381872da6244beefe27fc418783
   - enabled: 1
-    path: Assets/Scenes/GameStateManagerTest 1.unity
+    path: Assets/Scenes/Local.unity
     guid: cb478c57c144cc149bcf12a4e91d1ed6
   - enabled: 1
     path: Assets/Scenes/VerticalCharlesNet.unity
