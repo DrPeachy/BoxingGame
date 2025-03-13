@@ -137,6 +137,18 @@ public class CursorController : MonoBehaviour
         }
     }
 
+    public void Reset()
+    {
+        ResetCursors();
+        buttonLeftClicked = null;
+        buttonRightClicked = null;
+        // reset button colors
+        foreach(Button button in FindObjectsOfType<Button>()){
+            ResetButtonColor(button, transparentRed);
+            ResetButtonColor(button, transparentBlue);
+        }   
+    }
+
     public void ResetCursors(){
         Debug.Log($"cursorLeftOrigin: {cursorLeftOrigin}");
         Debug.Log($"cursorRightOrigin: {cursorRightOrigin}");
@@ -200,7 +212,7 @@ public class CursorController : MonoBehaviour
     }
 
     public Tuple<bool, bool> CheckAnswerCorrectness(Button correctAnswer){
-        return new Tuple<bool, bool>(buttonLeftClicked==null? false : correctAnswer, buttonRightClicked == null? false: correctAnswer);
+        return new Tuple<bool, bool>(buttonLeftClicked==null? false : correctAnswer == buttonLeftClicked, buttonRightClicked == null? false: correctAnswer == buttonRightClicked);
     }
 
 }

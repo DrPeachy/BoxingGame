@@ -60,7 +60,7 @@ public class SceneLoader : MonoBehaviour
         ReassignButtons();
     }
 
-    private void ReassignButtons()
+    public void ReassignButtons()
     {
         // Reassign buttons
         Button[] buttons = FindObjectsOfType<Button>();

@@ -142,7 +142,7 @@ public class GameStateManager : NetworkBehaviour
         Debug.Log("Break phase started");
         //questionBoard.SetActive(true);
         ShowQuestionBoard(true);
-        CursorController.Instance.ResetCursors();
+        CursorController.Instance.Reset();
         Button correctAnswer = questionBoard.GetComponent<QuestionGenerator>().GenerateQuestion();
         ChangeState(GameState.Break, breakPhaseLength);
 

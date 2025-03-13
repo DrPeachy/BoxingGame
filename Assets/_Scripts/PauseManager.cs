@@ -25,6 +25,7 @@ public class PauseManager : MonoBehaviour
         {
             // toggle the pause menu
             UIManager.Instance.TogglePauseMenu(!UIManager.Instance.pauseMenu.activeSelf);
+            SceneLoader.Instance.ReassignButtons(); // force reassign the buttons to prevent missing references
         }
     }
 }
