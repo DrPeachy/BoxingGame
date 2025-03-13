@@ -130,7 +130,7 @@ public class OnlineModeGameManager : NetworkBehaviour
             {
                 playerStates[playerIndex].punchStates[handIndex] = PunchState.StraightPunch;
                 Debug.Log($"Server: Player[{playerIndex}] hand[{hand}] landed a straight punch");
-                AudioManager.Instance.PlayWave();
+                AudioManager.Instance.PlayWave(playerIndex);
                 NotifyAllPlayers($"{playerIndex}-{hand}-Straight", straightPunchWindup * 0.9f);
 
                 await UniTask.Delay((int)(straightPunchWindup * 1000));
@@ -166,7 +166,7 @@ public class OnlineModeGameManager : NetworkBehaviour
             {
                 playerStates[playerIndex].punchStates[handIndex] = PunchState.HookPunch;
                 Debug.Log($"Server: Player[{playerIndex}] hand[{hand}] landed a hook punch");
-                AudioManager.Instance.PlayWave();
+                AudioManager.Instance.PlayWave(playerIndex);
                 NotifyAllPlayers($"{playerIndex}-{hand}-Hook", hookPunchWindup * 0.9f);
 
                 // windup

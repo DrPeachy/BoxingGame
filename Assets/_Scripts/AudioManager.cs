@@ -2,6 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public struct AudioEffectsPlayer{
+    public GameObject audioEffectsPlayer;
+    public AudioSource wave;
+    public AudioSource punch;
+    public AudioSource charge;
+    public AudioSource parry;
+    public AudioSource punchBlocked;
+
+    public AudioEffectsPlayer(GameObject audioEffectsPlayer){
+        this.audioEffectsPlayer = audioEffectsPlayer;
+        wave = audioEffectsPlayer.transform.Find("Wave").GetComponent<AudioSource>();
+        punch = audioEffectsPlayer.transform.Find("Punch").GetComponent<AudioSource>();
+        charge = audioEffectsPlayer.transform.Find("Charge").GetComponent<AudioSource>();
+        parry = audioEffectsPlayer.transform.Find("Parry").GetComponent<AudioSource>();
+        punchBlocked = audioEffectsPlayer.transform.Find("PunchBlocked").GetComponent<AudioSource>();
+    }
+}
+
+
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance { get; private set; }
@@ -13,6 +32,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource charge;
     [SerializeField] private AudioSource parry;
     [SerializeField] private AudioSource punchBlocked;
+
+    public Dictionary<int, AudioEffectsPlayer> audioEffectsPlayers = new Dictionary<int, AudioEffectsPlayer>();
 
 
     [Header("Audio Clips")]
@@ -47,7 +68,7 @@ public class AudioManager : MonoBehaviour
     }
 
 
-    public void PlayWave()
+    public void PlayWave(int playerID)
     {
         wave.Play();
     }

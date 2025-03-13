@@ -51,6 +51,7 @@ public class LocalModeGameManager : MonoBehaviour
             players[player.PlayerIndex] = player;
             playerInputs[player.PlayerIndex] = player.GetComponent<PlayerInput>();
             CursorController.Instance.AddPlayerInput(player.PlayerIndex, playerInputs[player.PlayerIndex]);
+            // register player audio sources
             Debug.Log($"玩家 {player.PlayerIndex} 加入游戏");
 
             // 初始化玩家状态
@@ -140,7 +141,7 @@ public class LocalModeGameManager : MonoBehaviour
             if(playerStates[playerIndex].punchStates[handIndex] == PunchState.HookCharge || playerStates[playerIndex].punchStates[handIndex] == PunchState.Idle){
                 playerStates[playerIndex].punchStates[handIndex] = PunchState.StraightPunch;
                 Debug.Log($"玩家 {playerIndex} 的 {handIndex} 手发动了直拳");
-                AudioManager.Instance.PlayWave();
+                AudioManager.Instance.PlayWave(playerIndex);
                 NotifyAllPlayers($"{playerIndex}-{hand}-Straight", straightPunchWindup * 0.9f);
                 AudioManager.Instance.StopCharge();
 
@@ -172,7 +173,7 @@ public class LocalModeGameManager : MonoBehaviour
             }else if(playerStates[playerIndex].punchStates[handIndex] == PunchState.HookChargeComplete){
                 playerStates[playerIndex].punchStates[handIndex] = PunchState.HookPunch;
                 Debug.Log($"玩家 {playerIndex} 的 {hand} 手发动了钩拳");
-                AudioManager.Instance.PlayWave();
+                AudioManager.Instance.PlayWave(playerIndex);
                 NotifyAllPlayers($"{playerIndex}-{hand}-Hook", hookPunchWindup * 0.9f);
 
                 // windup
