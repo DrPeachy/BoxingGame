@@ -1,0 +1,8 @@
+Model Information:
+* title:	Character Asset (3D): Basic Eyeball
+* source:	https://sketchfab.com/3d-models/character-asset-3d-basic-eyeball-b2428a8d32f3486180522620f741eaad
+* author:	Nyabsino KMM (https://sketchfab.com/nyabsino)
+
+Model License:
+* license type:	SKETCHFAB Standard (https://sketchfab.com/licenses)
+* requirements:	Under basic restrictions, use worldwide, on all types of media, commercially or not, and in all types of derivative works
