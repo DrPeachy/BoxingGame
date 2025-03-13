@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using Cysharp.Threading.Tasks;
 using FishNet.Demo.AdditiveScenes;
 using UnityEngine;
@@ -37,10 +39,16 @@ public class LocalModeGameManager : MonoBehaviour
     public float parryRecovery = 0.9f;
     public float blockDamageReduction = 4f;
 
+    [Header("Metrices")]
+    private string logFilePath;
+    private bool sessionLogged = false; // 是否已记录本局会话的开始时间
+
     private void Awake()
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
+
+        logFilePath = Path.Combine(Application.persistentDataPath, $"combat_log_{DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss")}.txt");
     }
 
     // 玩家加入时注册
@@ -71,6 +79,47 @@ public class LocalModeGameManager : MonoBehaviour
                 }
                 
             }
+
+            // 如果还没有写入会话开始时间，则写入
+            if (!sessionLogged)
+            {
+                LogSessionHeader();
+                sessionLogged = true;
+            }
+        }
+    }
+
+    // 新增方法：写入会话开始时间（日期-开始游戏时间）
+    private void LogSessionHeader()
+    {
+        string header = $"{DateTime.Now.ToString("yyyy-MM-dd")}-开始游戏时间: {DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}";
+        AppendLogLine(header);
+    }
+
+    // 新增方法：写入单条日志记录
+    private void LogCombatEvent(string message)
+    {
+        // 解析消息格式，假定格式为 "playerIndex-hand-action"
+        string[] parts = message.Split('-');
+        if(parts.Length < 3) return;
+        int playerIndex;
+        if(!int.TryParse(parts[0], out playerIndex)) return;
+        string handStr = parts[1] == "l" ? "左拳" : "右拳";
+        string action = parts[2];
+        string logLine = $"p{playerIndex+1}-{handStr}-{action}-{DateTime.Now.ToString("HH:mm:ss.fff")}";
+        AppendLogLine(logLine);
+    }
+
+    // 新增方法：将文本行追加到日志文件中
+    private void AppendLogLine(string line)
+    {
+        try
+        {
+            File.AppendAllText(logFilePath, line + Environment.NewLine);
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("写入日志失败: " + ex.Message);
         }
     }
 
@@ -245,6 +294,8 @@ public class LocalModeGameManager : MonoBehaviour
     // **通知所有玩家（广播事件）**
     public void NotifyAllPlayers(string message, float d = 0)
     {
+        LogCombatEvent(message);
+
         foreach (var player in players.Values)
         {
             _= player.ReceiveGameEvent(message, d);
