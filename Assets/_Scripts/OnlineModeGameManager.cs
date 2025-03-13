@@ -140,20 +140,20 @@ public class OnlineModeGameManager : NetworkBehaviour
                 {
                     // take damage
                     playerStates[opponentIndex].damageTaken += straightPunchDamage;
-                    AudioManager.Instance.PlayPunch();
+                    AudioManager.Instance.PlayPunch(playerIndex);
                 }
                 else if (opponentPunchState == PunchState.Parry)
                 {
                     // parry
                     _= Interrupt(playerIndex, handIndex);
-                    AudioManager.Instance.PlayParry();
+                    AudioManager.Instance.PlayParry(playerIndex);
                     return;
                 }
                 else
                 {
                     // block
                     playerStates[opponentIndex].damageTaken += straightPunchDamage - blockDamageReduction;
-                    AudioManager.Instance.PlayPunch();
+                    AudioManager.Instance.PlayPunch(playerIndex);
                 }
 
                 // interrupt opponent's charge
@@ -177,20 +177,20 @@ public class OnlineModeGameManager : NetworkBehaviour
                 {
                     // take damage
                     playerStates[opponentIndex].damageTaken += hookPunchDamage;
-                    AudioManager.Instance.PlayPunch();
+                    AudioManager.Instance.PlayPunch(playerIndex);
                 }
                 else if (opponentPunchState == PunchState.Parry)
                 {
                     // parry
                     _= Interrupt(playerIndex, handIndex);
-                    AudioManager.Instance.PlayParry();
+                    AudioManager.Instance.PlayParry(playerIndex);
                     return;
                 }
                 else
                 {
                     // block
                     playerStates[opponentIndex].damageTaken += hookPunchDamage - blockDamageReduction;
-                    AudioManager.Instance.PlayPunch();
+                    AudioManager.Instance.PlayPunch(playerIndex);
                 }
 
                 // recovery

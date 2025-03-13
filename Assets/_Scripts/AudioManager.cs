@@ -70,44 +70,44 @@ public class AudioManager : MonoBehaviour
 
     public void PlayWave(int playerID)
     {
-        wave.Play();
+        audioEffectsPlayers[playerID].wave.Play();
     }
 
-    public void PlayPunch()
+    public void PlayPunch(int playerID)
     {
-        punch.clip = punchClipsList[Random.Range(0, punchClipsList.Count)];
-        punch.Play();
+        audioEffectsPlayers[playerID].punch.clip = punchClipsList[Random.Range(0, punchClipsList.Count)];
+        audioEffectsPlayers[playerID].punch.Play();
     }
 
-    public void PlayPunchBlocked()
+    public void PlayPunchBlocked(int playerID)
     {
-        punchBlocked.clip = punchBlockedClipsList[Random.Range(0, punchBlockedClipsList.Count)];
-        punchBlocked.Play();
+        audioEffectsPlayers[playerID].punchBlocked.clip = punchBlockedClipsList[Random.Range(0, punchBlockedClipsList.Count)];
+        audioEffectsPlayers[playerID].punchBlocked.Play();
     }
 
-    public void PlayCharge()
+    public void PlayCharge(int playerID)
     {
-        charge.clip = chargingClip;
-        charge.volume = 0.8f;
-        charge.Play();
+        audioEffectsPlayers[playerID].charge.clip = chargingClip;
+        audioEffectsPlayers[playerID].charge.volume = 0.8f;
+        audioEffectsPlayers[playerID].charge.Play();
     }
 
-    public void PlayChargeComplete()
+    public void PlayChargeComplete(int playerID)
     {
         // stop charging sound
-        charge.Stop();
-        charge.clip = chargeCompleteClip;
-        charge.volume = 0.3f;
-        charge.Play();
+        audioEffectsPlayers[playerID].charge.Stop();
+        audioEffectsPlayers[playerID].charge.clip = chargeCompleteClip;
+        audioEffectsPlayers[playerID].charge.volume = 0.3f;
+        audioEffectsPlayers[playerID].charge.Play();
     }
 
-    public void StopCharge()
+    public void StopCharge(int playerID)
     {
-        charge.Stop();
+        audioEffectsPlayers[playerID].charge.Stop();
     }
 
-    public void PlayParry()
+    public void PlayParry(int playerID)
     {
-        parry.Play();
+        audioEffectsPlayers[playerID].parry.Play();
     }
 }
