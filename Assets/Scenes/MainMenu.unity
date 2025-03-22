@@ -447,7 +447,7 @@ GameObject:
   - component: {fileID: 327348800}
   - component: {fileID: 327348799}
   m_Layer: 5
-  m_Name: Online
+  m_Name: LOAD_Store
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -516,19 +516,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 327348800}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 108148432}
-        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: StartLoadingSceneAsync
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: VNGameState
-          m_BoolArgument: 0
-        m_CallState: 1
+      m_Calls: []
 --- !u!114 &327348800
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -938,6 +926,77 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 692747306}
   m_CullTransparentMesh: 1
+--- !u!1 &844177065
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 844177067}
+  - component: {fileID: 844177066}
+  m_Layer: 0
+  m_Name: DataManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &844177066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 844177065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f149bad71f3ada641b9deae22999652e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  money: 100
+  purchasedEquipmentIds: 0000000002000000
+  equipments:
+  - id: 0
+    name: Default_Equipment
+    description: aaa
+    price: 5
+    effect:
+      baseValue: 0
+      additionalValue: 0
+      percentageValue: 0
+  - id: 1
+    name: Default_Equipment_1
+    description: bbb
+    price: 10
+    effect:
+      baseValue: 0
+      additionalValue: 0
+      percentageValue: 0
+  - id: 2
+    name: Default_Equipment_2
+    description: ccc
+    price: 29
+    effect:
+      baseValue: 0
+      additionalValue: 0
+      percentageValue: 0
+--- !u!4 &844177067
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 844177065}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1009.0899, y: 541.9241, z: -5.648178}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &845526058
 GameObject:
   m_ObjectHideFlags: 0
@@ -2064,3 +2123,4 @@ SceneRoots:
   - {fileID: 108148433}
   - {fileID: 1333645943}
   - {fileID: 2015950416}
+  - {fileID: 844177067}

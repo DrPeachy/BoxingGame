@@ -16,6 +16,14 @@ public class NC_Float
         this.percentageValue = percentageValue;
     }
 
+    // copy constructor
+    public NC_Float(NC_Float ncFloat)
+    {
+        baseValue = ncFloat.baseValue;
+        additionalValue = ncFloat.additionalValue;
+        percentageValue = ncFloat.percentageValue;
+    }
+
     public float finalValue
     {
         get
@@ -49,6 +57,14 @@ public class NC_Float
     public override string ToString() =>
         $"Base: {baseValue}, Additional: {additionalValue}, Percentage: {percentageValue * 100}%, Final: {finalValue}";
 
+
+    public void CopyFrom(NC_Float other)
+    {
+        baseValue = other.baseValue;
+        additionalValue = other.additionalValue;
+        percentageValue = other.percentageValue;
+    }
+
     // overload math operators for NC_Float, only the base value is used
     public static NC_Float operator +(NC_Float a, NC_Float b) {return new NC_Float(a.baseValue + b.baseValue, 0, 0);}
     public static NC_Float operator -(NC_Float a, NC_Float b) {return new NC_Float(a.baseValue - b.baseValue, 0, 0);}
@@ -75,4 +91,11 @@ public class NC_Float
     public void setAdditionalValue(float value) { additionalValue = value; }
     public void setPercentageValue(float value) { percentageValue = value; }
     public void reset() { baseValue = 0; additionalValue = 0; percentageValue = 0; }
+
+    public void addEffect(NC_Float effect)
+    {
+        baseValue += effect.baseValue;
+        additionalValue += effect.additionalValue;
+        percentageValue += effect.percentageValue;
+    }
 }
