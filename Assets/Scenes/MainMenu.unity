@@ -966,6 +966,7 @@ MonoBehaviour:
       baseValue: 0
       additionalValue: 0
       percentageValue: 0
+    model: {fileID: 1856668426016908889, guid: d99e63dabf269c742bff99fc390823cc, type: 3}
   - id: 1
     name: Default_Equipment_1
     description: bbb
@@ -974,6 +975,7 @@ MonoBehaviour:
       baseValue: 0
       additionalValue: 0
       percentageValue: 0
+    model: {fileID: 7642202085936924254, guid: 5a73fab142889d44186a5b11e7d688dc, type: 3}
   - id: 2
     name: Default_Equipment_2
     description: ccc
@@ -982,6 +984,7 @@ MonoBehaviour:
       baseValue: 0
       additionalValue: 0
       percentageValue: 0
+    model: {fileID: 5587189295160379553, guid: 15e76ce0504433a46ab6eb86941a9dcb, type: 3}
 --- !u!4 &844177067
 Transform:
   m_ObjectHideFlags: 0

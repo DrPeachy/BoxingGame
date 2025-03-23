@@ -11,6 +11,8 @@ public class DataManager : MonoBehaviour
 
     public List<Equipment> equipments = new List<Equipment>();
 
+    private string assetPath = "_Prefabs/Equipments/";
+
     private void Awake() {
         if(Instance == null){
             Instance = this;
@@ -44,6 +46,7 @@ public class DataManager : MonoBehaviour
             Debug.LogError("Save file not found");
         }
     }
+
 
     void OnValidate()
     {
