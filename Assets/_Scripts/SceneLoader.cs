@@ -48,6 +48,44 @@ public class SceneLoader : MonoBehaviour
         isLoadingSceneAsync = false;
     }
 
+    public void StartLoadingSceneAdditiveAsync(string sceneName)
+    {
+        if (isLoadingSceneAsync) return;
+
+        isLoadingSceneAsync = true;
+        LoadSceneAdditiveAsync(sceneName).Forget();
+    }
+
+    private async UniTaskVoid LoadSceneAdditiveAsync(string sceneName)
+    {
+        AsyncOperation loadOperation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+        loadOperation.allowSceneActivation = false; // Prevent auto-switching to the new scene
+
+        while (loadOperation.progress < 0.9f)
+        {
+            // Wait for the scene to be loaded
+            await UniTask.Yield();
+        }
+        loadOperation.allowSceneActivation = true; // Now activate the scene
+        //SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
+        isLoadingSceneAsync = false;
+    }
+
+    public void UnloadScene(string sceneName)
+    {
+        SceneManager.UnloadSceneAsync(sceneName);
+        Debug.Log("Unloading scene: " + sceneName);
+    }
+
+    // private async UniTaskVoid UnloadSceneAsync(string sceneName)
+    // {
+    //     AsyncOperation unloadOperation = SceneManager.UnloadSceneAsync(sceneName);
+    //     while (!unloadOperation.isDone)
+    //     {
+    //         await UniTask.Yield();
+    //     }
+    // }
+
     public void QuitApplication(){
         Debug.Log("Quitting application...");
         Application.Quit();
@@ -74,9 +112,22 @@ public class SceneLoader : MonoBehaviour
                 button.onClick.RemoveAllListeners();
                 button.onClick.AddListener(() => StartLoadingSceneAsync(sceneName));
             }
+            if (button.name.StartsWith("ALOAD_"))
+            {
+                string sceneName = button.name.Replace("ALOAD_", "");
+                button.onClick.RemoveAllListeners();
+                button.onClick.AddListener(() => StartLoadingSceneAdditiveAsync(sceneName));
+            }
+            if(button.name.StartsWith("ULoad_"))
+            {
+                string sceneName = button.name.Replace("ULoad_", "");
+                button.onClick.RemoveAllListeners();
+                button.onClick.AddListener(() => UnloadScene(sceneName));
+            }
             if(button.name == "Quit"){
                 button.onClick.AddListener(QuitApplication);
             }
+
         }
     }
 }
