@@ -78,6 +78,8 @@ public class PlayerController : MonoBehaviour
     private PlayerInput playerInput;
     private InputActionMap actionMap;
 
+    public InputCache inputCache;
+
     private void Awake()
     {
         playerInput = GetComponent<PlayerInput>(); // ✅ 获取当前 Player 的 PlayerInput 组件
@@ -104,6 +106,9 @@ public class PlayerController : MonoBehaviour
 
         // set player transform
         playerView.SetPlayerTransform(PlayerIndex);
+
+        // get input cache
+        inputCache = GetComponent<InputCache>();
     }
 
     private void OnEnable()
@@ -151,6 +156,7 @@ public class PlayerController : MonoBehaviour
                 if (inputSequences[hand].Count == 0 || inputSequences[hand][inputSequences[hand].Count - 1] != direction)
                 {
                     inputSequences[hand].Add(direction);
+                    Debug.Log($"Input Sequence: {string.Join(", ", inputSequences[hand])}");
                     if ((hand == "l" && (direction == "Left" || direction == "LeftDown" || direction == "Down")) ||
                         (hand == "r" && (direction == "Right" || direction == "RightDown" || direction == "Down")))
                     {
@@ -165,6 +171,7 @@ public class PlayerController : MonoBehaviour
             }
             else if (action == "trigger")
             {
+                inputCache.HoldAction(hand, "Block");
                 StartBlock(hand);
             }
         }
@@ -180,10 +187,12 @@ public class PlayerController : MonoBehaviour
             string action = strInputs[1];
             if (action == "stick")
             {
+                inputSequences[hand].Clear();
                 EndPunch(hand);
             }
             else if (action == "trigger")
             {
+                inputCache.ReleaseAction(hand, "Block");
                 EndBlock(hand);
             }
         }
@@ -193,12 +202,13 @@ public class PlayerController : MonoBehaviour
     private void StartCharge(string hand)
     {
         _ = LocalModeGameManager.Instance.HandlePlayerAction(PlayerIndex, hand, "Charge");
+        inputCache.PushAction(hand, "Charge");
     }
 
     private void StartPunch(string hand)
     {
         _ = LocalModeGameManager.Instance.HandlePlayerAction(PlayerIndex, hand, "Punch");
-
+        inputCache.PushAction(hand, "Punch");
     }
 
     private void EndPunch(string hand)
@@ -209,6 +219,7 @@ public class PlayerController : MonoBehaviour
     private void StartBlock(string hand)
     {
         _ = LocalModeGameManager.Instance.HandlePlayerAction(PlayerIndex, hand, "Block");
+        inputCache.PushAction(hand, "Block");
     }
 
     private void EndBlock(string hand)
@@ -218,6 +229,7 @@ public class PlayerController : MonoBehaviour
 
     private string GetDirection(Vector2 input)
     {
+        Debug.Log($"Input: {input}, Magnitude: {input.magnitude}");
         if (input.magnitude < 0.4f) return "Neutral";
 
         input.Normalize();
