@@ -1632,6 +1632,7 @@ GameObject:
   - component: {fileID: 3560061550267231263}
   - component: {fileID: 8955908916532407665}
   - component: {fileID: 3611601327931221639}
+  - component: {fileID: 5968083620778005271}
   m_Layer: 0
   m_Name: TempPlayer
   m_TagString: Untagged
@@ -1717,6 +1718,7 @@ MonoBehaviour:
   blockDamageReduction: 4
   punchMovementFactor: 15
   stageMovingFactor: 0.1
+  inputCache: {fileID: 0}
 --- !u!114 &3611601327931221639
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1760,6 +1762,31 @@ MonoBehaviour:
   rPunchRot: {x: 0.61237246, y: 0.35355353, z: 0.3535532, w: 0.6123723}
   lChargeRot: {x: 0.25000006, y: -0.43301275, z: -0.43301275, w: 0.75}
   rChargeRot: {x: 0.25, y: 0.4330127, z: 0.4330127, w: 0.75}
+--- !u!114 &5968083620778005271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3503703759334943369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e09b8cba0d4c3734da74d10c0ca73cec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftPunchBuffered: 0
+  leftBlockBuffered: 0
+  leftChargeBuffered: 0
+  rightPunchBuffered: 0
+  rightBlockBuffered: 0
+  rightChargeBuffered: 0
+  bufferTime: 0.1
+  leftPunchHold: 0
+  leftBlockHold: 0
+  leftChargeHold: 0
+  rightPunchHold: 0
+  rightBlockHold: 0
+  rightChargeHold: 0
 --- !u!1 &3627253775514859703
 GameObject:
   m_ObjectHideFlags: 0
