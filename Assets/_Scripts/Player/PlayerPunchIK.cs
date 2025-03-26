@@ -9,6 +9,7 @@ public class PlayerPunchIK : MonoBehaviour
     public float leftHandRotationWeight;
     public float rightHandPositionWeight;
     public float rightHandRotationWeight;
+
     public Animator animator;
     public Transform leftHandIKTarget;
     public Transform rightHandIKTarget;
@@ -28,7 +29,7 @@ public class PlayerPunchIK : MonoBehaviour
 
     void OnAnimatorIK(int layerIndex)
     {
-        //Debug.Log("OnAnimatorIK");
+        Debug.Log("OnAnimatorIK");
         Quaternion leftHandRotationOffset = rotationOffset;
         Quaternion rightHandRotationOffset = new Quaternion(rotationOffset.x, -rotationOffset.y, -rotationOffset.z, rotationOffset.w);
         
@@ -37,8 +38,8 @@ public class PlayerPunchIK : MonoBehaviour
         animator.SetIKPositionWeight(AvatarIKGoal.RightHand, rightHandPositionWeight);
         animator.SetIKRotationWeight(AvatarIKGoal.RightHand, rightHandRotationWeight);
         animator.SetIKPosition(AvatarIKGoal.LeftHand, leftHandIKTarget.position);
-        animator.SetIKRotation(AvatarIKGoal.LeftHand, leftHandIKTarget.rotation * leftHandRotationOffset);
+        animator.SetIKRotation(AvatarIKGoal.LeftHand, leftHandIKTarget.rotation);
         animator.SetIKPosition(AvatarIKGoal.RightHand, rightHandIKTarget.position);
-        animator.SetIKRotation(AvatarIKGoal.RightHand, rightHandIKTarget.rotation * rightHandRotationOffset);
+        animator.SetIKRotation(AvatarIKGoal.RightHand, rightHandIKTarget.rotation);
     }
 }

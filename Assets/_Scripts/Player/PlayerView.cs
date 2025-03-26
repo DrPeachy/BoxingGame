@@ -128,12 +128,12 @@ public class PlayerView : MonoBehaviour
         Debug.Log("SetPlayerTransform");
         if (playerIndex == 0)
         {
-            transform.position = new Vector3(0f, 0, 1);
+            transform.position = new Vector3(0f, 0, 0.5f);
             transform.rotation = Quaternion.Euler(0, 180, 0);
         }
         else if (playerIndex == 1)
         {
-            transform.position = new Vector3(0f, 0, -1);
+            transform.position = new Vector3(0f, 0, -0.5f);
             transform.rotation = Quaternion.Euler(0, 0, 0);
         }
 
