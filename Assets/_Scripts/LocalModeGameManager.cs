@@ -189,6 +189,9 @@ public class LocalModeGameManager : MonoBehaviour
         if(action == "Punch"){
             // if charge is not complete, do straight punch
             if(playerStates[playerIndex].punchStates[handIndex] == PunchState.HookCharge || playerStates[playerIndex].punchStates[handIndex] == PunchState.Idle){
+                // debug , print both hand punch state
+                Debug.Log($"kkkkk玩家 {playerIndex} 的左手状态：{playerStates[playerIndex].punchStates[0]} ${handIndex}");
+                Debug.Log($"kkkkk玩家 {playerIndex} 的右手状态：{playerStates[playerIndex].punchStates[1]} ${handIndex}");
                 playerStates[playerIndex].punchStates[handIndex] = PunchState.StraightPunch;
                 Debug.Log($"玩家 {playerIndex} 的 {handIndex} 手发动了直拳");
                 AudioManager.Instance.PlayWave(playerIndex);
@@ -335,7 +338,8 @@ public class LocalModeGameManager : MonoBehaviour
         // set to idle
         playerStates[player].punchStates[handIndex] = PunchState.Idle;
         NotifyAllPlayers($"{player}-{hand}-Idle");
-
+        // pop buffered action from input cache
+        players[player].inputCache.PopBufferedAction(player, hand);
     }
 
     private async UniTaskVoid Interrupt(int player, string hand){
