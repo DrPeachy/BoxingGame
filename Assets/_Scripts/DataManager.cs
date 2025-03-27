@@ -7,7 +7,7 @@ public class DataManager : MonoBehaviour
     public static DataManager Instance;
 
     public int money;
-    public List<int> purchasedEquipmentIds;
+    public HashSet<int> purchasedEquipmentIds = new HashSet<int>();
 
     public List<Equipment> equipments = new List<Equipment>();
 
@@ -27,7 +27,8 @@ public class DataManager : MonoBehaviour
     public void Save(){
         SaveData saveData = new SaveData();
         saveData.money = money;
-        saveData.purchasedEquipmentIds = purchasedEquipmentIds;
+        // 将 HashSet 转换为 List 以便序列化
+        saveData.purchasedEquipmentIds = new List<int>(purchasedEquipmentIds);
 
         string json = JsonUtility.ToJson(saveData);
         System.IO.File.WriteAllText(Application.persistentDataPath + "/savefile.json", json);
@@ -39,10 +40,11 @@ public class DataManager : MonoBehaviour
             string json = System.IO.File.ReadAllText(path);
             SaveData saveData = JsonUtility.FromJson<SaveData>(json);
             money = saveData.money;
-            purchasedEquipmentIds = saveData.purchasedEquipmentIds;
+            // 将加载的 List 转换回 HashSet
+            purchasedEquipmentIds = new HashSet<int>(saveData.purchasedEquipmentIds);
         }else{
             money = 0;
-            purchasedEquipmentIds = new List<int>();
+            purchasedEquipmentIds = new HashSet<int>();
             Debug.LogError("Save file not found");
         }
     }
