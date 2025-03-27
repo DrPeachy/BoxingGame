@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 15287531549958649}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: -1}
-  m_LocalPosition: {x: -0.0025946335, y: 0.0024900027, z: 0.007976096}
+  m_LocalPosition: {x: -0.00329, y: 0.00505, z: 0.01066}
   m_LocalScale: {x: 0.0034380432, y: 0.003189095, z: 0.0034380439}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -718,7 +718,7 @@ Transform:
   m_GameObject: {fileID: 1137106039036973976}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: -1}
-  m_LocalPosition: {x: 0.0025946335, y: 0.0024900027, z: 0.007976096}
+  m_LocalPosition: {x: 0.00329, y: 0.00505, z: 0.01066}
   m_LocalScale: {x: 0.0034380432, y: 0.003189095, z: 0.0034380439}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -6660,17 +6660,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b72e7db7c83587d46823a24205cbae44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  straightPunchWindup: 0.5
+  straightPunchWindup: 0.4
   straightPunchRecovery: 0.3
-  straightPunchDamage: 5
+  straightPunchDamage: 3
   straightInterruptTime: 0.5
   hookChargeDuration: 0.8
   hookPunchWindup: 0.7
   hookPunchRecovery: 0.4
   hookPunchDamage: 7
   blockRecovery: 0.15
-  parryDuration: 0.25
-  parryRecovery: 0.9
+  parryDuration: 0.15
+  parryRecovery: 0.8
   blockDamageReduction: 4
   punchMovementFactor: 15
   stageMovingFactor: 0.1
