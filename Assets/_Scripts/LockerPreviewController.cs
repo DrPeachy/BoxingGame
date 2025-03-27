@@ -16,7 +16,7 @@ public class LockerPreviewController : MonoBehaviour
     void Start()
     {
         InitializePlayerPreview();
-        SetPreviewModelPosition();
+        //SetPreviewModelPosition();
     }
 
     void InitializePlayerPreview()
