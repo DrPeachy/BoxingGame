@@ -23,6 +23,9 @@ public class UIPlayerSettingSlot : MonoBehaviour
     {
         leftArrow.onClick.AddListener(OnLeftArrowClick);
         rightArrow.onClick.AddListener(OnRightArrowClick);
+
+        if(slotType == "Character") UpdatePlayerOwnedChar();
+        if(slotType == "Equipment") UpdatePlayerOwnedEquip();
     }
 
     void OnEnable()
