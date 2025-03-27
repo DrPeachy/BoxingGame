@@ -69,6 +69,8 @@ crashlytics-build.properties
 
 # Ignore FishNet generated code
 /[Aa]ssets/FishNet/Generated/
+/[Aa]ssets/FishNet/CodeGenerating/
+/[Aa]ssets/FishNet/Runtime/
 
 # Ignore ParrelSync Clones
 /Clones/

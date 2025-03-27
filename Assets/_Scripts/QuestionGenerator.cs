@@ -40,6 +40,7 @@ public class QuestionGenerator : MonoBehaviour
         if(questionBoard == null || !questionBoard.activeSelf) return null;
 
         // generate question
+        Debug.Log("Generating question...");
         int a = UnityEngine.Random.Range(1, 100);
         int b = UnityEngine.Random.Range(1, 100);
 
@@ -118,6 +119,7 @@ public class QuestionGenerator : MonoBehaviour
         Debug.Log($"Correct answer: {correctAnswerIndex + 1}");
         Debug.Log($"Wrong Answer 1: {wrongAnswerIndex1 + 1}");
         Debug.Log($"Wrong Answer 2: {wrongAnswerIndex2 + 1}");
+        Debug.Log("Question generated");
 
         return buttons[correctAnswerIndex];
     }

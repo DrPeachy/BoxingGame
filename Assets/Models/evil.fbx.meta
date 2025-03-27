@@ -82,7 +82,7 @@ ModelImporter:
   humanDescription:
     serializedVersion: 3
     human:
-    - boneName: QuickRigCharacter_Hips
+    - boneName: Evil_Hips
       humanName: Hips
       limit:
         min: {x: 0, y: 0, z: 0}
@@ -90,436 +90,441 @@ ModelImporter:
         value: {x: 0, y: 0, z: 0}
         length: 0
         modified: 0
-    - boneName: QuickRigCharacter_LeftUpLeg
+    - boneName: Evil_LeftUpLeg
       humanName: LeftUpperLeg
       limit:
-        min: {x: -60, y: -60, z: -90}
+        min: {x: -60, y: -60, z: 0}
         max: {x: 60, y: 60, z: 50}
         value: {x: 0, y: 0, z: 0}
         length: 0
-        modified: 0
-    - boneName: QuickRigCharacter_RightUpLeg
+        modified: 1
+    - boneName: Evil_RightUpLeg
       humanName: RightUpperLeg
       limit:
-        min: {x: -60, y: -60, z: -90}
-        max: {x: 60, y: 60, z: 50}
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
         value: {x: 0, y: 0, z: 0}
         length: 0
         modified: 0
-    - boneName: QuickRigCharacter_LeftLeg
+    - boneName: Evil_LeftLeg
       humanName: LeftLowerLeg
       limit:
-        min: {x: -90, y: 0, z: -80}
-        max: {x: 90, y: 0, z: 80}
+        min: {x: -90, y: 0, z: 0}
+        max: {x: 90, y: 0, z: 63.853195}
         value: {x: 0, y: 0, z: 0}
         length: 0
-        modified: 0
-    - boneName: QuickRigCharacter_RightLeg
+        modified: 1
+    - boneName: Evil_RightLeg
       humanName: RightLowerLeg
       limit:
-        min: {x: -90, y: 0, z: -80}
-        max: {x: 90, y: 0, z: 80}
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
         value: {x: 0, y: 0, z: 0}
         length: 0
         modified: 0
-    - boneName: QuickRigCharacter_LeftFoot
+    - boneName: Evil_LeftFoot
       humanName: LeftFoot
       limit:
-        min: {x: 0, y: -30, z: -50}
-        max: {x: 0, y: 30, z: 50}
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
         value: {x: 0, y: 0, z: 0}
         length: 0
         modified: 0
-    - boneName: QuickRigCharacter_RightFoot
+    - boneName: Evil_RightFoot
       humanName: RightFoot
       limit:
-        min: {x: 0, y: -30, z: -50}
-        max: {x: 0, y: 30, z: 50}
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
         value: {x: 0, y: 0, z: 0}
         length: 0
         modified: 0
-    - boneName: QuickRigCharacter_Spine
+    - boneName: Evil_Spine
       humanName: Spine
       limit:
-        min: {x: -40, y: -40, z: -40}
-        max: {x: 40, y: 40, z: 40}
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
         value: {x: 0, y: 0, z: 0}
         length: 0
         modified: 0
-    - boneName: QuickRigCharacter_Spine1
+    - boneName: Evil_Spine1
       humanName: Chest
       limit:
-        min: {x: -40, y: -40, z: -40}
-        max: {x: 40, y: 40, z: 40}
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
         value: {x: 0, y: 0, z: 0}
         length: 0
         modified: 0
-    - boneName: QuickRigCharacter_Neck
+    - boneName: Evil_Neck
       humanName: Neck
       limit:
-        min: {x: -40, y: -40, z: -40}
-        max: {x: 40, y: 40, z: 40}
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
         value: {x: 0, y: 0, z: 0}
         length: 0
         modified: 0
-    - boneName: QuickRigCharacter_Head
+    - boneName: Evil_Head
       humanName: Head
       limit:
-        min: {x: -40, y: -40, z: -40}
-        max: {x: 40, y: 40, z: 40}
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
         value: {x: 0, y: 0, z: 0}
         length: 0
         modified: 0
-    - boneName: QuickRigCharacter_LeftShoulder
+    - boneName: Evil_LeftShoulder
       humanName: LeftShoulder
       limit:
-        min: {x: 0, y: -15, z: -15}
-        max: {x: 0, y: 15, z: 30}
+        min: {x: 0, y: -15, z: -1.78899}
+        max: {x: 0, y: 15, z: 178.21101}
         value: {x: 0, y: 0, z: 0}
         length: 0
-        modified: 0
-    - boneName: QuickRigCharacter_RightShoulder
+        modified: 1
+    - boneName: Evil_RightShoulder
       humanName: RightShoulder
       limit:
-        min: {x: 0, y: -15, z: -15}
-        max: {x: 0, y: 15, z: 30}
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
         value: {x: 0, y: 0, z: 0}
         length: 0
         modified: 0
-    - boneName: QuickRigCharacter_LeftArm
+    - boneName: Evil_LeftArm
       humanName: LeftUpperArm
       limit:
-        min: {x: -90, y: -100, z: -60}
-        max: {x: 90, y: 100, z: 100}
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
         value: {x: 0, y: 0, z: 0}
         length: 0
         modified: 0
-    - boneName: QuickRigCharacter_RightArm
+    - boneName: Evil_RightArm
       humanName: RightUpperArm
       limit:
-        min: {x: -90, y: -100, z: -60}
-        max: {x: 90, y: 100, z: 100}
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
         value: {x: 0, y: 0, z: 0}
         length: 0
         modified: 0
-    - boneName: QuickRigCharacter_LeftForeArm
+    - boneName: Evil_LeftForeArm
       humanName: LeftLowerArm
       limit:
-        min: {x: -90, y: 0, z: -80}
-        max: {x: 90, y: 0, z: 80}
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
         value: {x: 0, y: 0, z: 0}
         length: 0
         modified: 0
-    - boneName: QuickRigCharacter_RightForeArm
+    - boneName: Evil_RightForeArm
       humanName: RightLowerArm
       limit:
-        min: {x: -90, y: 0, z: -80}
-        max: {x: 90, y: 0, z: 80}
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
         value: {x: 0, y: 0, z: 0}
         length: 0
         modified: 0
-    - boneName: QuickRigCharacter_LeftHand
+    - boneName: Evil_LeftHand
       humanName: LeftHand
       limit:
-        min: {x: 0, y: -40, z: -80}
-        max: {x: 0, y: 40, z: 80}
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
         value: {x: 0, y: 0, z: 0}
         length: 0
         modified: 0
-    - boneName: QuickRigCharacter_RightHand
+    - boneName: Evil_RightHand
       humanName: RightHand
       limit:
-        min: {x: 0, y: -40, z: -80}
-        max: {x: 0, y: 40, z: 80}
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
         value: {x: 0, y: 0, z: 0}
         length: 0
         modified: 0
-    - boneName: QuickRigCharacter_LeftToeBase
+    - boneName: Evil_LeftToeBase
       humanName: LeftToes
       limit:
-        min: {x: 0, y: 0, z: -50}
-        max: {x: 0, y: 0, z: 50}
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
         value: {x: 0, y: 0, z: 0}
         length: 0
         modified: 0
-    - boneName: QuickRigCharacter_RightToeBase
+    - boneName: Evil_RightToeBase
       humanName: RightToes
       limit:
-        min: {x: 0, y: 0, z: -50}
-        max: {x: 0, y: 0, z: 50}
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
         value: {x: 0, y: 0, z: 0}
         length: 0
         modified: 0
-    - boneName: QuickRigCharacter_Spine2
+    - boneName: Evil_Spine2
       humanName: UpperChest
       limit:
-        min: {x: -20, y: -20, z: -20}
-        max: {x: 20, y: 20, z: 20}
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
         value: {x: 0, y: 0, z: 0}
         length: 0
         modified: 0
     skeleton:
-    - name: evil(Clone)
+    - name: Evil(Clone)
       parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: first_body
-      parentName: evil(Clone)
-      position: {x: -0, y: 1.7577322, z: 0}
+    - name: head
+      parentName: Evil(Clone)
+      position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 16.263498, y: 16.263498, z: 16.263498}
-    - name: PM3D_Sphere3D1
-      parentName: evil(Clone)
-      position: {x: -0, y: 1.7577322, z: 0}
+      scale: {x: 1, y: 1, z: 1}
+    - name: hair
+      parentName: Evil(Clone)
+      position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 16.263498, y: 16.263498, z: 16.263498}
-    - name: PM3D_Sphere3D1_1
-      parentName: evil(Clone)
-      position: {x: -0, y: 1.7577322, z: 0}
+      scale: {x: 1, y: 1, z: 1}
+    - name: body
+      parentName: Evil(Clone)
+      position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 16.263498, y: 16.263498, z: 16.263498}
-    - name: QuickRigCharacter_Guides
-      parentName: evil(Clone)
+      scale: {x: 1, y: 1, z: 1}
+    - name: pants
+      parentName: Evil(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Evil_Guides
+      parentName: Evil(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Head
-      parentName: QuickRigCharacter_Guides
-      position: {x: -0, y: 1.784736, z: -0.00952996}
+      parentName: Evil_Guides
+      position: {x: -0, y: 0.005018553, z: -0.0030864745}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Hips
-      parentName: QuickRigCharacter_Guides
-      position: {x: -0, y: 0.9461759, z: -0.074947126}
+      parentName: Evil_Guides
+      position: {x: -0, y: -0.03499696, z: -0.0019066357}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: LeftArm
-      parentName: QuickRigCharacter_Guides
-      position: {x: -0.20388709, y: 1.5179893, z: -0.07673568}
+      parentName: Evil_Guides
+      position: {x: -0.008388227, y: -0.0074306414, z: -0.006116327}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: LeftFoot
-      parentName: QuickRigCharacter_Guides
-      position: {x: -0.1926265, y: 0.12446697, z: -0.023051815}
+      parentName: Evil_Guides
+      position: {x: -0.008039461, y: -0.054561, z: 0.00058367144}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: LeftForeArm
-      parentName: QuickRigCharacter_Guides
-      position: {x: -0.5686302, y: 1.4633758, z: -0.004491615}
+      parentName: Evil_Guides
+      position: {x: -0.02599327, y: -0.012061964, z: -0.006684966}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: LeftHand
-      parentName: QuickRigCharacter_Guides
-      position: {x: -0.7697079, y: 1.3986186, z: 0.041107345}
+      parentName: Evil_Guides
+      position: {x: -0.035883795, y: -0.015285579, z: -0.0076565426}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: LeftLeg
-      parentName: QuickRigCharacter_Guides
-      position: {x: -0.16551441, y: 0.50099945, z: -0.013816528}
+      parentName: Evil_Guides
+      position: {x: -0.0043387543, y: -0.040005486, z: -0.0012285435}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: LeftShoulder
-      parentName: QuickRigCharacter_Guides
-      position: {x: -0.08155484, y: 1.5179893, z: -0.07673568}
+      parentName: Evil_Guides
+      position: {x: -0.0033552907, y: -0.0074306414, z: -0.006116327}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: LeftToeBase
-      parentName: QuickRigCharacter_Guides
-      position: {x: -0.2034932, y: 0.02081281, z: 0.0824364}
+      parentName: Evil_Guides
+      position: {x: -0.009134418, y: -0.058442723, z: 0.0045065144}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: LeftUpLeg
-      parentName: QuickRigCharacter_Guides
-      position: {x: -0.1001902, y: 0.93322754, z: -0.0725999}
+      parentName: Evil_Guides
+      position: {x: -0.0029118333, y: -0.035000235, z: -0.001903417}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Neck
-      parentName: QuickRigCharacter_Guides
-      position: {x: -0, y: 1.6441838, z: -0.045976065}
+      parentName: Evil_Guides
+      position: {x: -0, y: -0.0028766142, z: -0.004297444}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Reference
-      parentName: QuickRigCharacter_Guides
-      position: {x: -0, y: -0.00398056, z: -0.022816218}
+      parentName: Evil_Guides
+      position: {x: -0, y: -0.059564564, z: 0.0007687187}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: RightArm
-      parentName: QuickRigCharacter_Guides
-      position: {x: 0.20388709, y: 1.5179893, z: -0.07673568}
+      parentName: Evil_Guides
+      position: {x: 0.008388227, y: -0.0074306414, z: -0.006116327}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: RightFoot
-      parentName: QuickRigCharacter_Guides
-      position: {x: 0.1926265, y: 0.12446697, z: -0.023051815}
+      parentName: Evil_Guides
+      position: {x: 0.008039461, y: -0.054561, z: 0.00058367144}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: RightForeArm
-      parentName: QuickRigCharacter_Guides
-      position: {x: 0.5686302, y: 1.4633758, z: -0.004491615}
+      parentName: Evil_Guides
+      position: {x: 0.02599, y: -0.01206, z: -0.0066799996}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: RightHand
-      parentName: QuickRigCharacter_Guides
-      position: {x: 0.7697079, y: 1.3986186, z: 0.041107345}
+      parentName: Evil_Guides
+      position: {x: 0.03588, y: -0.0152900005, z: -0.0076599997}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: RightLeg
-      parentName: QuickRigCharacter_Guides
-      position: {x: 0.16551441, y: 0.50099945, z: -0.013816528}
+      parentName: Evil_Guides
+      position: {x: 0.0043387543, y: -0.040005486, z: -0.0012285435}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: RightShoulder
-      parentName: QuickRigCharacter_Guides
-      position: {x: 0.08155484, y: 1.5179893, z: -0.07673568}
+      parentName: Evil_Guides
+      position: {x: 0.0033552907, y: -0.0074306414, z: -0.006116327}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: RightToeBase
-      parentName: QuickRigCharacter_Guides
-      position: {x: 0.2034932, y: 0.02081281, z: 0.0824364}
+      parentName: Evil_Guides
+      position: {x: 0.009134418, y: -0.058442723, z: 0.0045065144}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: RightUpLeg
-      parentName: QuickRigCharacter_Guides
-      position: {x: 0.1001902, y: 0.93322754, z: -0.0725999}
+      parentName: Evil_Guides
+      position: {x: 0.0029118333, y: -0.035000235, z: -0.001903417}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Spine
-      parentName: QuickRigCharacter_Guides
-      position: {x: -0, y: 1.0650582, z: -0.07709937}
+      parentName: Evil_Guides
+      position: {x: -0, y: -0.02844092, z: -0.0027756148}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Spine1
-      parentName: QuickRigCharacter_Guides
-      position: {x: -0, y: 1.1839435, z: -0.07687923}
+      parentName: Evil_Guides
+      position: {x: -0, y: -0.021687455, z: -0.003443186}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Spine2
-      parentName: QuickRigCharacter_Guides
-      position: {x: -0, y: 1.3028287, z: -0.0766591}
+      parentName: Evil_Guides
+      position: {x: -0, y: -0.014229089, z: -0.004110757}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: QuickRigCharacter_Reference
-      parentName: evil(Clone)
-      position: {x: -0, y: -0.00398056, z: -0.022816218}
+    - name: Evil_Reference
+      parentName: Evil(Clone)
+      position: {x: -0, y: -0.059564564, z: 0.0007687187}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: QuickRigCharacter_Hips
-      parentName: QuickRigCharacter_Reference
-      position: {x: -0, y: 0.9501564, z: -0.052130904}
-      rotation: {x: 0.4954541, y: -0.5045049, z: -0.4954541, w: 0.5045049}
-      scale: {x: 1, y: 1, z: 1}
-    - name: QuickRigCharacter_LeftUpLeg
-      parentName: QuickRigCharacter_Hips
-      position: {x: 0.012988821, y: 0.0021124573, z: 0.1001902}
-      rotation: {x: -0.05708378, y: -0.016196271, z: 0.9962474, w: -0.06301027}
-      scale: {x: 1, y: 1, z: 1}
-    - name: QuickRigCharacter_LeftLeg
-      parentName: QuickRigCharacter_LeftUpLeg
-      position: {x: -0.44107062, y: -0.000004009613, z: -0.00000086457715}
-      rotation: {x: -0.002905911, y: 0.0002389607, z: -0.08801316, w: 0.9961151}
-      scale: {x: 1, y: 1, z: 1}
-    - name: QuickRigCharacter_LeftFoot
-      parentName: QuickRigCharacter_LeftLeg
-      position: {x: -0.37762082, y: -0.000000897202, z: -0.0000000051007554}
-      rotation: {x: -0.013446312, y: -0.026928836, z: 0.40025282, w: 0.91591036}
-      scale: {x: 1, y: 1, z: 1}
-    - name: QuickRigCharacter_LeftToeBase
-      parentName: QuickRigCharacter_LeftFoot
-      position: {x: -0.14829028, y: 0.000000035947338, z: 0.00000008146714}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: QuickRigCharacter_RightUpLeg
-      parentName: QuickRigCharacter_Hips
-      position: {x: 0.012988821, y: 0.0021124573, z: -0.1001902}
-      rotation: {x: -0.016205257, y: 0.057083376, z: 0.063009344, w: 0.99624735}
-      scale: {x: 1, y: 1, z: 1}
-    - name: QuickRigCharacter_RightLeg
-      parentName: QuickRigCharacter_RightUpLeg
-      position: {x: 0.44107172, y: 0.00000624242, z: 0.0000011475709}
-      rotation: {x: -0.0028870415, y: 0.00023885648, z: -0.088013254, w: 0.9961151}
-      scale: {x: 1, y: 1, z: 1}
-    - name: QuickRigCharacter_RightFoot
-      parentName: QuickRigCharacter_RightLeg
-      position: {x: 0.3776205, y: 0.0000009818789, z: 0.000000022489607}
-      rotation: {x: -0.013455053, y: -0.026924625, z: 0.40025488, w: 0.9159094}
-      scale: {x: 1, y: 1, z: 1}
-    - name: QuickRigCharacter_RightToeBase
-      parentName: QuickRigCharacter_RightFoot
-      position: {x: 0.14829019, y: 0.000000009576785, z: -0.000000033706023}
-      rotation: {x: 0.00002542347, y: 0.000000095037414, z: -2.4161808e-12, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: QuickRigCharacter_Spine
-      parentName: QuickRigCharacter_Hips
-      position: {x: -0.11890185, y: -0.00000000160552, z: 0}
-      rotation: {x: 0, y: -0, z: -0.009976618, w: 0.99995023}
-      scale: {x: 1, y: 1, z: 1}
-    - name: QuickRigCharacter_Spine1
-      parentName: QuickRigCharacter_Spine
-      position: {x: -0.11888539, y: 3.465952e-10, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: QuickRigCharacter_Spine2
-      parentName: QuickRigCharacter_Spine1
-      position: {x: -0.118885465, y: 2.053272e-10, z: 0}
-      rotation: {x: 0, y: -0, z: -0.04388262, w: 0.99903667}
-      scale: {x: 1, y: 1, z: 1}
-    - name: QuickRigCharacter_LeftShoulder
-      parentName: QuickRigCharacter_Spine2
-      position: {x: -0.21428984, y: -0.019338544, z: 0.08155484}
-      rotation: {x: 0.5219016, y: -0.47709405, z: -0.5219016, w: -0.47709405}
-      scale: {x: 1, y: 1, z: 1}
-    - name: QuickRigCharacter_LeftArm
-      parentName: QuickRigCharacter_LeftShoulder
-      position: {x: -0.12233225, y: -5.684342e-16, z: 1.7763568e-17}
-      rotation: {x: 0.7148991, y: 0.036856208, z: 0.0059870784, w: 0.69822997}
-      scale: {x: 1, y: 1, z: 1}
-    - name: QuickRigCharacter_LeftForeArm
-      parentName: QuickRigCharacter_LeftArm
-      position: {x: -0.37581787, y: 0.000014658682, z: 0.000011695314}
-      rotation: {x: -0.0016624033, y: -0.019233229, z: -0.014579668, w: 0.9997074}
-      scale: {x: 1, y: 1, z: 1}
-    - name: QuickRigCharacter_LeftHand
-      parentName: QuickRigCharacter_LeftForeArm
-      position: {x: -0.21611343, y: -0.00000072378555, z: -0.000000057088698}
-      rotation: {x: 0, y: 0, z: 0.000033658413, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: QuickRigCharacter_RightShoulder
-      parentName: QuickRigCharacter_Spine2
-      position: {x: -0.21428984, y: -0.019338544, z: -0.08155484}
-      rotation: {x: 0.47709405, y: 0.5219016, z: -0.47709405, w: 0.5219016}
-      scale: {x: 1, y: 1, z: 1}
-    - name: QuickRigCharacter_RightArm
-      parentName: QuickRigCharacter_RightShoulder
-      position: {x: 0.12233225, y: 5.684342e-16, z: -1.7763568e-17}
-      rotation: {x: 0.7148989, y: 0.03685786, z: 0.005986008, w: 0.6982301}
-      scale: {x: 1, y: 1, z: 1}
-    - name: QuickRigCharacter_RightForeArm
-      parentName: QuickRigCharacter_RightArm
-      position: {x: 0.37581772, y: -0.00001356311, z: -0.0000110328965}
-      rotation: {x: -0.0016621653, y: -0.019232694, z: -0.014577707, w: 0.9997074}
-      scale: {x: 1, y: 1, z: 1}
-    - name: QuickRigCharacter_RightHand
-      parentName: QuickRigCharacter_RightForeArm
-      position: {x: 0.21611343, y: 0.0000006826251, z: 0.00000001042991}
-      rotation: {x: 0, y: 0, z: 0.00003312481, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: QuickRigCharacter_Neck
-      parentName: QuickRigCharacter_Spine2
-      position: {x: -0.34273136, y: -0.0000000030457978, z: -1.5840514e-16}
-      rotation: {x: 0, y: -0, z: -0.081944674, w: 0.99663687}
-      scale: {x: 1, y: 1, z: 1}
-    - name: QuickRigCharacter_Head
-      parentName: QuickRigCharacter_Neck
-      position: {x: -0.1452007, y: 2.0454799e-10, z: -7.051038e-17}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    armTwist: 0
-    foreArmTwist: 0
-    upperLegTwist: 0
-    legTwist: 0
-    armStretch: 0
-    legStretch: 0
+    - name: Evil_Hips
+      parentName: Evil_Reference
+      position: {x: 0, y: 0.08371361, z: -0.0026753545}
+      rotation: {x: 0.4659943, y: -0.5318358, z: -0.4659943, w: 0.5318358}
+      scale: {x: 1.0000001, y: 1.0000001, z: 1}
+    - name: Evil_LeftUpLeg
+      parentName: Evil_Hips
+      position: {x: 0.0000036703905, y: 0.0000027603041, z: 0.0029118333}
+      rotation: {x: -0.12715986, y: -0.009285897, z: 0.9917909, w: -0.00974907}
+      scale: {x: 1, y: 0.99999994, z: 1.0000001}
+    - name: Evil_LeftLeg
+      parentName: Evil_LeftUpLeg
+      position: {x: -0.005248242, y: -0.000000088758085, z: -0.00000011980791}
+      rotation: {x: -0.02734734, y: 0.00018612739, z: -0.01490278, w: 0.9995149}
+      scale: {x: 1.0000002, y: 1.0000002, z: 0.9999999}
+    - name: Evil_LeftFoot
+      parentName: Evil_LeftLeg
+      position: {x: -0.0151275275, y: 0.00000007892168, z: 0.000000002073738}
+      rotation: {x: 0.037151426, y: 0.040454697, z: -0.32008904, w: -0.94579405}
+      scale: {x: 1.0000002, y: 1.0000007, z: 1.0000006}
+    - name: Evil_LeftToeBase
+      parentName: Evil_LeftFoot
+      position: {x: -0.005626313, y: -0.0000000068111476, z: 0.000000003395887}
+      rotation: {x: -0, y: -0, z: 0.000000011292284, w: 1}
+      scale: {x: 1.0000001, y: 1.0000004, z: 1.0000004}
+    - name: Evil_RightUpLeg
+      parentName: Evil_Hips
+      position: {x: 0.0000036703905, y: 0.0000027603041, z: -0.0029118333}
+      rotation: {x: -0.0092921555, y: 0.12715928, z: 0.009699285, w: 0.9917914}
+      scale: {x: 1.0000005, y: 1.0000005, z: 1.0000002}
+    - name: Evil_RightLeg
+      parentName: Evil_RightUpLeg
+      position: {x: 0.0052482514, y: 0.00000008406776, z: 0.00000011944061}
+      rotation: {x: -0.027335174, y: 0.00018426773, z: -0.014834945, w: 0.99951625}
+      scale: {x: 1.0000001, y: 1.0000002, z: 1.0000002}
+    - name: Evil_RightFoot
+      parentName: Evil_RightLeg
+      position: {x: 0.0151275275, y: -0.00000008574919, z: -0.0000000077745375}
+      rotation: {x: -0.037164062, y: -0.040449463, z: 0.3200733, w: 0.945799}
+      scale: {x: 0.9999998, y: 0.99999946, z: 0.9999997}
+    - name: Evil_RightToeBase
+      parentName: Evil_RightFoot
+      position: {x: 0.0056263125, y: 0.0000000011990852, z: 4.19055e-10}
+      rotation: {x: 0.000025492162, y: -0.000000048428774, z: -0.00000003387686, w: 1}
+      scale: {x: 0.99999994, y: 1, z: 1.0000001}
+    - name: Evil_Spine
+      parentName: Evil_Hips
+      position: {x: -0.006613378, y: -1.0063488e-10, z: 0}
+      rotation: {x: 0.000000014901161, y: -0.000000029802322, z: -0.016624123, w: 0.99986184}
+      scale: {x: 1.0000006, y: 1.0000006, z: 1.0000001}
+    - name: Evil_Spine1
+      parentName: Evil_Spine
+      position: {x: -0.006786378, y: -4.0949955e-11, z: 0}
+      rotation: {x: 0.000000014762449, y: 1.76124e-10, z: -0.0046300143, w: 0.99998933}
+      scale: {x: 1.0000006, y: 1.0000006, z: 1.000001}
+    - name: Evil_Spine2
+      parentName: Evil_Spine1
+      position: {x: -0.007488181, y: 3.7680925e-10, z: -3.948548e-18}
+      rotation: {x: -0.000000015939266, y: -0.0000000014437848, z: -0.036404636, w: 0.99933714}
+      scale: {x: 1.0000006, y: 1.0000006, z: 1.0000001}
+    - name: Evil_LeftShoulder
+      parentName: Evil_Spine2
+      position: {x: -0.006830502, y: -0.0018935156, z: 0.0033552896}
+      rotation: {x: -0.49587238, y: 0.5040938, z: 0.4958724, w: 0.5040938}
+      scale: {x: 1.0000004, y: 1.0000001, z: 1.0000001}
+    - name: Evil_LeftArm
+      parentName: Evil_LeftShoulder
+      position: {x: -0.0050329245, y: 1.110223e-18, z: 0}
+      rotation: {x: 0.70821404, y: 0.016993608, z: 0.032087374, w: 0.7050635}
+      scale: {x: 1, y: 0.9999998, z: 0.9999998}
+    - name: Evil_LeftForeArm
+      parentName: Evil_LeftArm
+      position: {x: -0.018212909, y: 0.0000010726583, z: 0.00000042819647}
+      rotation: {x: -0.00025403488, y: -0.0041536903, z: -0.0383604, w: 0.9992553}
+      scale: {x: 1, y: 1, z: 0.99999994}
+    - name: Evil_LeftHand
+      parentName: Evil_LeftForeArm
+      position: {x: -0.010447886, y: -0.00000003398434, z: 1.9473093e-10}
+      rotation: {x: 0.000000021966116, y: -0.000000008876668, z: 0.000034162582, w: 1}
+      scale: {x: 0.99999994, y: 1, z: 1.0000001}
+    - name: Evil_RightShoulder
+      parentName: Evil_Spine2
+      position: {x: -0.006830502, y: -0.0018935156, z: -0.0033552896}
+      rotation: {x: 0.5040938, y: 0.49587238, z: -0.5040938, w: 0.4958724}
+      scale: {x: 1.0000004, y: 1.0000001, z: 1.0000001}
+    - name: Evil_RightArm
+      parentName: Evil_RightShoulder
+      position: {x: 0.0050329245, y: -1.110223e-18, z: 0}
+      rotation: {x: -0.70823723, y: -0.016933823, z: -0.032108966, w: -0.70504063}
+      scale: {x: 1, y: 0.99999994, z: 0.99999994}
+    - name: Evil_RightForeArm
+      parentName: Evil_RightArm
+      position: {x: 0.018209092, y: -0.0000010963157, z: -0.00000043250526}
+      rotation: {x: -0.0002666711, y: -0.0043918, z: -0.038680065, w: 0.99924195}
+      scale: {x: 0.99999994, y: 1.0000002, z: 1.0000005}
+    - name: Evil_RightHand
+      parentName: Evil_RightForeArm
+      position: {x: 0.010450143, y: 0.000000032958155, z: 3.4589537e-10}
+      rotation: {x: 0.000000031337546, y: -0.0000009182403, z: 0.000033655844, w: 1}
+      scale: {x: 0.99999994, y: 1.0000005, z: 1.0000004}
+    - name: Evil_Neck
+      parentName: Evil_Spine2
+      position: {x: -0.011353805, y: -0.000000003470554, z: -8.874326e-18}
+      rotation: {x: 0.000000018968487, y: -0.000000027393787, z: 0.084217355, w: -0.99644744}
+      scale: {x: 1.0000011, y: 1.0000011, z: 1.000001}
+    - name: Evil_Head
+      parentName: Evil_Neck
+      position: {x: -0.007987476, y: 8.713491e-10, z: -7.3833e-18}
+      rotation: {x: -0, y: -0, z: 5.1961866e-16, w: 1}
+      scale: {x: 1.0000002, y: 1.0000001, z: 0.9999998}
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
     feetSpacing: 0
     globalScale: 1
     rootMotionBoneName: 
