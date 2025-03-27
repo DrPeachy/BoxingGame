@@ -6,6 +6,7 @@ public class UIMainMenu : MonoBehaviour
 {
     public Transform mainPanel;
     public Transform settingPanel;
+    public Transform storePanel;
     void Start()
     {
         
@@ -15,6 +16,7 @@ public class UIMainMenu : MonoBehaviour
     {
         mainPanel.gameObject.SetActive(false);
         settingPanel.gameObject.SetActive(false);
+        storePanel.gameObject.SetActive(false);
     }
 
     public void OnClickSetting()
@@ -27,5 +29,11 @@ public class UIMainMenu : MonoBehaviour
     {
         DisableAllPanel();
         mainPanel.gameObject.SetActive(true);
+    }
+
+    public void OnClickStore()
+    {
+        DisableAllPanel();
+        storePanel.gameObject.SetActive(true);
     }
 }
