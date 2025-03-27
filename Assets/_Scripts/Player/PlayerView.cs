@@ -139,6 +139,12 @@ public class PlayerView : MonoBehaviour
 
         SetGloveMaterial(playerIndex);
     }
+    public void UpdatePlayerEquipment(int playerIndex){
+        int equipmentLeftId = DataManager.Instance.equippedEquipmentIds[2 * playerIndex];
+        int equipmentRightId = DataManager.Instance.equippedEquipmentIds[2 * playerIndex + 1];
+
+        // TODO: enable the equipment transform based on the equipment id
+    }
 
     public void SetGloveMaterial(int playerIndex)
     {
@@ -200,6 +206,7 @@ public class PlayerView : MonoBehaviour
         selfCamera.gameObject.SetActive(false);
     }
 
+    // ======================= Animation =======================
     public void AnimateCharge(string hand, float duration)
     {
         Sequence sequence = GetOrResetSequence(hand);

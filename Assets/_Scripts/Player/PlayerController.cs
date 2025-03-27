@@ -9,6 +9,7 @@ using Cysharp.Threading.Tasks.CompilerServices;
 public class PlayerController : MonoBehaviour
 {
     public int PlayerIndex { get; private set; }
+    public bool isUsedForPreview = false;
     private PlayerView playerView;
 
     private readonly Dictionary<Vector2, string> directionMap = new Dictionary<Vector2, string>
@@ -82,6 +83,8 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        if (isUsedForPreview) return;
+
         playerInput = GetComponent<PlayerInput>(); // ✅ 获取当前 Player 的 PlayerInput 组件
         actionMap = playerInput.actions.FindActionMap("PlayerControl"); // ✅ 获取 PlayerControls ActionMap
 
@@ -113,7 +116,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnEnable()
     {
-
+        if (isUsedForPreview) return;
         actionMap.Enable();
         actionMap.FindAction("LStick").performed += OnInputPerformed;
         actionMap.FindAction("RStick").performed += OnInputPerformed;
@@ -127,6 +130,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnDisable()
     {
+        if (isUsedForPreview) return;
         actionMap.Disable();
         actionMap.FindAction("LStick").performed -= OnInputPerformed;
         actionMap.FindAction("RStick").performed -= OnInputPerformed;
