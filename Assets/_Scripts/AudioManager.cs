@@ -29,12 +29,12 @@ public class AudioManager : MonoBehaviour
 
     [Header("Audio Sources")]
     [SerializeField] private AudioSource general;
-    [SerializeField] private AudioSource wave;
-    [SerializeField] private AudioSource punch;
-    [SerializeField] private AudioSource charge;
-    [SerializeField] private AudioSource parry;
-    [SerializeField] private AudioSource punchBlocked;
-    [SerializeField] private AudioSource getHit;
+    // [SerializeField] private AudioSource wave;
+    // [SerializeField] private AudioSource punch;
+    // [SerializeField] private AudioSource charge;
+    // [SerializeField] private AudioSource parry;
+    // [SerializeField] private AudioSource punchBlocked;
+    // [SerializeField] private AudioSource getHit;
 
     public Dictionary<int, AudioEffectsPlayer> audioEffectsPlayers = new Dictionary<int, AudioEffectsPlayer>();
 
@@ -47,6 +47,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip chargeCompleteClip;
     public AudioClip questionBoardSelectClip;
     public List<AudioClip> getHitClipsList; // light to heavy
+    public AudioClip generalButtonClickedClip;
 
     private void Awake()
     {
@@ -57,6 +58,7 @@ public class AudioManager : MonoBehaviour
         else
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
     }
 
@@ -120,5 +122,10 @@ public class AudioManager : MonoBehaviour
     {
         audioEffectsPlayers[playerID].getHit.clip = getHitClipsList[hitType];
         audioEffectsPlayers[playerID].getHit.Play();
+    }
+
+    public void PlayGeneralButtonClicked()
+    {
+        PlayGeneral(generalButtonClickedClip);
     }
 }

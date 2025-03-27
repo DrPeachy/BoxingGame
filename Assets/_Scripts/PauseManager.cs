@@ -21,7 +21,7 @@ public class PauseManager : MonoBehaviour
     // listen for the pause input
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown("joystick button 3")) // "joystick button 3" corresponds to the Y button on most gamepads
         {
             // toggle the pause menu
             UIManager.Instance.TogglePauseMenu(!UIManager.Instance.pauseMenu.activeSelf);

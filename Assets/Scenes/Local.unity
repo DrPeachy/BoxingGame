@@ -476,7 +476,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.8962264, g: 0.8962264, b: 0.8962264, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -2266,8 +2266,8 @@ MonoBehaviour:
   gameState: 0
   playerCount: 0
   roundCount: 0
-  fightingPhaseLength: 999
-  breakPhaseLength: 999
+  fightingPhaseLength: 20
+  breakPhaseLength: 10
   timerText: {fileID: 885033064}
   questionBoard: {fileID: 1485669322}
 --- !u!4 &744788516
@@ -2797,7 +2797,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.8962264, g: 0.8962264, b: 0.8962264, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -3005,7 +3005,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.8962264, g: 0.8962264, b: 0.8962264, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -3481,7 +3481,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.8962264, g: 0.8962264, b: 0.8962264, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -5069,12 +5069,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   general: {fileID: 301647682}
-  wave: {fileID: 591853461}
-  punch: {fileID: 840878259}
-  charge: {fileID: 225453438}
-  parry: {fileID: 2085615776}
-  punchBlocked: {fileID: 2109832403}
-  getHit: {fileID: 0}
   startEndClip: {fileID: 8300000, guid: ae31c33489765e644bddefa7c23c4373, type: 3}
   punchClipsList:
   - {fileID: 8300000, guid: e5778f1b9aba9bc4d8ce0c3030ed5d17, type: 3}
@@ -5090,6 +5084,8 @@ MonoBehaviour:
   getHitClipsList:
   - {fileID: 8300000, guid: 25be3827755a21845a8831a0c573d6f9, type: 3}
   - {fileID: 8300000, guid: b86432a7f41f43c4997c59632db3404a, type: 3}
+  generalButtonClickedClip: {fileID: 8300000, guid: d970d03dd6c709541868867344ecc254,
+    type: 3}
 --- !u!4 &1905569767
 Transform:
   m_ObjectHideFlags: 0
