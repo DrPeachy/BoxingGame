@@ -121,7 +121,14 @@ public class UIPlayerSettingSlot : MonoBehaviour
 
 
             // call corresponding playerview's method to update the player's equipment
-            lockerPanel.p1View.UpdatePlayerEquipment(playerIndex);
+            if (playerIndex == 0)
+            {
+                lockerPanel.p1View.UpdatePlayerEquipment(playerIndex);
+            }
+            else if (playerIndex == 1)
+            {
+                lockerPanel.p2View.UpdatePlayerEquipment(playerIndex);
+            }
 
         }
     }
@@ -132,7 +139,7 @@ public class UIPlayerSettingSlot : MonoBehaviour
         {
             // early return if the player doesn't own any character
             if(playerOwnedCharIds.Count == 0) return;
-            
+
             playerPreviewCharIndex = (playerPreviewCharIndex + 1) % playerOwnedCharIds.Count;
 
             slotName.text = playerOwnedCharIds[playerPreviewCharIndex] == -1 ? "Default" : DataManager.Instance.characters[playerOwnedCharIds[playerPreviewCharIndex]].name;
@@ -166,7 +173,14 @@ public class UIPlayerSettingSlot : MonoBehaviour
             }
 
             // call corresponding playerview's method to update the player's equipment
-            lockerPanel.p1View.UpdatePlayerEquipment(playerIndex);
+            if (playerIndex == 0)
+            {
+                lockerPanel.p1View.UpdatePlayerEquipment(playerIndex);
+            }
+            else if (playerIndex == 1)
+            {
+                lockerPanel.p2View.UpdatePlayerEquipment(playerIndex);
+            }
         }
     }
 }
