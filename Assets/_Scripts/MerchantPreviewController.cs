@@ -114,6 +114,9 @@ public class MerchantPreviewController : MonoBehaviour
             GameObject model = Instantiate(equipments[i].model, merchantModelParent);
             model.transform.localScale = Vector3.one * modelScaleFactor;
             model.transform.localPosition = pos;
+
+            // set model to rotate using DOTween in constant speed
+            model.transform.DORotate(new Vector3(0, 360, 0), 2f, RotateMode.FastBeyond360).SetLoops(-1, LoopType.Restart);
         }
     }
 
