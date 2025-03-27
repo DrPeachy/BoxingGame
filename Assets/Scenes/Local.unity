@@ -701,18 +701,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isGameModeLocal: 1
   playerStateTexts: {fileID: 22662525}
-  straightPunchWindup: 0.7
-  straightPunchRecovery: 0.2
-  straightPunchDamage: 5
+  straightPunchWindup: 0.4
+  straightPunchRecovery: 0.18
+  straightPunchDamage: 4
   straightInterruptTime: 0.5
-  hookChargeDuration: 0.5
-  hookPunchWindup: 0.35
-  hookPunchRecovery: 0.3
-  hookPunchDamage: 7
+  hookChargeDuration: 0.6
+  hookPunchWindup: 0.3
+  hookPunchRecovery: 0.35
+  hookPunchDamage: 9
   blockRecovery: 0.1
-  parryDuration: 0.25
-  parryRecovery: 2
-  blockDamageReduction: 4
+  parryDuration: 0.1
+  parryRecovery: 1
+  blockDamageReduction: 3
 --- !u!4 &133670154
 Transform:
   m_ObjectHideFlags: 0
@@ -2266,7 +2266,7 @@ MonoBehaviour:
   gameState: 0
   playerCount: 0
   roundCount: 0
-  fightingPhaseLength: 20
+  fightingPhaseLength: 2000
   breakPhaseLength: 10
   timerText: {fileID: 885033064}
   questionBoard: {fileID: 1485669322}
