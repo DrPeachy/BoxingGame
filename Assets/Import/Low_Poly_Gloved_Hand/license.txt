@@ -1,0 +1,11 @@
+Model Information:
+* title:	Low Poly Gloved Hand
+* source:	https://sketchfab.com/3d-models/low-poly-gloved-hand-1f5b60b45c4a43a0984042e23ced7fc6
+* author:	CitrusH (https://sketchfab.com/venture.dalton)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Low Poly Gloved Hand" (https://sketchfab.com/3d-models/low-poly-gloved-hand-1f5b60b45c4a43a0984042e23ced7fc6) by CitrusH (https://sketchfab.com/venture.dalton) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

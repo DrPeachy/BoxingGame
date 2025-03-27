@@ -1,0 +1,11 @@
+Model Information:
+* title:	Freebie - Lowpoly People
+* source:	https://sketchfab.com/3d-models/freebie-lowpoly-people-3c57a85ef5464aa7973f466383d69c48
+* author:	Studio Ochi (https://sketchfab.com/studioochi)
+
+Model License:
+* license type:	CC-BY-NC-ND-4.0 (http://creativecommons.org/licenses/by-nc-nd/4.0/)
+* requirements:	Author must be credited. No commercial use. Modified versions can not be distributed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Freebie - Lowpoly People" (https://sketchfab.com/3d-models/freebie-lowpoly-people-3c57a85ef5464aa7973f466383d69c48) by Studio Ochi (https://sketchfab.com/studioochi) licensed under CC-BY-NC-ND-4.0 (http://creativecommons.org/licenses/by-nc-nd/4.0/)
