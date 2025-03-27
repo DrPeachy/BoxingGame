@@ -29,7 +29,7 @@ public class PlayerPunchIK : MonoBehaviour
 
     void OnAnimatorIK(int layerIndex)
     {
-        Debug.Log("OnAnimatorIK");
+        //Debug.Log("OnAnimatorIK");
         Quaternion leftHandRotationOffset = rotationOffset;
         Quaternion rightHandRotationOffset = new Quaternion(rotationOffset.x, -rotationOffset.y, -rotationOffset.z, rotationOffset.w);
         

@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1755808003002034895}
+  - component: {fileID: 8829751983760097116}
   m_Layer: 5
   m_Name: UIPlayerSettingSlot
   m_TagString: Untagged
@@ -39,6 +40,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &8829751983760097116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4804861587372784437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f557a06a57b1ea14b804d6762c839afb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftArrow: {fileID: 8413370764613106569}
+  rightArrow: {fileID: 4735554346962064460}
+  slotName: {fileID: 7081726764642188118}
 --- !u!1 &5208033622374130514
 GameObject:
   m_ObjectHideFlags: 0

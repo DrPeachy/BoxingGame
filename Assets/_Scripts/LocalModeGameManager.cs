@@ -296,7 +296,7 @@ public class LocalModeGameManager : MonoBehaviour
         playerStates[playerIndex].damageTaken += damage;
         foreach (var pair in playerStates)
         {
-            playerStateTextsDict[pair.Key].text = $"Player {pair.Key + 1} - {pair.Value.punchStates[0]} - {pair.Value.punchStates[1]}\n DamageTaken: {pair.Value.damageTaken}";
+            playerStateTextsDict[pair.Key].text = $"Player {pair.Key + 1} - {pair.Value.punchStates[0]} - {pair.Value.punchStates[1]}\n Stun Gauge: {pair.Value.damageTaken}";
         }
     }
 

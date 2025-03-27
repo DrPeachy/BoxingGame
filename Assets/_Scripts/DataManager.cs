@@ -11,8 +11,8 @@ public class DataManager : MonoBehaviour
     public int money;
     public HashSet<int> purchasedEquipmentIds = new HashSet<int>();
     public HashSet<int> purchasedCharacterIds = new HashSet<int>();
-    public int[] equippedEquipmentIds = new int[4];
-    public int[] equippedCharacterIds = new int[2];
+    public int[] equippedEquipmentIds = { -1, -1, -1, -1 };
+    public int[] equippedCharacterIds = { -1, -1 };
 
     // CONFIG DATA
     public List<Equipment> equipments = new List<Equipment>();

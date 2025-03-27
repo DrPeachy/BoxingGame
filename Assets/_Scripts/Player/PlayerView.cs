@@ -76,7 +76,7 @@ public class PlayerView : MonoBehaviour
 
 
         //selfCamera = transform.Find("playerCam");
-        if(selfCamera != null)
+        if (selfCamera != null)
         {
             selfCameraComponent = selfCamera.GetComponent<Camera>();
         }
@@ -99,7 +99,7 @@ public class PlayerView : MonoBehaviour
 
     void UpdateIKTarget(string hand, Vector3 position, Quaternion rotation)
     {
-        if(hand == "l")
+        if (hand == "l")
         {
             playerPunchIK.leftHandIKTarget.position = position;
             playerPunchIK.leftHandIKTarget.rotation = rotation;
@@ -139,10 +139,35 @@ public class PlayerView : MonoBehaviour
 
         SetGloveMaterial(playerIndex);
     }
+    public void UpdatePlayerEquipment(int playerIndex)
+    {
+        int equipmentLeftId = DataManager.Instance.equippedEquipmentIds[2 * playerIndex];
+        int equipmentRightId = DataManager.Instance.equippedEquipmentIds[2 * playerIndex + 1];
+
+        // TODO: enable the equipment transform based on the equipment id
+        // 根据装备 ID 确定要启用的子节点名称
+        // 如果装备 ID 为 -1，则默认显示 "Default" 拳套
+        string leftGloveEquipName = equipmentLeftId == -1 ? "Default" : "TE_" + DataManager.Instance.equipments[equipmentLeftId].name;
+        string rightGloveEquipName = equipmentRightId == -1 ? "Default" : "TE_" + DataManager.Instance.equipments[equipmentRightId].name;
+
+        Debug.Log("leftGloveEquipName: " + leftGloveEquipName);
+        Debug.Log("rightGloveEquipName: " + rightGloveEquipName);
+        // 遍历左拳套节点下的所有子节点，启用名称匹配的拳套，禁用其他
+        foreach (Transform child in lGlove)
+        {
+            child.gameObject.SetActive(child.name == leftGloveEquipName);
+        }
+
+        // 遍历右拳套节点下的所有子节点，启用名称匹配的拳套，禁用其他
+        foreach (Transform child in rGlove)
+        {
+            child.gameObject.SetActive(child.name == rightGloveEquipName);
+        }
+    }
 
     public void SetGloveMaterial(int playerIndex)
     {
-        if(playerIndex < 0 || playerIndex >= gloveMaterials.Count)
+        if (playerIndex < 0 || playerIndex >= gloveMaterials.Count)
         {
             return;
         }
@@ -172,7 +197,7 @@ public class PlayerView : MonoBehaviour
             Debug.LogWarning("selfCamera上未找到Camera组件");
             return;
         }
-        
+
         int layerToRemove = -1;
         if (playerIndex == 0)
         {
@@ -189,7 +214,7 @@ public class PlayerView : MonoBehaviour
             Debug.LogError("无效的玩家索引，请传入0或1");
             return;
         }
-        
+
         // 从摄像机的cullingMask中移除指定的Layer
         // 使用位运算将对应位清零
         selfCameraComponent.cullingMask &= ~(1 << layerToRemove);
@@ -200,6 +225,7 @@ public class PlayerView : MonoBehaviour
         selfCamera.gameObject.SetActive(false);
     }
 
+    // ======================= Animation =======================
     public void AnimateCharge(string hand, float duration)
     {
         Sequence sequence = GetOrResetSequence(hand);
@@ -207,36 +233,36 @@ public class PlayerView : MonoBehaviour
         Vector3 targetPos = hand == "l" ? lChargePos.localPosition : rChargePos.localPosition;
         Quaternion targetRot = hand == "l" ? lChargeRot : rChargeRot;
 
-        
+
 
         sequence.Append(
             glove.DOLocalMove(
-                targetPos, 
+                targetPos,
                 duration
             ).SetEase(Ease.InBack));
         sequence.Join(
             glove.DOLocalRotateQuaternion(
-                targetRot, 
+                targetRot,
                 duration
             ).SetEase(Ease.InBack));
-    
+
     }
 
     public void AnimateChargeComplete(string hand)
     {
-        if(hand == "l")
+        if (hand == "l")
         {
-            if(leftChargeCompleteTween != null)
+            if (leftChargeCompleteTween != null)
             {
                 leftChargeCompleteTween.Kill();
             }
             lgloveRenderer.material.color = Color.white;
             leftChargeCompleteTween = lgloveRenderer.material.DOColor(selfMaterial.color, 0.1f).SetLoops(-1, LoopType.Yoyo);
-            
+
         }
         else
         {
-            if(rightChargeCompleteTween != null)
+            if (rightChargeCompleteTween != null)
             {
                 rightChargeCompleteTween.Kill();
             }
@@ -253,9 +279,9 @@ public class PlayerView : MonoBehaviour
         Quaternion targetRot = hand == "l" ? lPunchRot : rPunchRot;
 
         // kill color tween
-        if(hand == "l")
+        if (hand == "l")
         {
-            if(leftChargeCompleteTween != null)
+            if (leftChargeCompleteTween != null)
             {
                 leftChargeCompleteTween.Kill();
                 lgloveRenderer.material.color = selfMaterial.color;
@@ -263,7 +289,7 @@ public class PlayerView : MonoBehaviour
         }
         else
         {
-            if(rightChargeCompleteTween != null)
+            if (rightChargeCompleteTween != null)
             {
                 rightChargeCompleteTween.Kill();
                 rgloveRenderer.material.color = selfMaterial.color;
@@ -272,12 +298,12 @@ public class PlayerView : MonoBehaviour
 
         sequence.Append(
             glove.DOLocalMove(
-                targetPos, 
+                targetPos,
                 duration
             ).SetEase(Ease.InBack));
         sequence.Join(
             glove.DOLocalRotateQuaternion(
-                targetRot, 
+                targetRot,
                 duration
             ).SetEase(Ease.InBack));
     }
@@ -288,7 +314,7 @@ public class PlayerView : MonoBehaviour
         Transform glove = hand == "l" ? lGlove : rGlove;
         Vector3 targetPos = hand == "l" ? lBlockPos.localPosition : rBlockPos.localPosition;
         Quaternion targetRot = hand == "l" ? lBlockRot : rBlockRot;
-        
+
         // set block position and rotation without animation
         glove.localPosition = targetPos;
         glove.localRotation = targetRot;
@@ -304,24 +330,24 @@ public class PlayerView : MonoBehaviour
 
         sequence.Append(
             glove.DOLocalMove(
-                targetPos, 
+                targetPos,
                 duration
             ).SetEase(Ease.InBack));
         sequence.Join(
             glove.DOLocalRotateQuaternion(
-                targetRot, 
+                targetRot,
                 duration
             ).SetEase(Ease.InBack));
     }
 
     public void ResetGloves(string hand)
     {
-        if(hand == "l")
+        if (hand == "l")
         {
             lGlove.localPosition = lGloveOrgPos;
             lGlove.localRotation = lGloveOrgRot;
 
-            if(leftChargeCompleteTween != null)
+            if (leftChargeCompleteTween != null)
             {
                 leftChargeCompleteTween.Kill();
                 lgloveRenderer.material.color = selfMaterial.color;
@@ -332,7 +358,7 @@ public class PlayerView : MonoBehaviour
             rGlove.localPosition = rGloveOrgPos;
             rGlove.localRotation = rGloveOrgRot;
 
-            if(rightChargeCompleteTween != null)
+            if (rightChargeCompleteTween != null)
             {
                 rightChargeCompleteTween.Kill();
                 rgloveRenderer.material.color = selfMaterial.color;
