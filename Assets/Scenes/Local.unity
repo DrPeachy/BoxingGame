@@ -706,11 +706,11 @@ MonoBehaviour:
   straightPunchDamage: 4
   straightInterruptTime: 0.5
   hookChargeDuration: 0.6
-  hookPunchWindup: 0.3
+  hookPunchWindup: 0.15
   hookPunchRecovery: 0.35
   hookPunchDamage: 9
   blockRecovery: 0.1
-  parryDuration: 0.1
+  parryDuration: 0.05
   parryRecovery: 1
   blockDamageReduction: 3
 --- !u!4 &133670154
