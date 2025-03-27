@@ -19,12 +19,20 @@ public class PlayerEffect : MonoBehaviour
     public float flashDuration = 0.1f;
     public float flashStartAlpha = 1f;
 
+    [Header("Ripple")]
+    public ParticleSystem rippleLeft;
+    public ParticleSystem rippleRight;
+    public Transform leftRippleTarget;
+    public Transform rightRippleTarget;
+
 
     void Start()
     {
         if(cameraShake == null){
             cameraShake = GetComponent<PlayerView>().selfCamera.GetComponent<CameraShake>();
         }
+        rippleLeft.transform.position = leftRippleTarget.position;
+        rippleRight.transform.position = rightRippleTarget.position;
     }
 
 
@@ -32,6 +40,10 @@ public class PlayerEffect : MonoBehaviour
 
     public void TriggerCameraShake(float duration, float magnitude){
         _ = cameraShake.Shake(duration, magnitude);
+    }
+
+    public void TriggerCameraShake(float multiplier){
+        _ = cameraShake.Shake(cameraShakeDuration, cameraShakeMagnitude * multiplier);
     }
 
     public void TriggerCameraShake(){
@@ -48,6 +60,21 @@ public class PlayerEffect : MonoBehaviour
 
     public void TriggerFlash(){
         _ = TriggerFlashEffect(flashDuration, flashStartAlpha);
+    }
+
+    public void TriggerRipple(string hand, float size = 10f){
+        // default size is 10
+        if(hand == "l"){
+            var main = rippleLeft.main;
+            main.startSize = size;
+            rippleLeft.Play();
+            main.startSize = 10f;
+        }else if(hand == "r"){
+            var main = rippleLeft.main;
+            main.startSize = size;
+            rippleRight.Play();
+            main.startSize = 10f;
+        }
     }
 
 

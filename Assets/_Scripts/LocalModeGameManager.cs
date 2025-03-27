@@ -210,6 +210,7 @@ public class LocalModeGameManager : MonoBehaviour
                     AudioManager.Instance.PlayPunch(playerIndex);
                     playerEffects[playerIndex].TriggerCameraShake();
                     playerEffects[opponentIndex].TriggerFlash(straightPunchDamage / 10);
+                    playerEffects[playerIndex].TriggerRipple(hand);
                 }else if(opponentPunchState == PunchState.Parry){
                     // parry
                     _= SetToRecovery(playerIndex, hand, parryRecovery);
@@ -221,7 +222,8 @@ public class LocalModeGameManager : MonoBehaviour
                     playerStates[opponentIndex].damageTaken += (straightPunchDamage - blockDamageReduction);
                     Debug.Log($"====blockdamage===={blockDamageReduction}");
                     AudioManager.Instance.PlayPunchBlocked(playerIndex);
-                    playerEffects[playerIndex].TriggerCameraShake();
+                    playerEffects[playerIndex].TriggerCameraShake(0.2f);
+                    playerEffects[playerIndex].TriggerRipple(hand);
                 }
 
                 //_= Interrupt(opponentIndex, opponentHandIndex == 0 ? "l" : "r");
@@ -246,6 +248,7 @@ public class LocalModeGameManager : MonoBehaviour
                     AudioManager.Instance.PlayPunch(playerIndex);
                     playerEffects[playerIndex].TriggerCameraShake(playerEffects[playerIndex].cameraShakeDuration * 1.2f, playerEffects[playerIndex].cameraShakeMagnitude * 2f);
                     playerEffects[opponentIndex].TriggerFlash(hookPunchDamage / 10);
+                    playerEffects[playerIndex].TriggerRipple(hand, 15f);
                 }else if(opponentPunchState == PunchState.Parry){
                     // parry
                     _= SetToRecovery(playerIndex, hand, parryRecovery);
@@ -257,7 +260,8 @@ public class LocalModeGameManager : MonoBehaviour
                     playerStates[opponentIndex].damageTaken += (hookPunchDamage - blockDamageReduction);
                     Debug.Log($"====blockdamage===={blockDamageReduction}");
                     AudioManager.Instance.PlayPunchBlocked(playerIndex);
-                    playerEffects[playerIndex].TriggerCameraShake();
+                    playerEffects[playerIndex].TriggerCameraShake(0.6f);
+                    playerEffects[playerIndex].TriggerRipple(hand);
                 }
 
                 _ = SetToRecovery(playerIndex, hand, hookPunchRecovery);
