@@ -127,7 +127,8 @@ public class SceneLoader : MonoBehaviour
             if(button.name == "Quit"){
                 button.onClick.AddListener(QuitApplication);
             }
-
+            // add button click sound
+            button.onClick.AddListener(() => AudioManager.Instance.PlayGeneralButtonClicked());
         }
     }
 }

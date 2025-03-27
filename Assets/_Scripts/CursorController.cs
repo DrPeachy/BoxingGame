@@ -29,8 +29,8 @@ public class CursorController : MonoBehaviour
     private Gamepad gamepadLeft;
     private Gamepad gamepadRight;
 
-    private Color transparentRed = new Color(1, 0, 0, 0.5f);
-    private Color transparentBlue = new Color(0, 0, 1, 0.5f);
+    public Color transparentRed = new Color(1, 0, 0, 0.6f);
+    public Color transparentBlue = new Color(0, 0, 1, 0.5f);
 
     private void Awake()
     {
@@ -69,13 +69,15 @@ public class CursorController : MonoBehaviour
 
         // check if a button was clicked
         // left player red cursor
-        if(gamepadLeft.leftShoulder.wasPressedThisFrame || gamepadLeft.rightShoulder.wasPressedThisFrame){
+        if(gamepadLeft.leftShoulder.wasPressedThisFrame || gamepadLeft.rightShoulder.wasPressedThisFrame
+            || gamepadLeft.leftTrigger.wasPressedThisFrame || gamepadLeft.rightTrigger.wasPressedThisFrame){
             Button currentClickedButtonLeft = GetButtonUnderCursor(cursorLeft);
             if(currentClickedButtonLeft == buttonLeftClicked) return;
 
             // show button pressed effect
             if(currentClickedButtonLeft != null){
                 Debug.Log($"Button clicked: {currentClickedButtonLeft.name}");
+                AudioManager.Instance.PlayGeneral(AudioManager.Instance.questionBoardSelectClip);
                 SetButtonColor(currentClickedButtonLeft, transparentRed, transparentBlue, true);
                 if(buttonLeftClicked != null){
                     ResetButtonColor(buttonLeftClicked, transparentRed);
@@ -85,13 +87,15 @@ public class CursorController : MonoBehaviour
         }
 
         // right player blue cursor
-        if(gamepadRight.leftShoulder.wasPressedThisFrame || gamepadRight.rightShoulder.wasPressedThisFrame){
+        if(gamepadRight.leftShoulder.wasPressedThisFrame || gamepadRight.rightShoulder.wasPressedThisFrame
+            || gamepadRight.leftTrigger.wasPressedThisFrame || gamepadRight.rightTrigger.wasPressedThisFrame){
             Button currentClickedButtonRight = GetButtonUnderCursor(cursorRight);
             if(currentClickedButtonRight == buttonRightClicked) return;
 
             // show button pressed effect
             if(currentClickedButtonRight != null){
                 Debug.Log($"Button clicked: {currentClickedButtonRight.name}");
+                AudioManager.Instance.PlayGeneral(AudioManager.Instance.questionBoardSelectClip);
                 SetButtonColor(currentClickedButtonRight, transparentBlue, transparentRed, false);
                 if(buttonRightClicked != null){
                     ResetButtonColor(buttonRightClicked, transparentBlue);
@@ -139,6 +143,11 @@ public class CursorController : MonoBehaviour
 
     public void Reset()
     {
+        if(cursorLeft == null || cursorRight == null) return;
+        if(cursorLeftOrigin == null || cursorRightOrigin == null){
+            cursorLeftOrigin = cursorLeft.anchoredPosition;
+            cursorRightOrigin = cursorRight.anchoredPosition;
+        }
         ResetCursors();
         buttonLeftClicked = null;
         buttonRightClicked = null;

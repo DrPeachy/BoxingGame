@@ -14,6 +14,7 @@ public class LocalModeGameManager : MonoBehaviour
     private Dictionary<int, PlayerController> players = new Dictionary<int, PlayerController>();
     private Dictionary<int, PlayerState> playerStates = new Dictionary<int, PlayerState>();
     public Dictionary<int, PlayerInput> playerInputs = new Dictionary<int, PlayerInput>();
+    public Dictionary<int, PlayerEffect> playerEffects = new Dictionary<int, PlayerEffect>();
     public int PlayerCount => players.Count;
     public bool isGameModeLocal = true;
 
@@ -61,6 +62,7 @@ public class LocalModeGameManager : MonoBehaviour
             CursorController.Instance.AddPlayerInput(player.PlayerIndex, playerInputs[player.PlayerIndex]);
             // register player audio sources
             AudioManager.Instance.audioEffectsPlayers[player.PlayerIndex] = new AudioEffectsPlayer(player.transform.Find("AudioSources").gameObject);
+            playerEffects[player.PlayerIndex] = player.GetComponent<PlayerEffect>();
             Debug.Log($"玩家 {player.PlayerIndex} 加入游戏");
 
             // 初始化玩家状态
@@ -206,16 +208,23 @@ public class LocalModeGameManager : MonoBehaviour
                     // take damage
                     playerStates[opponentIndex].damageTaken += straightPunchDamage;
                     AudioManager.Instance.PlayPunch(playerIndex);
+                    AudioManager.Instance.PlayGetHit(opponentIndex, 0);
+                    playerEffects[playerIndex].TriggerCameraShake();
+                    playerEffects[opponentIndex].TriggerFlash(straightPunchDamage / 10);
+                    playerEffects[playerIndex].TriggerRipple(hand);
                 }else if(opponentPunchState == PunchState.Parry){
                     // parry
                     _= SetToRecovery(playerIndex, hand, parryRecovery);
                     AudioManager.Instance.PlayParry(playerIndex);
+                    // to do: add parry effect
                     return;
                 }else if(opponentPunchState == PunchState.Block){
                     // block
                     playerStates[opponentIndex].damageTaken += (straightPunchDamage - blockDamageReduction);
                     Debug.Log($"====blockdamage===={blockDamageReduction}");
                     AudioManager.Instance.PlayPunchBlocked(playerIndex);
+                    playerEffects[playerIndex].TriggerCameraShake(0.2f);
+                    playerEffects[playerIndex].TriggerRipple(hand);
                 }
 
                 //_= Interrupt(opponentIndex, opponentHandIndex == 0 ? "l" : "r");
@@ -238,16 +247,23 @@ public class LocalModeGameManager : MonoBehaviour
                     // take damage
                     playerStates[opponentIndex].damageTaken += hookPunchDamage;
                     AudioManager.Instance.PlayPunch(playerIndex);
+                    AudioManager.Instance.PlayGetHit(opponentIndex, 1);
+                    playerEffects[playerIndex].TriggerCameraShake(playerEffects[playerIndex].cameraShakeDuration * 1.2f, playerEffects[playerIndex].cameraShakeMagnitude * 2f);
+                    playerEffects[opponentIndex].TriggerFlash(hookPunchDamage / 10);
+                    playerEffects[playerIndex].TriggerRipple(hand, 15f);
                 }else if(opponentPunchState == PunchState.Parry){
                     // parry
                     _= SetToRecovery(playerIndex, hand, parryRecovery);
                     AudioManager.Instance.PlayParry(playerIndex);
+                    // to do: add parry effect
                     return;
                 }else if(opponentPunchState == PunchState.Block){
                     // block
                     playerStates[opponentIndex].damageTaken += (hookPunchDamage - blockDamageReduction);
                     Debug.Log($"====blockdamage===={blockDamageReduction}");
                     AudioManager.Instance.PlayPunchBlocked(playerIndex);
+                    playerEffects[playerIndex].TriggerCameraShake(0.6f);
+                    playerEffects[playerIndex].TriggerRipple(hand);
                 }
 
                 _ = SetToRecovery(playerIndex, hand, hookPunchRecovery);
