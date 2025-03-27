@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,10 +7,18 @@ public class DataManager : MonoBehaviour
 {
     public static DataManager Instance;
 
+    // PLAYER DATA
     public int money;
     public HashSet<int> purchasedEquipmentIds = new HashSet<int>();
+    public HashSet<int> purchasedCharacterIds = new HashSet<int>();
+    public int[] equippedEquipmentIds = new int[4];
+    public int[] equippedCharacterIds = new int[2];
 
+    // CONFIG DATA
     public List<Equipment> equipments = new List<Equipment>();
+    public List<Character> characters = new List<Character>();
+
+
 
     private string assetPath = "_Prefabs/Equipments/";
 
@@ -85,4 +94,9 @@ public class DataManager : MonoBehaviour
 public struct SaveData{
     public int money;
     public List<int> purchasedEquipmentIds;
+    public List<int> purchasedCharacterIds;
+    // P1: left-0, right-1, P2: left-2, right-3
+    public List<int> equippedEquipmentIds;
+    // P1: 0, P2: 1
+    public List<int> equippedCharacterIds;
 }
