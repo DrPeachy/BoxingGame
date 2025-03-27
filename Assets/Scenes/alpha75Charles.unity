@@ -1717,8 +1717,8 @@ MonoBehaviour:
   gameState: 0
   playerCount: 0
   roundCount: 0
-  fightingPhaseLength: 99999
-  breakPhaseLength: 5
+  fightingPhaseLength: 2
+  breakPhaseLength: 99999
   timerText: {fileID: 885033064}
   questionBoard: {fileID: 1485669322}
 --- !u!4 &744788516
@@ -3618,6 +3618,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 040c13b884bc01a43bd8500484c794ac, type: 3}
   chargingClip: {fileID: 8300000, guid: e2f29c25cb439aa479553716a947aadb, type: 3}
   chargeCompleteClip: {fileID: 8300000, guid: 6a7036937779c124db5ad330034daf0e, type: 3}
+  questionBoardSelectClip: {fileID: 8300000, guid: 21eac158465030c44871afd657865ab1,
+    type: 3}
 --- !u!4 &2057390175
 Transform:
   m_ObjectHideFlags: 0

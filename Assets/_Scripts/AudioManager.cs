@@ -9,6 +9,7 @@ public struct AudioEffectsPlayer{
     public AudioSource charge;
     public AudioSource parry;
     public AudioSource punchBlocked;
+    public AudioSource getHit;
 
     public AudioEffectsPlayer(GameObject audioEffectsPlayer){
         this.audioEffectsPlayer = audioEffectsPlayer;
@@ -17,6 +18,7 @@ public struct AudioEffectsPlayer{
         charge = audioEffectsPlayer.transform.Find("Charge").GetComponent<AudioSource>();
         parry = audioEffectsPlayer.transform.Find("Parry").GetComponent<AudioSource>();
         punchBlocked = audioEffectsPlayer.transform.Find("PunchBlocked").GetComponent<AudioSource>();
+        getHit = audioEffectsPlayer.transform.Find("GetHit").GetComponent<AudioSource>();
     }
 }
 
@@ -32,6 +34,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource charge;
     [SerializeField] private AudioSource parry;
     [SerializeField] private AudioSource punchBlocked;
+    [SerializeField] private AudioSource getHit;
 
     public Dictionary<int, AudioEffectsPlayer> audioEffectsPlayers = new Dictionary<int, AudioEffectsPlayer>();
 
@@ -42,6 +45,8 @@ public class AudioManager : MonoBehaviour
     public List<AudioClip> punchBlockedClipsList;
     public AudioClip chargingClip;
     public AudioClip chargeCompleteClip;
+    public AudioClip questionBoardSelectClip;
+    public List<AudioClip> getHitClipsList; // light to heavy
 
     private void Awake()
     {
@@ -109,5 +114,11 @@ public class AudioManager : MonoBehaviour
     public void PlayParry(int playerID)
     {
         audioEffectsPlayers[playerID].parry.Play();
+    }
+
+    public void PlayGetHit(int playerID, int hitType = 0)
+    {
+        audioEffectsPlayers[playerID].getHit.clip = getHitClipsList[hitType];
+        audioEffectsPlayers[playerID].getHit.Play();
     }
 }

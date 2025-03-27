@@ -208,6 +208,7 @@ public class LocalModeGameManager : MonoBehaviour
                     // take damage
                     playerStates[opponentIndex].damageTaken += straightPunchDamage;
                     AudioManager.Instance.PlayPunch(playerIndex);
+                    AudioManager.Instance.PlayGetHit(opponentIndex, 0);
                     playerEffects[playerIndex].TriggerCameraShake();
                     playerEffects[opponentIndex].TriggerFlash(straightPunchDamage / 10);
                     playerEffects[playerIndex].TriggerRipple(hand);
@@ -246,6 +247,7 @@ public class LocalModeGameManager : MonoBehaviour
                     // take damage
                     playerStates[opponentIndex].damageTaken += hookPunchDamage;
                     AudioManager.Instance.PlayPunch(playerIndex);
+                    AudioManager.Instance.PlayGetHit(opponentIndex, 1);
                     playerEffects[playerIndex].TriggerCameraShake(playerEffects[playerIndex].cameraShakeDuration * 1.2f, playerEffects[playerIndex].cameraShakeMagnitude * 2f);
                     playerEffects[opponentIndex].TriggerFlash(hookPunchDamage / 10);
                     playerEffects[playerIndex].TriggerRipple(hand, 15f);

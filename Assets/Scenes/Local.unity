@@ -1288,6 +1288,8 @@ MonoBehaviour:
   mainCamera: {fileID: 160059514}
   buttonLeftClicked: {fileID: 0}
   buttonRightClicked: {fileID: 0}
+  transparentRed: {r: 1, g: 0, b: 0, a: 0.6}
+  transparentBlue: {r: 0, g: 0, b: 1, a: 0.5}
 --- !u!1 &300239063
 GameObject:
   m_ObjectHideFlags: 0
@@ -2264,8 +2266,8 @@ MonoBehaviour:
   gameState: 0
   playerCount: 0
   roundCount: 0
-  fightingPhaseLength: 9999999
-  breakPhaseLength: 8
+  fightingPhaseLength: 999
+  breakPhaseLength: 999
   timerText: {fileID: 885033064}
   questionBoard: {fileID: 1485669322}
 --- !u!4 &744788516
@@ -5072,6 +5074,7 @@ MonoBehaviour:
   charge: {fileID: 225453438}
   parry: {fileID: 2085615776}
   punchBlocked: {fileID: 2109832403}
+  getHit: {fileID: 0}
   startEndClip: {fileID: 8300000, guid: ae31c33489765e644bddefa7c23c4373, type: 3}
   punchClipsList:
   - {fileID: 8300000, guid: e5778f1b9aba9bc4d8ce0c3030ed5d17, type: 3}
@@ -5082,6 +5085,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 040c13b884bc01a43bd8500484c794ac, type: 3}
   chargingClip: {fileID: 8300000, guid: e2f29c25cb439aa479553716a947aadb, type: 3}
   chargeCompleteClip: {fileID: 8300000, guid: 6a7036937779c124db5ad330034daf0e, type: 3}
+  questionBoardSelectClip: {fileID: 8300000, guid: 21eac158465030c44871afd657865ab1,
+    type: 3}
+  getHitClipsList:
+  - {fileID: 8300000, guid: 25be3827755a21845a8831a0c573d6f9, type: 3}
+  - {fileID: 8300000, guid: b86432a7f41f43c4997c59632db3404a, type: 3}
 --- !u!4 &1905569767
 Transform:
   m_ObjectHideFlags: 0
