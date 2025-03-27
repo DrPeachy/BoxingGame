@@ -28,9 +28,12 @@ public class StoreManager : MonoBehaviour
 
     void Awake()
     {
-        if(Instance == null){
+        if (Instance == null)
+        {
             Instance = this;
-        }else{
+        }
+        else
+        {
             Destroy(gameObject);
         }
     }
@@ -39,8 +42,9 @@ public class StoreManager : MonoBehaviour
     {
         // read from data manager
         equipments = DataManager.Instance.equipments;
-        index = 0;   
-        if(prefabDisplayTransform == null){
+        index = 0;
+        if (prefabDisplayTransform == null)
+        {
             prefabDisplayTransform.position = new Vector3(0, 0, 0);
             prefabDisplayTransform.rotation = Quaternion.identity;
             prefabDisplayTransform.localScale = new Vector3(1, 1, 1);
@@ -51,7 +55,8 @@ public class StoreManager : MonoBehaviour
     public void NextEquipment()
     {
         index++;
-        if(index >= equipments.Count){
+        if (index >= equipments.Count)
+        {
             index = 0;
         }
         LoadPrefabToDisplay();
@@ -60,42 +65,95 @@ public class StoreManager : MonoBehaviour
     public void PreviousEquipment()
     {
         index--;
-        if(index < 0){
+        if (index < 0)
+        {
             index = equipments.Count - 1;
         }
         LoadPrefabToDisplay();
     }
 
-    public void PurchaseEquipment(){
-        if(DataManager.Instance.money >= equipments[index].price){
+    public void PurchaseEquipment()
+    {
+        if (DataManager.Instance.money >= equipments[index].price)
+        {
             DataManager.Instance.money -= equipments[index].price;
             DataManager.Instance.purchasedEquipmentIds.Add(equipments[index].id);
 
             // make sure the id is unique
-            if(DataManager.Instance.purchasedEquipmentIds.Count != DataManager.Instance.purchasedEquipmentIds.Distinct().Count()){
+            if (DataManager.Instance.purchasedEquipmentIds.Count != DataManager.Instance.purchasedEquipmentIds.Distinct().Count())
+            {
                 Debug.LogError("Redundant equipment id in purchased list");
             }
 
             purchaseButton.SetActive(false);
             priceText.text = "Purchased";
-        }else{
+        }
+        else
+        {
             Debug.Log("Not enough money");
         }
     }
 
-    public void LoadPrefabToDisplay(){
-        if(currentPrefab != null){
+    public bool PurchaseEquipmentById(int id)
+    {
+        if (DataManager.Instance == null)
+        {
+            Debug.LogError("DataManager.Instance is null");
+            return false;
+        }
+        if (DataManager.Instance.purchasedEquipmentIds == null)
+        {
+            Debug.LogError("purchasedEquipmentIds is not initialized");
+            return false;
+        }
+        if (equipments == null)
+        {
+            Debug.LogError("equipments is null");
+            return false;
+        }
+        if (id < 0 || id >= equipments.Count)
+        {
+            Debug.LogError("id out of range: " + id);
+            return false;
+        }
+
+        if (DataManager.Instance.money >= equipments[id].price)
+        {
+            DataManager.Instance.money -= equipments[id].price;
+            DataManager.Instance.purchasedEquipmentIds.Add(equipments[id].id);
+
+            return true;
+        }
+        else
+        {
+            Debug.Log("Not enough money");
+            return false;
+        }
+    }
+
+    public bool isPurchased(int id)
+    {
+        return DataManager.Instance.purchasedEquipmentIds.Contains(id);
+    }
+
+    public void LoadPrefabToDisplay()
+    {
+        if (currentPrefab != null)
+        {
             Destroy(currentPrefab);
         }
         currentPrefab = Instantiate(equipments[index].model, prefabDisplayTransform.position, prefabDisplayTransform.rotation, prefabDisplayTransform);
         nameText.text = equipments[index].name;
         // descriptionText.text = equipments[index].description;
-        
+
         // check if the equipment is already purchased
-        if(DataManager.Instance.purchasedEquipmentIds.Contains(equipments[index].id)){
+        if (DataManager.Instance.purchasedEquipmentIds.Contains(equipments[index].id))
+        {
             purchaseButton.SetActive(false);
             priceText.text = "Purchased";
-        }else{
+        }
+        else
+        {
             purchaseButton.SetActive(true);
             // set price text
             priceText.text = "Price: " + equipments[index].price.ToString();
