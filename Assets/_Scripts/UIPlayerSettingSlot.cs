@@ -13,26 +13,26 @@ public class UIPlayerSettingSlot : MonoBehaviour
     public Button rightArrow;
     public TextMeshProUGUI slotName;
     public UILockerPanel lockerPanel;
-    [SerializeField]private List<int> playerOwnedCharIds;
-    [SerializeField]private List<int> playerOwnedEquipIds;
-    [SerializeField]private int playerPreviewCharIndex;
-    [SerializeField]private int playerPreviewEquipLeftIndex;
-    [SerializeField]private int playerPreviewEquipRightIndex;
+    [SerializeField] private List<int> playerOwnedCharIds;
+    [SerializeField] private List<int> playerOwnedEquipIds;
+    [SerializeField] private int playerPreviewCharIndex;
+    [SerializeField] private int playerPreviewEquipLeftIndex;
+    [SerializeField] private int playerPreviewEquipRightIndex;
 
     void Start()
     {
         leftArrow.onClick.AddListener(OnLeftArrowClick);
         rightArrow.onClick.AddListener(OnRightArrowClick);
 
-        if(slotType == "Character") UpdatePlayerOwnedChar();
-        if(slotType == "Equipment") UpdatePlayerOwnedEquip();
+        if (slotType == "Character") UpdatePlayerOwnedChar();
+        if (slotType == "Equipment") UpdatePlayerOwnedEquip();
     }
 
     void OnEnable()
     {
         // every time the slot is enabled, update the list of player owned characters and equipments
-        if(slotType == "Character") UpdatePlayerOwnedChar();
-        if(slotType == "Equipment") UpdatePlayerOwnedEquip();
+        if (slotType == "Character") UpdatePlayerOwnedChar();
+        if (slotType == "Equipment") UpdatePlayerOwnedEquip();
     }
 
 
@@ -40,6 +40,11 @@ public class UIPlayerSettingSlot : MonoBehaviour
     {
         // transfer the player owned character ids from DataManager to this script(from HashSet to List in increasing order)
         playerOwnedCharIds = new List<int>(DataManager.Instance.purchasedCharacterIds);
+        // ensure the default character -1 is always in the list
+        if (!playerOwnedCharIds.Contains(-1))
+        {
+            playerOwnedCharIds.Add(-1);
+        }
         playerOwnedCharIds.Sort();
 
         // set the slot name to the current equipped character/equipment name
@@ -56,27 +61,32 @@ public class UIPlayerSettingSlot : MonoBehaviour
 
     void UpdatePlayerOwnedEquip()
     {
-        // transfer the player owned equipment ids from DataManager to this script(from HashSet to List in increasing order)
+        // 从 DataManager 获取玩家拥有的装备 ID（HashSet转换为List）
         playerOwnedEquipIds = new List<int>(DataManager.Instance.purchasedEquipmentIds);
+        // 确保默认装备 -1 始终存在于列表中
+        if (!playerOwnedEquipIds.Contains(-1))
+        {
+            playerOwnedEquipIds.Add(-1);
+        }
         playerOwnedEquipIds.Sort();
+
         if (slotType == "Equipment")
         {
             int currentEquipIdLeft = DataManager.Instance.equippedEquipmentIds[2 * playerIndex];
             int currentEquipIdRight = DataManager.Instance.equippedEquipmentIds[2 * playerIndex + 1];
 
-            // slot for hand
+            // 对于左拳槽
             if (handIndex == 0)
             {
                 slotName.text = currentEquipIdLeft == -1 ? "Default" : DataManager.Instance.equipments[currentEquipIdLeft].name;
-
-                // set the player preview equipment index to the current equipped equipment index
+                // 将当前装备在列表中的索引赋给预览变量
                 playerPreviewEquipLeftIndex = playerOwnedEquipIds.IndexOf(currentEquipIdLeft);
             }
+            // 对于右拳槽
             else if (handIndex == 1)
             {
                 slotName.text = currentEquipIdRight == -1 ? "Default" : DataManager.Instance.equipments[currentEquipIdRight].name;
-
-                // set the player preview equipment index to the current equipped equipment index
+                // 将当前装备在列表中的索引赋给预览变量
                 playerPreviewEquipRightIndex = playerOwnedEquipIds.IndexOf(currentEquipIdRight);
             }
         }
@@ -87,7 +97,7 @@ public class UIPlayerSettingSlot : MonoBehaviour
         if (slotType == "Character")
         {
             // early return if the player doesn't own any character
-            if(playerOwnedCharIds.Count == 0) return;
+            if (playerOwnedCharIds.Count == 0) return;
 
             playerPreviewCharIndex = (playerPreviewCharIndex - 1 + playerOwnedCharIds.Count) % playerOwnedCharIds.Count;
 
@@ -98,7 +108,7 @@ public class UIPlayerSettingSlot : MonoBehaviour
         else if (slotType == "Equipment")
         {
             // early return if the player doesn't own any equipment
-            if(playerOwnedEquipIds.Count == 0) return;
+            if (playerOwnedEquipIds.Count == 0) return;
 
             if (handIndex == 0)
             {
@@ -141,7 +151,7 @@ public class UIPlayerSettingSlot : MonoBehaviour
         if (slotType == "Character")
         {
             // early return if the player doesn't own any character
-            if(playerOwnedCharIds.Count == 0) return;
+            if (playerOwnedCharIds.Count == 0) return;
 
             playerPreviewCharIndex = (playerPreviewCharIndex + 1) % playerOwnedCharIds.Count;
 
@@ -151,7 +161,7 @@ public class UIPlayerSettingSlot : MonoBehaviour
         else if (slotType == "Equipment")
         {
             // early return if the player doesn't own any equipment
-            if(playerOwnedEquipIds.Count == 0) return;
+            if (playerOwnedEquipIds.Count == 0) return;
 
             if (handIndex == 0)
             {
