@@ -110,6 +110,9 @@ public class PlayerController : MonoBehaviour
         // set player transform
         playerView.SetPlayerTransform(PlayerIndex);
 
+        // set player equipment
+        playerView.UpdatePlayerEquipment(PlayerIndex);
+
         // get input cache
         inputCache = GetComponent<InputCache>();
     }
