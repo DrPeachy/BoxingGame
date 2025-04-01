@@ -110,6 +110,9 @@ public class PlayerController : MonoBehaviour
         // set player transform
         playerView.SetPlayerTransform(PlayerIndex);
 
+        // set player character
+        playerView.UpdatePlayerCharacter(PlayerIndex);
+
         // set player equipment
         playerView.UpdatePlayerEquipment(PlayerIndex);
 

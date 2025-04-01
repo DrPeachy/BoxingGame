@@ -94,6 +94,7 @@ public class UIPlayerSettingSlot : MonoBehaviour
 
     void OnLeftArrowClick()
     {
+        //// Character
         if (slotType == "Character")
         {
             // early return if the player doesn't own any character
@@ -101,10 +102,23 @@ public class UIPlayerSettingSlot : MonoBehaviour
 
             playerPreviewCharIndex = (playerPreviewCharIndex - 1 + playerOwnedCharIds.Count) % playerOwnedCharIds.Count;
 
+            // update the data in cpu
             slotName.text = playerOwnedCharIds[playerPreviewCharIndex] == -1 ? "Default" : DataManager.Instance.characters[playerOwnedCharIds[playerPreviewCharIndex]].name;
 
+            // update the data in cpu
+            DataManager.Instance.equippedCharacterIds[playerIndex] = playerOwnedCharIds[playerPreviewCharIndex];
 
+            if (playerIndex == 0)
+            {
+                lockerPanel.p1View.UpdatePlayerCharacter(playerIndex);
+            }
+            else if (playerIndex == 1)
+            {
+                lockerPanel.p2View.UpdatePlayerCharacter(playerIndex);
+            }
         }
+
+        //// Equipment
         else if (slotType == "Equipment")
         {
             // early return if the player doesn't own any equipment
@@ -148,6 +162,7 @@ public class UIPlayerSettingSlot : MonoBehaviour
 
     void OnRightArrowClick()
     {
+        //// Character
         if (slotType == "Character")
         {
             // early return if the player doesn't own any character
@@ -155,9 +170,23 @@ public class UIPlayerSettingSlot : MonoBehaviour
 
             playerPreviewCharIndex = (playerPreviewCharIndex + 1) % playerOwnedCharIds.Count;
 
+            // update the slot name
             slotName.text = playerOwnedCharIds[playerPreviewCharIndex] == -1 ? "Default" : DataManager.Instance.characters[playerOwnedCharIds[playerPreviewCharIndex]].name;
 
+            // update the data in cpu
+            DataManager.Instance.equippedCharacterIds[playerIndex] = playerOwnedCharIds[playerPreviewCharIndex];
+
+            if (playerIndex == 0)
+            {
+                lockerPanel.p1View.UpdatePlayerCharacter(playerIndex);
+            }
+            else if (playerIndex == 1)
+            {
+                lockerPanel.p2View.UpdatePlayerCharacter(playerIndex);
+            }
         }
+
+        //// Equipment
         else if (slotType == "Equipment")
         {
             // early return if the player doesn't own any equipment

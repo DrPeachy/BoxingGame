@@ -29,14 +29,8 @@ public class PlayerView : MonoBehaviour
     public List<Transform> nodesToCull;
 
     [Header("IK Hands")]
-    public PlayerPunchIK playerPunchIK;
-    // public float leftHandPositionWeight;
-    // public float leftHandRotationWeight;
-    // public float rightHandPositionWeight;
-    // public float rightHandRotationWeight;
-    // public Animator animator;
-    // public Transform leftHandIKTarget;
-    // public Transform rightHandIKTarget;
+    public Transform playerModel;
+    private PlayerPunchIK playerPunchIK;
 
     [Header("Punch states Transform")]
     public Transform lBlockPos;
@@ -80,6 +74,9 @@ public class PlayerView : MonoBehaviour
         {
             selfCameraComponent = selfCamera.GetComponent<Camera>();
         }
+
+        // initialize ik target
+        InitializeIKTarget();
     }
 
     void Update()
@@ -93,6 +90,16 @@ public class PlayerView : MonoBehaviour
         Quaternion rtargetWorldRot = rGlove.rotation;
         // update ik target with world position and rotation
         UpdateIKTarget("r", rtargetWorldPos, rtargetWorldRot);
+    }
+
+    void InitializeIKTarget(){
+        // get the playerPunchIK component from the only active child from playerModel
+        playerPunchIK = playerModel.GetComponentInChildren<PlayerPunchIK>();
+        if (playerPunchIK == null)
+        {
+            Debug.LogError("PlayerPunchIK component not found in playerModel's children.");
+            return;
+        }
     }
 
 
@@ -163,6 +170,25 @@ public class PlayerView : MonoBehaviour
         {
             child.gameObject.SetActive(child.name == rightGloveEquipName);
         }
+    }
+
+    public void UpdatePlayerCharacter(int playerIndex){
+        string characterName = DataManager.Instance.equippedCharacterIds[playerIndex] == -1 ? "Default" : DataManager.Instance.characters[DataManager.Instance.equippedCharacterIds[playerIndex]].name;
+
+        foreach (Transform child in playerModel)
+        {
+            if (child.name == characterName)
+            {
+                child.gameObject.SetActive(true);
+            }
+            else
+            {
+                child.gameObject.SetActive(false);
+            }
+        }
+
+        // update IK target
+        InitializeIKTarget();
     }
 
     public void SetGloveMaterial(int playerIndex)
