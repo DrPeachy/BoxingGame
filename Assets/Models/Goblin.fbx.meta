@@ -3,7 +3,37 @@ guid: 8cdd7f05ce53573408fe7669a8f4caf9
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: body1_oPP
+    second: {fileID: 2100000, guid: 031e6fa07f2cf0c468a86177cdc6b54e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: eye
+    second: {fileID: 2100000, guid: 5256d0222b186d14daf32a3212c1875c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: hair_SeamsColor
+    second: {fileID: 2100000, guid: 5338a2aecf7d4834181a667164142769, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: head_oPP
+    second: {fileID: 2100000, guid: cfe5910c2b003d240828428b27f9c16e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pants
+    second: {fileID: 2100000, guid: da6399593e0ac284eab200a54cab7276, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pupil
+    second: {fileID: 2100000, guid: 8e483d10745968c498798c64f66b77a0, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -81,8 +111,454 @@ ModelImporter:
   importAnimation: 1
   humanDescription:
     serializedVersion: 3
-    human: []
-    skeleton: []
+    human:
+    - boneName: Goblin_Hips
+      humanName: Hips
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Goblin_LeftUpLeg
+      humanName: LeftUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Goblin_RightUpLeg
+      humanName: RightUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Goblin_LeftLeg
+      humanName: LeftLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Goblin_RightLeg
+      humanName: RightLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Goblin_LeftFoot
+      humanName: LeftFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Goblin_RightFoot
+      humanName: RightFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Goblin_Spine
+      humanName: Spine
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Goblin_Spine1
+      humanName: Chest
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Goblin_Neck
+      humanName: Neck
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Goblin_Head
+      humanName: Head
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Goblin_LeftShoulder
+      humanName: LeftShoulder
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Goblin_RightShoulder
+      humanName: RightShoulder
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Goblin_LeftArm
+      humanName: LeftUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Goblin_RightArm
+      humanName: RightUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Goblin_LeftForeArm
+      humanName: LeftLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Goblin_RightForeArm
+      humanName: RightLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Goblin_LeftHand
+      humanName: LeftHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Goblin_RightHand
+      humanName: RightHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Goblin_LeftToeBase
+      humanName: LeftToes
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Goblin_RightToeBase
+      humanName: RightToes
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Goblin_Spine2
+      humanName: UpperChest
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    skeleton:
+    - name: Goblin(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: head
+      parentName: Goblin(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: pupil
+      parentName: Goblin(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: eye
+      parentName: Goblin(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: body
+      parentName: Goblin(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: pants
+      parentName: Goblin(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: hair
+      parentName: Goblin(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Goblin_Guides
+      parentName: Goblin(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Head
+      parentName: Goblin_Guides
+      position: {x: -0, y: 0.0038225749, z: 0.00028824454}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Hips
+      parentName: Goblin_Guides
+      position: {x: -0, y: -0.034410845, z: -0.0009437452}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: LeftArm
+      parentName: Goblin_Guides
+      position: {x: -0.009658059, y: -0.0073658368, z: -0.006194817}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: LeftFoot
+      parentName: Goblin_Guides
+      position: {x: -0.008404656, y: -0.058017, z: 0.00036204347}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: LeftForeArm
+      parentName: Goblin_Guides
+      position: {x: -0.02529098, y: -0.012025078, z: -0.007089809}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: LeftHand
+      parentName: Goblin_Guides
+      position: {x: -0.034484327, y: -0.014435974, z: -0.0078350995}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: LeftLeg
+      parentName: Goblin_Guides
+      position: {x: -0.005301695, y: -0.044936117, z: 0.0006796061}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: LeftShoulder
+      parentName: Goblin_Guides
+      position: {x: -0.004585099, y: -0.0073658368, z: -0.006194817}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: LeftToeBase
+      parentName: Goblin_Guides
+      position: {x: -0.010589845, y: -0.058462404, z: 0.0065032695}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: LeftUpLeg
+      parentName: Goblin_Guides
+      position: {x: -0.004028145, y: -0.034398343, z: -0.00080040295}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Neck
+      parentName: Goblin_Guides
+      position: {x: -0, y: -0.0022149824, z: -0.0031922918}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Reference
+      parentName: Goblin_Guides
+      position: {x: -0, y: -0.059536636, z: 0.00066864607}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: RightArm
+      parentName: Goblin_Guides
+      position: {x: 0.009658059, y: -0.0073658368, z: -0.006194817}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: RightFoot
+      parentName: Goblin_Guides
+      position: {x: 0.008404656, y: -0.058017, z: 0.00036204347}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: RightForeArm
+      parentName: Goblin_Guides
+      position: {x: 0.02529098, y: -0.012025078, z: -0.007089809}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: RightHand
+      parentName: Goblin_Guides
+      position: {x: 0.033626314, y: -0.014363174, z: -0.0078350995}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: RightLeg
+      parentName: Goblin_Guides
+      position: {x: 0.005301695, y: -0.044936117, z: 0.0006796061}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: RightShoulder
+      parentName: Goblin_Guides
+      position: {x: 0.004585099, y: -0.0073658368, z: -0.006194817}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: RightToeBase
+      parentName: Goblin_Guides
+      position: {x: 0.010589845, y: -0.058462404, z: 0.0065032695}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: RightUpLeg
+      parentName: Goblin_Guides
+      position: {x: 0.004028145, y: -0.034398343, z: -0.00080040295}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Spine
+      parentName: Goblin_Guides
+      position: {x: -0, y: -0.026544861, z: -0.0017121459}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Spine1
+      parentName: Goblin_Guides
+      position: {x: -0, y: -0.020258462, z: -0.0025615655}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Spine2
+      parentName: Goblin_Guides
+      position: {x: -0, y: -0.0141917765, z: -0.0045484197}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Goblin_Reference
+      parentName: Goblin(Clone)
+      position: {x: -0, y: -0.059536636, z: 0.00066864607}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Goblin_Hips
+      parentName: Goblin_Reference
+      position: {x: 0, y: 0.084310144, z: -0.0016123911}
+      rotation: {x: 0.47507268, y: -0.52374226, z: -0.47507268, w: 0.52374226}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Goblin_LeftUpLeg
+      parentName: Goblin_Hips
+      position: {x: 0.0000014952051, y: 0.00014387848, z: 0.004028145}
+      rotation: {x: -0.08776699, y: 0.04881427, z: 0.9945832, w: -0.026803257}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Goblin_LeftLeg
+      parentName: Goblin_LeftUpLeg
+      position: {x: -0.010717144, y: -0.000000117853396, z: -0.00000008456129}
+      rotation: {x: -0.12242969, y: 0.012023591, z: -0.09771265, w: 0.98758227}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Goblin_LeftFoot
+      parentName: Goblin_LeftLeg
+      position: {x: -0.013447647, y: -0.00000007111411, z: -0.000000016913978}
+      rotation: {x: -0.11770806, y: -0.00615333, z: 0.6732463, w: 0.7299633}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Goblin_LeftToeBase
+      parentName: Goblin_LeftFoot
+      position: {x: -0.0065336083, y: -0.0000000013754067, z: 0.0000000054764127}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Goblin_RightUpLeg
+      parentName: Goblin_Hips
+      position: {x: 0.0000014952051, y: 0.00014387848, z: -0.004028145}
+      rotation: {x: 0.048819285, y: 0.087767124, z: 0.026801703, w: 0.994583}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Goblin_RightLeg
+      parentName: Goblin_RightUpLeg
+      position: {x: 0.010717125, y: 0.00000014996378, z: 0.00000008568255}
+      rotation: {x: -0.12240892, y: 0.012020625, z: -0.097711824, w: 0.98758495}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Goblin_RightFoot
+      parentName: Goblin_RightLeg
+      position: {x: 0.013447647, y: 0.00000006431522, z: 0.000000017400348}
+      rotation: {x: -0.11772746, y: -0.006135446, z: 0.673246, w: 0.72996056}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Goblin_RightToeBase
+      parentName: Goblin_RightFoot
+      position: {x: 0.006533617, y: -0.0000000023342237, z: 0.0000000020988524}
+      rotation: {x: 0.000025420395, y: -0.0000000018300658, z: 4.6520994e-14, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Goblin_Spine
+      parentName: Goblin_Hips
+      position: {x: -0.007903426, y: 1.9208402e-10, z: 0}
+      rotation: {x: 0, y: 0, z: 0.018463574, w: 0.9998296}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Goblin_Spine1
+      parentName: Goblin_Spine
+      position: {x: -0.0063435268, y: 2.6315145e-11, z: -1.886283e-18}
+      rotation: {x: 0, y: 0, z: 0.09096742, w: 0.9958539}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Goblin_Spine2
+      parentName: Goblin_Spine1
+      position: {x: -0.00638375, y: -3.20634e-10, z: -2.8044423e-18}
+      rotation: {x: 0, y: -0, z: -0.21297757, w: 0.9770571}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Goblin_LeftShoulder
+      parentName: Goblin_Spine2
+      position: {x: -0.0065973606, y: -0.0024039343, z: 0.004585099}
+      rotation: {x: 0.5273781, y: -0.47103328, z: -0.5273781, w: -0.47103328}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Goblin_LeftArm
+      parentName: Goblin_LeftShoulder
+      position: {x: -0.0050729606, y: -1.110223e-18, z: 0}
+      rotation: {x: 0.7074243, y: 0.017632065, z: 0.031816717, w: 0.70585257}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Goblin_LeftForeArm
+      parentName: Goblin_LeftArm
+      position: {x: -0.016336996, y: 0.0000009531963, z: 0.00000038194662}
+      rotation: {x: -0.000064790234, y: 0.00024250381, z: -0.020344554, w: 0.999793}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Goblin_LeftHand
+      parentName: Goblin_LeftForeArm
+      position: {x: -0.009533401, y: -0.000000026348419, z: 0.000000003754802}
+      rotation: {x: 0, y: 0, z: 0.000029719511, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Goblin_RightShoulder
+      parentName: Goblin_Spine2
+      position: {x: -0.0065973606, y: -0.0024039343, z: -0.004585099}
+      rotation: {x: 0.47103328, y: 0.5273781, z: -0.47103328, w: 0.5273781}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Goblin_RightArm
+      parentName: Goblin_RightShoulder
+      position: {x: 0.0050729606, y: -1.110223e-18, z: 0}
+      rotation: {x: 0.70730394, y: 0.017807301, z: 0.0315373, w: 0.70598114}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Goblin_RightForeArm
+      parentName: Goblin_RightArm
+      position: {x: 0.016337039, y: -0.0000009737219, z: -0.00000038432896}
+      rotation: {x: -0.000062475156, y: 0.00024162699, z: -0.017574914, w: 0.99984556}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Goblin_RightHand
+      parentName: Goblin_RightForeArm
+      position: {x: 0.008689039, y: 0.00000002374983, z: -0.0000000025321167}
+      rotation: {x: 0, y: 0, z: 0.000029063403, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Goblin_Neck
+      parentName: Goblin_Spine2
+      position: {x: -0.012053326, y: 8.209749e-11, z: -5.2434843e-18}
+      rotation: {x: -0, y: -0, z: -0.19128917, w: 0.9815337}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Goblin_Head
+      parentName: Goblin_Neck
+      position: {x: -0.006968936, y: 1.6661054e-10, z: -2.4880015e-18}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5
