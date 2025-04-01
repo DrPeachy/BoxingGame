@@ -18,13 +18,15 @@ public class UIMerchantSlot : MonoBehaviour
     public TMP_Text isPurchaseText;
     public Button purchaseButton;
     public int merchantID;
+    public string merchantType;
 
-    public void SetMerchantData(string name, string description, int price, bool purchased, int id){
+    public void SetMerchantData(string name, string description, int price, bool purchased, int id, string type){
         merchantName = name;
         merchantDescription = description;
         merchantPrice = price;
         isPurchased = purchased;
         merchantID = id;
+        merchantType = type;
 
         nameText.text = merchantName;
         //descriptionText.text = merchantDescription;
@@ -36,7 +38,20 @@ public class UIMerchantSlot : MonoBehaviour
 
     // callback function for purchase button
     public void OnClickPurchase(){
-        isPurchased = StoreManager.Instance.PurchaseEquipmentById(merchantID);
+        if (merchantType == "Equipment")
+        {
+            isPurchased = StoreManager.Instance.PurchaseEquipmentById(merchantID);
+        }
+        else if (merchantType == "Character")
+        {
+            isPurchased = StoreManager.Instance.PurchaseCharacterById(merchantID);
+        }
+        else
+        {
+            Debug.LogError("Invalid merchant type: " + merchantType);
+            return;
+        }
+        
         isPurchaseText.text = isPurchased ? "Purchased" : "Buy";
         purchaseButton.interactable = !isPurchased;
     }

@@ -11,6 +11,8 @@ public class StoreManager : MonoBehaviour
     public static StoreManager Instance;
 
     public List<Equipment> equipments = new List<Equipment>();
+    public List<Character> characters = new List<Character>();
+
     public int index;
 
     public Transform prefabDisplayTransform;
@@ -42,6 +44,7 @@ public class StoreManager : MonoBehaviour
     {
         // read from data manager
         equipments = DataManager.Instance.equipments;
+        characters = DataManager.Instance.characters;
         index = 0;
         if (prefabDisplayTransform == null)
         {
@@ -131,9 +134,51 @@ public class StoreManager : MonoBehaviour
         }
     }
 
-    public bool isPurchased(int id)
+    public bool PurchaseCharacterById(int id)
+    {
+        if (DataManager.Instance == null)
+        {
+            Debug.LogError("DataManager.Instance is null");
+            return false;
+        }
+        if (DataManager.Instance.purchasedCharacterIds == null)
+        {
+            Debug.LogError("purchasedCharacterIds is not initialized");
+            return false;
+        }
+        if (characters == null)
+        {
+            Debug.LogError("characters is null");
+            return false;
+        }
+        if (id < 0 || id >= characters.Count)
+        {
+            Debug.LogError("id out of range: " + id);
+            return false;
+        }
+
+        if (DataManager.Instance.money >= characters[id].price)
+        {
+            DataManager.Instance.money -= characters[id].price;
+            DataManager.Instance.purchasedCharacterIds.Add(characters[id].id);
+
+            return true;
+        }
+        else
+        {
+            Debug.Log("Not enough money");
+            return false;
+        }
+    }
+
+    public bool isEquipmentPurchased(int id)
     {
         return DataManager.Instance.purchasedEquipmentIds.Contains(id);
+    }
+
+    public bool isCharacterPurchased(int id)
+    {
+        return DataManager.Instance.purchasedCharacterIds.Contains(id);
     }
 
     public void LoadPrefabToDisplay()

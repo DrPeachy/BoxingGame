@@ -73,9 +73,12 @@ public class MerchantPreviewController : MonoBehaviour
         // 根据 pageIndex 计算当前页的起始索引
         int startIndex = pageIndex * itemsPerPage;
         var equipments = DataManager.Instance.equipments;
-        if (startIndex >= equipments.Count)
+        var characters = DataManager.Instance.characters;
+        int totalItemsCount = equipments.Count + characters.Count;
+
+        if (startIndex >= totalItemsCount)
         {
-            Debug.LogWarning("当前页没有足够的装备数据");
+            Debug.LogWarning("当前页没有足够的数据");
             return;
         }
 
@@ -96,7 +99,7 @@ public class MerchantPreviewController : MonoBehaviour
         Vector3 origin = new Vector3(-cameraWidth / 2f, cameraHeight / 2f, 0);
 
         // 遍历当前页的装备数据，按照网格中心位置实例化模型
-        for (int i = startIndex; i < Mathf.Min(startIndex + itemsPerPage, equipments.Count); i++)
+        for (int i = startIndex; i < Mathf.Min(startIndex + itemsPerPage, totalItemsCount); i++)
         {
             int relativeIndex = i - startIndex;  // 当前页内的索引
             int col = relativeIndex % columns;
@@ -111,7 +114,8 @@ public class MerchantPreviewController : MonoBehaviour
             Debug.Log("pos: " + pos);
 
             // 实例化模型，并设置为 merchantModelParent 的子对象，同时设置局部位置
-            GameObject model = Instantiate(equipments[i].model, merchantModelParent);
+            // 先生成character模型，在生成equipment模型
+            GameObject model = Instantiate((i < characters.Count) ? characters[i].model : equipments[i - characters.Count].model, merchantModelParent);
             model.transform.localScale = Vector3.one * modelScaleFactor;
             model.transform.localPosition = pos;
 

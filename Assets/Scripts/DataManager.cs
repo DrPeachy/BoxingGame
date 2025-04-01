@@ -61,6 +61,7 @@ public class DataManager : MonoBehaviour
 
     void OnValidate()
     {
+        // Equipment
         for(int i = 0; i < equipments.Count; i++){
             // check for existing equipment
             if(i != equipments.Count - 1){
@@ -84,6 +85,34 @@ public class DataManager : MonoBehaviour
                 }
                 if(equipments[i].price < 0){
                     equipments[i].price = 0;
+                }
+            }
+        }
+
+        // Character
+        for(int i = 0; i < characters.Count; i++){
+            // check for existing character
+            if(i != characters.Count - 1){
+                if(characters[i].id != i){
+                    Debug.LogError("Character id must be unique");
+                }
+                if(characters[i].name == ""){
+                    Debug.Log("Add default name for character " + i);
+                    characters[i].name = "Default_Character_" + i;
+                }
+                if(characters[i].price < 0){
+                    Debug.LogError("Price must be greater than or equal to 0, setting price to 0");
+                    characters[i].price = 0;
+                }
+            }
+            // set default values for new character
+            else{
+                characters[i].id = i;
+                if(characters[i].name == ""){
+                    characters[i].name = "Default_Character";
+                }
+                if(characters[i].price < 0){
+                    characters[i].price = 0;
                 }
             }
         }
