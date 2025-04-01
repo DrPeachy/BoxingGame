@@ -6967,6 +6967,7 @@ MonoBehaviour:
   selfCamera: {fileID: 8134055062072917017}
   selfCameraComponent: {fileID: 6974957124142395995}
   nodesToCull:
+  - {fileID: 8202525139371787009}
   - {fileID: 2427575721063725390}
   - {fileID: 4046498637441312129}
   playerModel: {fileID: 5769128019500129724}
