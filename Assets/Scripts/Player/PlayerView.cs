@@ -184,7 +184,14 @@ public class PlayerView : MonoBehaviour
         int layerToRemove = playerIndex == 0 ? LayerMask.NameToLayer("P1") : LayerMask.NameToLayer("P2");
         foreach (Transform node in nodesToCull)
         {
-            node.gameObject.layer = layerToRemove;
+            // loop over all child nodes and set the layer to the specified layer
+            foreach (Transform child in node)
+            {
+                //Debug.Log("child name: " + child.name);
+                //Debug.Log("child layer: " + child.gameObject.layer);
+                child.gameObject.layer = layerToRemove;
+            }
+            //node.gameObject.layer = layerToRemove;
         }
 
         SetSelfCameraCullingMask(playerIndex);
