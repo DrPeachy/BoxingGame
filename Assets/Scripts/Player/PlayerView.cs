@@ -106,12 +106,12 @@ public class PlayerView : MonoBehaviour
 
     void UpdateIKTarget(string hand, Vector3 position, Quaternion rotation)
     {
-        if (hand == "l")
+        if (hand == "l" && playerPunchIK != null && playerPunchIK.leftHandIKTarget != null)
         {
             playerPunchIK.leftHandIKTarget.position = position;
             playerPunchIK.leftHandIKTarget.rotation = rotation;
         }
-        else
+        else if(hand == "r" && playerPunchIK != null && playerPunchIK.rightHandIKTarget != null)
         {
             playerPunchIK.rightHandIKTarget.position = position;
             playerPunchIK.rightHandIKTarget.rotation = rotation;
@@ -207,6 +207,10 @@ public class PlayerView : MonoBehaviour
 
     public void SetCullLayer(int playerIndex)
     {
+        // activate camera
+        if (selfCamera != null) selfCamera.gameObject.SetActive(true);
+
+        // set camera culling mask to exclude the layer of the other player
         int layerToRemove = playerIndex == 0 ? LayerMask.NameToLayer("P1") : LayerMask.NameToLayer("P2");
         foreach (Transform node in nodesToCull)
         {

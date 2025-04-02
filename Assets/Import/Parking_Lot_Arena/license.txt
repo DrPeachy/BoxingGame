@@ -1,0 +1,11 @@
+Model Information:
+* title:	Parking Lot Arena
+* source:	https://sketchfab.com/3d-models/parking-lot-arena-88f6708a8d0641edbe68c5f2bf45ae58
+* author:	attackfrog (https://sketchfab.com/attackfrog)
+
+Model License:
+* license type:	CC-BY-NC-4.0 (http://creativecommons.org/licenses/by-nc/4.0/)
+* requirements:	Author must be credited. No commercial use.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Parking Lot Arena" (https://sketchfab.com/3d-models/parking-lot-arena-88f6708a8d0641edbe68c5f2bf45ae58) by attackfrog (https://sketchfab.com/attackfrog) licensed under CC-BY-NC-4.0 (http://creativecommons.org/licenses/by-nc/4.0/)
