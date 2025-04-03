@@ -4571,7 +4571,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.000061035156}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 278, y: 90}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &627617163
@@ -9198,6 +9198,7 @@ MonoBehaviour:
       baseValue: 0
       additionalValue: 0
       percentageValue: 0
+    effectTarget: 
     model: {fileID: 4066019979108579977, guid: e2ab5ff51aeaeca49bcef2538ea960e6, type: 3}
   - id: 1
     name: Pillow
@@ -9207,6 +9208,7 @@ MonoBehaviour:
       baseValue: 0
       additionalValue: 0
       percentageValue: 0
+    effectTarget: 
     model: {fileID: 5587189295160379553, guid: 15e76ce0504433a46ab6eb86941a9dcb, type: 3}
   - id: 2
     name: Hand
@@ -9216,6 +9218,7 @@ MonoBehaviour:
       baseValue: 0
       additionalValue: 0
       percentageValue: 0
+    effectTarget: 
     model: {fileID: 7642202085936924254, guid: 5a73fab142889d44186a5b11e7d688dc, type: 3}
   - id: 3
     name: Rock
@@ -9225,49 +9228,44 @@ MonoBehaviour:
       baseValue: 0
       additionalValue: 0
       percentageValue: 0
+    effectTarget: 
     model: {fileID: 1856668426016908889, guid: d99e63dabf269c742bff99fc390823cc, type: 3}
   characters:
   - id: 0
     name: Goblin
     description: 
     price: 0
-    straightPunchWindup: 0
-    straightPunchRecovery: 0
-    straightPunchDamage: 0
-    straightInterruptTime: 0
-    hookChargeDuration: 0
-    hookPunchWindup: 0
-    hookPunchRecovery: 0
-    hookPunchDamage: 0
-    blockRecovery: 0
-    parryDuration: 0
-    parryRecovery: 0
-    blockDamageReduction: 0
-    effect:
-      baseValue: 0
-      additionalValue: 0
-      percentageValue: 0
+    straightPunchWindup: 0.4
+    straightPunchRecovery: 0.18
+    straightBlockedRecovery: 0.6
+    straightPunchDamage: 4
+    straightInterruptTime: 0.15
+    hookChargeDuration: 0.6
+    hookPunchWindup: 0.15
+    hookPunchRecovery: 0.35
+    hookPunchDamage: 0.9
+    blockRecovery: 0.1
+    parryDuration: 0.11
+    parryRecovery: 1.2
+    blockDamageReduction: 3
     model: {fileID: 5699026698845120353, guid: 0053df82e6897864cbc1d0cedc411dcf, type: 3}
   - id: 1
     name: Moai
     description: 
     price: 0
-    straightPunchWindup: 0
-    straightPunchRecovery: 0
-    straightPunchDamage: 0
-    straightInterruptTime: 0
-    hookChargeDuration: 0
-    hookPunchWindup: 0
-    hookPunchRecovery: 0
-    hookPunchDamage: 0
-    blockRecovery: 0
-    parryDuration: 0
-    parryRecovery: 0
-    blockDamageReduction: 0
-    effect:
-      baseValue: 0
-      additionalValue: 0
-      percentageValue: 0
+    straightPunchWindup: 0.4
+    straightPunchRecovery: 0.18
+    straightBlockedRecovery: 0.6
+    straightPunchDamage: 4
+    straightInterruptTime: 0.15
+    hookChargeDuration: 0.6
+    hookPunchWindup: 0.15
+    hookPunchRecovery: 0.35
+    hookPunchDamage: 9
+    blockRecovery: 0.1
+    parryDuration: 0.11
+    parryRecovery: 1.2
+    blockDamageReduction: 3
     model: {fileID: 6582784325613894722, guid: 69eddefec3ec6264486ad856ccbada4e, type: 3}
 --- !u!4 &844177067
 Transform:
@@ -21015,7 +21013,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.000061035156}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1628310720

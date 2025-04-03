@@ -135,17 +135,17 @@ public class InputCache : MonoBehaviour
             }
         }
         else if(hand == "r"){
-            if(action == "Punch" && !rightPunchBuffered){
+            if(action == "Punch"){
                 ResetHand(hand);
                 rightPunchBuffered = true;
                 rightBufferTimer = bufferTime;
             }
-            else if(action == "Block" && !rightBlockBuffered){
+            else if(action == "Block"){
                 ResetHand(hand);
                 rightBlockBuffered = true;
                 rightBufferTimer = bufferTime;
             }
-            else if(action == "Charge" && !rightChargeBuffered){
+            else if(action == "Charge"){
                 ResetHand(hand);
                 rightChargeBuffered = true;
                 rightBufferTimer = bufferTime;

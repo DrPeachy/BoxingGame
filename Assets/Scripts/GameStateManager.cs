@@ -106,7 +106,12 @@ public class GameStateManager : NetworkBehaviour
 
         // post phase logic
         Debug.Log("Player gathering phase ended");
+        foreach(var player in LocalModeGameManager.Instance.playerInputs){
+            Debug.Log($"Resetting input cache for player {player.Key}");
+            player.Value.GetComponent<InputCache>().ResetHold(); // reset input cache for all players
+        }
         LocalModeGameManager.Instance.DisablePlayersInput(); // disable input while transitioning to next phase
+        
 
         // delay before next phase, prevent instant phase switch that cause crash
         await UniTask.Delay(500);

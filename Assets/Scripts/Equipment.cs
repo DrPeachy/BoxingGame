@@ -15,6 +15,7 @@ public class Equipment{
     // the effect is stored in this NC_Float
     // should avoid using operator directly between a NC_Float and this effect value
     public NC_Float effect;
+    public string effectTarget; // target variable name to apply the effect to
 
     // to do: add 3D model for the equipment
     public GameObject model;

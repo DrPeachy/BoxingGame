@@ -1,6 +1,66 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.UI;
 using UnityEngine;
+
+[System.Serializable]
+public class CharacterSetting{
+    [Header("Straight Punch Settings")]
+    public NC_Float straightPunchWindup;
+    public NC_Float straightPunchRecovery;
+    public NC_Float straightBlockedRecovery;
+    public NC_Float straightPunchDamage;
+    public NC_Float straightInterruptTime;
+
+    [Header("Hook Punch Settings")]
+    public NC_Float hookChargeDuration;
+    public NC_Float hookPunchWindup;
+    public NC_Float hookPunchRecovery;
+    public NC_Float hookPunchDamage;
+
+    [Header("Block Settings")]
+    public NC_Float blockRecovery;
+    public NC_Float parryDuration;
+    public NC_Float parryRecovery;
+    public NC_Float blockDamageReduction;
+
+    public CharacterSetting(Character character){
+        straightPunchWindup = character.straightPunchWindup;
+        straightPunchRecovery = character.straightPunchRecovery;
+        straightBlockedRecovery = character.straightBlockedRecovery;
+        straightPunchDamage = character.straightPunchDamage;
+        straightInterruptTime = character.straightInterruptTime;
+
+        hookChargeDuration = character.hookChargeDuration;
+        hookPunchWindup = character.hookPunchWindup;
+        hookPunchRecovery = character.hookPunchRecovery;
+        hookPunchDamage = character.hookPunchDamage;
+
+        blockRecovery = character.blockRecovery;
+        parryDuration = character.parryDuration;
+        parryRecovery = character.parryRecovery;
+        blockDamageReduction = character.blockDamageReduction;
+    }
+
+    public CharacterSetting(CharacterSetting other){
+        straightPunchWindup = other.straightPunchWindup;
+        straightPunchRecovery = other.straightPunchRecovery;
+        straightBlockedRecovery = other.straightBlockedRecovery;
+        straightPunchDamage = other.straightPunchDamage;
+        straightInterruptTime = other.straightInterruptTime;
+
+        hookChargeDuration = other.hookChargeDuration;
+        hookPunchWindup = other.hookPunchWindup;
+        hookPunchRecovery = other.hookPunchRecovery;
+        hookPunchDamage = other.hookPunchDamage;
+
+        blockRecovery = other.blockRecovery;
+        parryDuration = other.parryDuration;
+        parryRecovery = other.parryRecovery;
+        blockDamageReduction = other.blockDamageReduction;
+    }
+}
+
 
 [System.Serializable]
 public class Character{
@@ -13,6 +73,7 @@ public class Character{
     [Header("Straight Punch Settings")]
     public float straightPunchWindup = 0.5f;
     public float straightPunchRecovery = 0.3f;
+    public float straightBlockedRecovery = 0.6f;
     public float straightPunchDamage = 5f;
     public float straightInterruptTime = 0.5f;
 
@@ -28,13 +89,15 @@ public class Character{
     public float parryRecovery = 0.9f;
     public float blockDamageReduction = 4f;
 
+    //public CharacterSetting characterDefaultSetting;
+
 
     // effect
     // NC_Float: base, additional, percentage
     // final value = base + additional + base * percentage
     // the effect is stored in this NC_Float
     // should avoid using operator directly between a NC_Float and this effect value
-    public NC_Float effect;
+    //public NC_Float effect;
 
     // to do: add 3D model for the equipment
     public GameObject model;
