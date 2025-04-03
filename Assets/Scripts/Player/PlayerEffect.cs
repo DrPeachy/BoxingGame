@@ -84,9 +84,6 @@ public class PlayerEffect : MonoBehaviour
         }
     }
 
-
-
-
     public async UniTaskVoid TriggerFlashEffect(float flashDuration, float flashStartAlpha){
         flashStartAlpha = Mathf.Clamp(flashStartAlpha, 0, 1);
         Vector3 flashColorRGB = new Vector3(flashImage.color.r, flashImage.color.g, flashImage.color.b);
@@ -101,6 +98,12 @@ public class PlayerEffect : MonoBehaviour
         }
         flashImage.color = new Color(flashColorRGB.x, flashColorRGB.y, flashColorRGB.z, 0);
     }
+
+    public void TriggerInjuryPPEffect(){
+        ppController.AddInjury(0.25f);
+    }
+
+
 
 
     public void SetPlayerPostProcessingProfile(int playerIndex){

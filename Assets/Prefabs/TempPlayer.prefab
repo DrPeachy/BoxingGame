@@ -489,6 +489,19 @@ MonoBehaviour:
   focusDistanceWithBlurOff: 7.68
   apertureWithBlurOn: 0.5
   apertureWithBlurOff: 7.1
+  injuryFocalLength: 80
+  normalFocalLength: 33
+  injuryVignetteColor: {r: 0.93207544, g: 0.3358989, b: 0.34758875, a: 1}
+  normalVignetteColor: {r: 0.1, g: 0.1, b: 0.2, a: 1}
+  injuryVignetteInt: 0.7
+  normalVignetteInt: 0.2
+  injuryBloomSweatValue: 140
+  normalBloomSweatValue: 0
+  injuryChromaticAberrationInt: 1
+  normalChromaticAberrationInt: 0
+  injuryLensDistortionValue: -0.4
+  normalLensDistortionValue: 0
+  injuryDecayTime: 5
 --- !u!1 &2833201711560583205
 GameObject:
   m_ObjectHideFlags: 0
