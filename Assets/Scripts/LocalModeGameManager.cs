@@ -62,7 +62,11 @@ public class LocalModeGameManager : MonoBehaviour
             CursorController.Instance.AddPlayerInput(player.PlayerIndex, playerInputs[player.PlayerIndex]);
             // register player audio sources
             AudioManager.Instance.audioEffectsPlayers[player.PlayerIndex] = new AudioEffectsPlayer(player.transform.Find("AudioSources").gameObject);
+            
+            // setup player effect
             playerEffects[player.PlayerIndex] = player.GetComponent<PlayerEffect>();
+            playerEffects[player.PlayerIndex].SetPlayerPostProcessingProfile(player.PlayerIndex);
+            
             Debug.Log($"玩家 {player.PlayerIndex} 加入游戏");
 
             // 初始化玩家状态
