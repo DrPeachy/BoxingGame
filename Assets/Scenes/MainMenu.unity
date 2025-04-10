@@ -6360,6 +6360,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: b86432a7f41f43c4997c59632db3404a, type: 3}
   generalButtonClickedClip: {fileID: 8300000, guid: d970d03dd6c709541868867344ecc254,
     type: 3}
+  zebraJudgeSpeakingClip: {fileID: 8300000, guid: 1350939c4024db94a8d2433263dc5c57,
+    type: 3}
 --- !u!4 &791439795
 Transform:
   m_ObjectHideFlags: 0
