@@ -10,6 +10,7 @@ public struct AudioEffectsPlayer{
     public AudioSource parry;
     public AudioSource punchBlocked;
     public AudioSource getHit;
+    public AudioSource general;
 
     public AudioEffectsPlayer(GameObject audioEffectsPlayer){
         this.audioEffectsPlayer = audioEffectsPlayer;
@@ -19,6 +20,7 @@ public struct AudioEffectsPlayer{
         parry = audioEffectsPlayer.transform.Find("Parry").GetComponent<AudioSource>();
         punchBlocked = audioEffectsPlayer.transform.Find("PunchBlocked").GetComponent<AudioSource>();
         getHit = audioEffectsPlayer.transform.Find("GetHit").GetComponent<AudioSource>();
+        general = audioEffectsPlayer.transform.Find("General").GetComponent<AudioSource>();
     }
 }
 
@@ -48,6 +50,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip questionBoardSelectClip;
     public List<AudioClip> getHitClipsList; // light to heavy
     public AudioClip generalButtonClickedClip;
+    public AudioClip zebraJudgeSpeakingClip;
 
     private void Awake()
     {
@@ -122,6 +125,11 @@ public class AudioManager : MonoBehaviour
     {
         audioEffectsPlayers[playerID].getHit.clip = getHitClipsList[hitType];
         audioEffectsPlayers[playerID].getHit.Play();
+    }
+
+    public void PlayZebraJudgeCountdown(int playerID){
+        audioEffectsPlayers[playerID].general.clip = zebraJudgeSpeakingClip;
+        audioEffectsPlayers[playerID].general.Play();
     }
 
     public void PlayGeneralButtonClicked()
