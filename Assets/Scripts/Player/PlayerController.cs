@@ -239,7 +239,7 @@ public class PlayerController : MonoBehaviour
 
     private string GetDirection(Vector2 input)
     {
-        Debug.Log($"Input: {input}, Magnitude: {input.magnitude}");
+        // Debug.Log($"Input: {input}, Magnitude: {input.magnitude}");
         if (input.magnitude < 0.4f) return "Neutral";
 
         input.Normalize();

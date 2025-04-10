@@ -84,6 +84,20 @@ public class NC_Float
     public static float operator /(float a, NC_Float b) {return a / b.baseValue;}
     public static float operator %(float a, NC_Float b) {return a % b.baseValue;}
 
+    // operation between NC-Float and int
+    public static float operator +(NC_Float a, int b) {return a.baseValue + b;}
+    public static float operator -(NC_Float a, int b) {return a.baseValue - b;}
+    public static float operator *(NC_Float a, int b) {return a.baseValue * b;}
+    public static float operator /(NC_Float a, int b) {return a.baseValue / b;}
+    public static float operator %(NC_Float a, int b) {return a.baseValue % b;}
+    public static float operator +(int a, NC_Float b) {return a + b.baseValue;}
+    public static float operator -(int a, NC_Float b) {return a - b.baseValue;}
+    public static float operator *(int a, NC_Float b) {return a * b.baseValue;}
+    public static float operator /(int a, NC_Float b) {return a / b.baseValue;}
+    public static float operator %(int a, NC_Float b) {return a % b.baseValue;}
+    
+    
+
     public void addBaseValue(float value) { baseValue += value; }
     public void addAdditionalValue(float value) { additionalValue += value; }
     public void addPercentageValue(float value) { percentageValue += value; }
