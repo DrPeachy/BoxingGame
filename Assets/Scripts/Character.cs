@@ -24,6 +24,8 @@ public class CharacterSetting{
     public NC_Float parryRecovery;
     public NC_Float blockDamageReduction;
 
+    public CharacterSetting(){}
+
     public CharacterSetting(Character character){
         straightPunchWindup = character.straightPunchWindup;
         straightPunchRecovery = character.straightPunchRecovery;
@@ -58,6 +60,24 @@ public class CharacterSetting{
         parryDuration = other.parryDuration;
         parryRecovery = other.parryRecovery;
         blockDamageReduction = other.blockDamageReduction;
+    }
+
+    public void ApplyEquipmentEffect(CharacterSetting equipmentEffect){
+        straightPunchWindup.addEffect(equipmentEffect.straightPunchWindup);
+        straightPunchRecovery.addEffect(equipmentEffect.straightPunchRecovery);
+        straightBlockedRecovery.addEffect(equipmentEffect.straightBlockedRecovery);
+        straightPunchDamage.addEffect(equipmentEffect.straightPunchDamage);
+        straightInterruptTime.addEffect(equipmentEffect.straightInterruptTime);
+
+        hookChargeDuration.addEffect(equipmentEffect.hookChargeDuration);
+        hookPunchWindup.addEffect(equipmentEffect.hookPunchWindup);
+        hookPunchRecovery.addEffect(equipmentEffect.hookPunchRecovery);
+        hookPunchDamage.addEffect(equipmentEffect.hookPunchDamage);
+
+        blockRecovery.addEffect(equipmentEffect.blockRecovery);
+        parryDuration.addEffect(equipmentEffect.parryDuration);
+        parryRecovery.addEffect(equipmentEffect.parryRecovery);
+        blockDamageReduction.addEffect(equipmentEffect.blockDamageReduction);
     }
 }
 

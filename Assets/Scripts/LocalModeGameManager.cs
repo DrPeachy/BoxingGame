@@ -43,6 +43,12 @@ public class LocalModeGameManager : MonoBehaviour
     //public Dictionary<int, CharacterSetting> playerCharacters = new Dictionary<int, CharacterSetting>();
     //public Dictionary<int, CharacterSetting> playerCharacterSettings = new Dictionary<int, CharacterSetting>();
     public Dictionary<int, Dictionary<int, CharacterSetting>> playerCharacterSettings = new Dictionary<int, Dictionary<int, CharacterSetting>>();
+    // DEBUG
+    public CharacterSetting DEBUG_PLAYER0_LEFT = new CharacterSetting();
+    public CharacterSetting DEBUG_PLAYER0_RIGHT = new CharacterSetting();
+    public CharacterSetting DEBUG_PLAYER1_LEFT = new CharacterSetting();
+    public CharacterSetting DEBUG_PLAYER1_RIGHT = new CharacterSetting();
+    // END DEBUG
 
     public List<float> DEBUGserializedCharacter0 = new List<float>();
     public List<float> DEBUGserializedCharacter1 = new List<float>();
@@ -77,6 +83,25 @@ public class LocalModeGameManager : MonoBehaviour
             playerCharacterSettings[player.PlayerIndex] = new Dictionary<int, CharacterSetting>();
             playerCharacterSettings[player.PlayerIndex][0] = new CharacterSetting(c);
             playerCharacterSettings[player.PlayerIndex][1] = new CharacterSetting(c);
+
+            // applied equipment effects to player character
+            int leftHandEquipmentId = DataManager.Instance.equippedEquipmentIds[player.PlayerIndex * 2];
+            int rightHandEquipmentId = DataManager.Instance.equippedEquipmentIds[player.PlayerIndex * 2 + 1];
+            if(leftHandEquipmentId != -1) playerCharacterSettings[player.PlayerIndex][0].ApplyEquipmentEffect(DataManager.Instance.equipments[leftHandEquipmentId].equipmentEffect);
+            if(rightHandEquipmentId != -1) playerCharacterSettings[player.PlayerIndex][1].ApplyEquipmentEffect(DataManager.Instance.equipments[rightHandEquipmentId].equipmentEffect);
+
+            // DEBUG
+            if (player.PlayerIndex == 0)
+            {
+                DEBUG_PLAYER0_LEFT = new CharacterSetting(playerCharacterSettings[player.PlayerIndex][0]);
+                DEBUG_PLAYER0_RIGHT = new CharacterSetting(playerCharacterSettings[player.PlayerIndex][1]);
+            }
+            else if (player.PlayerIndex == 1)
+            {
+                DEBUG_PLAYER1_LEFT = new CharacterSetting(playerCharacterSettings[player.PlayerIndex][0]);
+                DEBUG_PLAYER1_RIGHT = new CharacterSetting(playerCharacterSettings[player.PlayerIndex][1]);
+            }
+         
 
             Debug.Log($"玩家 {player.PlayerIndex} 加入游戏");
 
