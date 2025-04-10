@@ -1,13 +1,13 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1102 &-8522300661397365888
+--- !u!1102 &-8291564038062446687
 AnimatorState:
   serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: HumanM@Idle01
+  m_Name: Guard_Idle
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -20,7 +20,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -2576967968662016515, guid: 56fd86b76fc74d24d83522069f5deb9b,
+  m_Motion: {fileID: 3812546017969097313, guid: 19f62fef95dbbdb45887cd1d86463f21,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
@@ -135,8 +135,8 @@ AnimatorStateMachine:
   m_Name: Base Layer
   m_ChildStates:
   - serializedVersion: 1
-    m_State: {fileID: -8522300661397365888}
-    m_Position: {x: 70, y: 180, z: 0}
+    m_State: {fileID: -8291564038062446687}
+    m_Position: {x: 514.66205, y: 184.78499, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -146,7 +146,7 @@ AnimatorStateMachine:
   m_EntryPosition: {x: 50, y: 120, z: 0}
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
-  m_DefaultState: {fileID: -8522300661397365888}
+  m_DefaultState: {fileID: -8291564038062446687}
 --- !u!1107 &9151266193395172235
 AnimatorStateMachine:
   serializedVersion: 6
