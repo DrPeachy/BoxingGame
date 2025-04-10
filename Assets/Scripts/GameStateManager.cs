@@ -39,6 +39,9 @@ public class GameStateManager : NetworkBehaviour
     [Header("UI")]
     public TMP_Text timerText;
 
+    [Header("Fighting phase")]
+    private int koPlayer;
+
     [Header("Break phase")]
     public GameObject questionBoard;
     private CancellationTokenSource cts;
@@ -129,7 +132,7 @@ public class GameStateManager : NetworkBehaviour
         
 
         // wait for phase end
-        await WaitForPhaseEnd(fightingPhaseLength, "Fighting", token);
+        await WaitForPhaseEnd(fightingPhaseLength, GameState.Fighting, token);
         //if(token.IsCancellationRequested) return;
 
         // post phase logic
@@ -144,6 +147,10 @@ public class GameStateManager : NetworkBehaviour
     private async UniTask StartBreakPhase(CancellationToken token){
         // pre phase logic
         gameState = GameState.Break;
+        // play zebra animation and shit
+        _= judgeController.StartCounting(LocalModeGameManager.Instance.GetPlayer(koPlayer));
+        await UniTask.Delay(1000); // delay for zebra animation
+
         Debug.Log("Break phase started");
         //questionBoard.SetActive(true);
         ShowQuestionBoard(true);
@@ -151,9 +158,11 @@ public class GameStateManager : NetworkBehaviour
         Button correctAnswer = questionBoard.GetComponent<QuestionGenerator>().GenerateQuestion();
         ChangeState(GameState.Break, breakPhaseLength);
 
+
+
         // wait for phase end
-        await WaitForPhaseEnd(breakPhaseLength, "Break", token);
-        //if(token.IsCancellationRequested) return;
+        await WaitForPhaseEnd(breakPhaseLength, GameState.Break, token);
+
 
         // post phase logic
         Debug.Log("Break phase ended");
@@ -184,21 +193,24 @@ public class GameStateManager : NetworkBehaviour
         SceneLoader.Instance.StartLoadingSceneAsync("MainMenu");
     }
 
-    private async UniTask WaitForPhaseEnd(float duration, string phaseName, CancellationToken token){
+    private async UniTask WaitForPhaseEnd(float duration, GameState phaseName, CancellationToken token){
+        float elapsedTime = 0f;
         while(!token.IsCancellationRequested){
 
-            if(phaseName == "Fighting"){
+            if(phaseName == GameState.Fighting){
                 // Call the external singleton function to check if the fighting phase should end
-                int koPlayer = LocalModeGameManager.Instance.CheckKOPlayer();
+                koPlayer = LocalModeGameManager.Instance.CheckKOPlayer();
                 if(koPlayer != -1){
-                    await UniTask.Delay(3000);
-                    _= judgeController.StartCounting(LocalModeGameManager.Instance.GetPlayer(koPlayer));
-                    await UniTask.Delay(3000);
                     break;
                 }
 
                 // Optionally update timer text or other UI elements here if needed
-
+            }else if(phaseName == GameState.Break){
+                // counting duration
+                elapsedTime += Time.deltaTime;
+                if(elapsedTime >= duration){
+                    break;
+                }
             }
 
             await UniTask.Yield();
