@@ -7,6 +7,7 @@ using FishNet.Demo.AdditiveScenes;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using UnityEngine.UI;
 
 public class LocalModeGameManager : MonoBehaviour
 {
@@ -22,6 +23,7 @@ public class LocalModeGameManager : MonoBehaviour
     [Header("UI")]
     public Transform playerStateTexts;
     private Dictionary<int, TMP_Text> playerStateTextsDict = new Dictionary<int, TMP_Text>();
+    private Dictionary<int, Slider> playerStunValueDict = new Dictionary<int, Slider>();
 
 
     public Dictionary<int, Dictionary<int, CharacterSetting>> playerCharacterSettings = new Dictionary<int, Dictionary<int, CharacterSetting>>();
@@ -54,7 +56,7 @@ public class LocalModeGameManager : MonoBehaviour
         {
             players[player.PlayerIndex] = player;
             playerInputs[player.PlayerIndex] = player.GetComponent<PlayerInput>();
-            CursorController.Instance.AddPlayerInput(player.PlayerIndex, playerInputs[player.PlayerIndex]);
+            GamepadAnswerSelector.Instance.AddPlayerInput(player.PlayerIndex, playerInputs[player.PlayerIndex]);
             // register player audio sources
             AudioManager.Instance.audioEffectsPlayers[player.PlayerIndex] = new AudioEffectsPlayer(player.transform.Find("AudioSources").gameObject);
             
@@ -103,7 +105,10 @@ public class LocalModeGameManager : MonoBehaviour
                 foreach (Transform child in playerStateTexts)
                 {
                     TMP_Text text = child.GetComponent<TMP_Text>();
-                    playerStateTextsDict[int.Parse(child.name)] = text;
+                    if (text != null) playerStateTextsDict[int.Parse(child.name)] = text;
+
+                    Slider slider = child.GetComponent<Slider>();
+                    if (slider != null) playerStunValueDict[int.Parse(child.name)] = slider;
                 }
                 
             }
@@ -349,6 +354,14 @@ public class LocalModeGameManager : MonoBehaviour
             return -1;
         }
 
+        // animate KO player
+        if(playerStates[0].damageTaken >= damageToKO && playerStates[1].damageTaken < damageToKO){
+            NotifyAllPlayers("0- -KO", 0.5f);
+            return 0;
+        }else if(playerStates[0].damageTaken < damageToKO && playerStates[1].damageTaken >= damageToKO){
+            NotifyAllPlayers("1- -KO", 0.5f);
+            return 1;
+        }
         return playerStates[0].damageTaken > playerStates[1].damageTaken ? 0 : 1;
     }
 
@@ -384,7 +397,13 @@ public class LocalModeGameManager : MonoBehaviour
         // put game state on tmp text
         foreach (var pair in playerStates)
         {
-            playerStateTextsDict[pair.Key].text = $"Player {pair.Key + 1} - {pair.Value.punchStates[0]} - {pair.Value.punchStates[1]}\n DamageTaken: {pair.Value.damageTaken}";
+            playerStateTextsDict[pair.Key].text = $"Player {pair.Key + 1} - {pair.Value.punchStates[0]} - {pair.Value.punchStates[1]}\n STUN: {pair.Value.damageTaken}";
+        }
+
+        // update stun value on slider
+        foreach (var pair in playerStates)
+        {
+            playerStunValueDict[pair.Key].value = pair.Value.damageTaken / 100f;
         }
     }
 

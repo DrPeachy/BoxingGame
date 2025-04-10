@@ -1,19 +1,33 @@
+// QuestionGenerator.cs
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
-using Unity.VisualScripting;
+using DG.Tweening; // DOTween namespace
 
 public class QuestionGenerator : MonoBehaviour
 {
     public static QuestionGenerator Instance { get; private set; }
 
     public GameObject questionBoard;
-    public TMPro.TMP_Text questionText;
-    public List<TMP_Text> buttonTexts;
-    public List<Button> buttons;
+    public TMP_Text questionText;
+    public List<TMP_Text> buttonTexts; // Text components attached to the answer buttons
+    public List<Button> buttons;         // Answer button components (index 0: left, 1: up, 2: right, 3: down)
+    public float typeDuration = 2f;
+
+    // Define the trivia question structure
+    [Serializable]
+    public class TriviaQuestion
+    {
+        public string question;       // Question text
+        public string[] options;      // Array of four options (order: left, up, right, down)
+        public int correctOption;     // Correct option index (0-3)
+    }
+
+    // Private question bank, always populated in code
+    private List<TriviaQuestion> questionBank;
 
     private void Awake()
     {
@@ -24,103 +38,106 @@ public class QuestionGenerator : MonoBehaviour
         else
         {
             Destroy(gameObject);
+            return;
+        }
+        // Populate the question bank in code
+        PopulateDefaultQuestions();
+
+        // Optionally initialize buttonTexts list if not set manually
+        if (buttonTexts == null || buttonTexts.Count == 0)
+        {
+            buttonTexts = new List<TMP_Text>();
+            foreach (Button button in buttons)
+            {
+                TMP_Text txt = button.GetComponentInChildren<TMP_Text>();
+                if (txt != null)
+                    buttonTexts.Add(txt);
+            }
         }
     }
 
-    void Start()
+    // Populate a default trivia question bank entirely in code
+    private void PopulateDefaultQuestions()
     {
-        if(buttonTexts != null || buttonTexts.Count != 0) return;
-        buttonTexts = new List<TMP_Text>();
-        foreach(Button button in buttons){
-            buttonTexts.Add(button.GetComponentInChildren<TMP_Text>());
-        }
+        questionBank = new List<TriviaQuestion>()
+        {
+            new TriviaQuestion() {
+                question = "What is the capital of France?",
+                options = new string[] { "Paris", "London", "Berlin", "Madrid" },
+                correctOption = 0
+            },
+            new TriviaQuestion() {
+                question = "Which planet is known as the Red Planet?",
+                options = new string[] { "Earth", "Mars", "Jupiter", "Saturn" },
+                correctOption = 1
+            },
+            new TriviaQuestion() {
+                question = "Who wrote 'Romeo and Juliet'?",
+                options = new string[] { "Charles Dickens", "William Shakespeare", "Leo Tolstoy", "Mark Twain" },
+                correctOption = 1
+            },
+            new TriviaQuestion() {
+                question = "What is the chemical symbol for water?",
+                options = new string[] { "H2O", "CO2", "NaCl", "O2" },
+                correctOption = 0
+            },
+            new TriviaQuestion() {
+                question = "What is the largest mammal in the world?",
+                options = new string[] { "Elephant", "Blue Whale", "Giraffe", "Great White Shark" },
+                correctOption = 1
+            },
+            new TriviaQuestion() {
+                question = "What is the speed of light?",
+                options = new string[] { "300,000 km/s", "150,000 km/s", "1,000,000 km/s", "3,000 km/s" },
+                correctOption = 0
+            },
+        };
     }
 
-    public Button GenerateQuestion(){
-        if(questionBoard == null || !questionBoard.activeSelf) return null;
-
-        // generate question
-        Debug.Log("Generating question...");
-        int a = UnityEngine.Random.Range(1, 100);
-        int b = UnityEngine.Random.Range(1, 100);
-
-        // generate operation
-        int operation = UnityEngine.Random.Range(0, 3); // 0, 1, 2 -> add, sub, mul
-
-        int answer = 0;
-        
-        switch(operation){
-            case 0:
-                answer = a + b;
-                break;
-            case 1:
-                answer = a - b;
-                if(answer < 0){
-                    answer = -answer;
-                    int temp = a;
-                    a = b;
-                    b = temp;
-                }
-                break;
-            case 2:
-                answer = a * b;
-                break;
-            default:
-                break;
-        }
-        
-
-        // generate two wrong answers, one with same last digit as correct one, or both with same last digit
-        int wrongAnswer1 = answer;
-        int wrongAnswer2 = answer;
-        int max = Math.Clamp(answer * 2, 3, 9801); // 99 * 99 = 9801
-        while(wrongAnswer1 == answer){
-            max = Math.Clamp(answer * 2, 3, 9801); // 99 * 99 = 9801
-            wrongAnswer1 = UnityEngine.Random.Range(1, max);
+    // Generate a trivia question with DOTween typewriter effect for the question text.
+    // Returns the Button which corresponds to the correct answer.
+    public Button GenerateQuestion()
+    {
+        // Ensure the question board is active
+        if (questionBoard == null || !questionBoard.activeSelf)
+        {
+            if (questionBoard != null)
+                questionBoard.SetActive(true);
         }
 
-        while(wrongAnswer2 == answer || wrongAnswer2 == wrongAnswer1){
-            max = Math.Clamp(answer * 2, 3, 9801); // 99 * 99 = 9801
-            wrongAnswer2 = UnityEngine.Random.Range(1, max);
-            // set wrong answer 2 to same last digit as correct answer or wrong answer 1
-            if(wrongAnswer2 % 10 != answer % 10 && wrongAnswer2 % 10 != wrongAnswer1 % 10){
-                int temp = UnityEngine.Random.Range(0, 2) == 0 ? answer : wrongAnswer1;
-                wrongAnswer2 = wrongAnswer2 - wrongAnswer2 % 10 + temp % 10;
-            }
+        // Randomly select a trivia question from the bank
+        if (questionBank == null || questionBank.Count == 0)
+        {
+            Debug.LogError("Question bank is empty!");
+            return null;
+        }
+        int randomIndex = UnityEngine.Random.Range(0, questionBank.Count);
+        TriviaQuestion selectedQuestion = questionBank[randomIndex];
+
+        Debug.Log("Generating trivia question...");
+
+        // Clear current question text and animate it with DOTween (typewriter effect)
+        questionText.text = "";
+        // Duration for the typewriter effect (in seconds)
+        questionText.DOText(selectedQuestion.question, typeDuration).SetEase(Ease.Linear);
+
+        // Set texts for all four answer buttons from the question options
+        if (buttonTexts.Count < 4)
+        {
+            Debug.LogError("Not enough button texts assigned.");
+            return null;
+        }
+        for (int i = 0; i < 4; i++)
+        {
+            if (selectedQuestion.options.Length > i)
+                buttonTexts[i].text = selectedQuestion.options[i];
+            else
+                buttonTexts[i].text = "";
         }
 
-        questionText.text = $"{a} {(operation == 0 ? "+" : operation == 1 ? "-" : "*")} {b} = ?";
-        int correctAnswerIndex = UnityEngine.Random.Range(0, 3); // 0, 1, 2
-        Debug.Log($"Correct answer index: {correctAnswerIndex}");
-        Debug.Log($"buttonTexts.Count: {buttonTexts.Count}");
-        buttonTexts[correctAnswerIndex].text = answer.ToString();
-        
-
-        int wrongAnswerIndex1 = -1;
-        int wrongAnswerIndex2 = -1;
-        for(int i = 0; i < 3; i++){
-            if(i == correctAnswerIndex) continue;
-            if(wrongAnswerIndex1 == -1){
-                wrongAnswerIndex1 = i;
-            }else{
-                wrongAnswerIndex2 = i;
-            }
-        }
-        // switch wrong answers to make it random
-        if(UnityEngine.Random.Range(0, 2) == 0){
-            int temp = wrongAnswer1;
-            wrongAnswer1 = wrongAnswer2;
-            wrongAnswer2 = temp;
-        }
-
-        buttonTexts[wrongAnswerIndex1].text = wrongAnswer1.ToString();
-        buttonTexts[wrongAnswerIndex2].text = wrongAnswer2.ToString();
-        
-        Debug.Log($"Correct answer: {correctAnswerIndex + 1}");
-        Debug.Log($"Wrong Answer 1: {wrongAnswerIndex1 + 1}");
-        Debug.Log($"Wrong Answer 2: {wrongAnswerIndex2 + 1}");
-        Debug.Log("Question generated");
-
-        return buttons[correctAnswerIndex];
+        // Return the Button corresponding to the correct answer for later validation
+        Button correctButton = buttons[selectedQuestion.correctOption];
+        Debug.Log($"Correct answer is at index: {selectedQuestion.correctOption}");
+        return correctButton;
     }
 }

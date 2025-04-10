@@ -32,7 +32,7 @@ public class JudgeController : MonoBehaviour
 
     void Start()
     {
-        _= StartGameLoop();
+        // _= StartGameLoop();
     }
 
     public async UniTask StartGameLoop(){
@@ -90,7 +90,11 @@ public class JudgeController : MonoBehaviour
 
         // start counting
         // AudioManager.Instance?.PlayZebraJudgeCountdown(0);
-        await UniTask.Delay((int)(1000 * countDuration)); // Wait for 10 second
+        for(int i = 0; i < 10; i++){
+            // AudioManager.Instance?.PlayZebraJudgeCountdown(i + 1);
+            await UniTask.Delay((int)(1000 * countDuration / 10)); // Wait for 1 second
+            AudioManager.Instance?.PlayZebraJudgeCountdown(0);
+        }
 
         // Move back to the next position
         Vector3 targetPosition2 = judgePositions[currentPositionIndex].position;

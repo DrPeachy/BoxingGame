@@ -31,6 +31,8 @@ public class GameStateManager : NetworkBehaviour
 
     public int playerCount = 0;
     public int roundCount = 0;
+    public int p1KOCount = 0;
+    public int p2KOCount = 0;
 
     [Header("phase length")]
     public float fightingPhaseLength = 30f;
@@ -87,8 +89,14 @@ public class GameStateManager : NetworkBehaviour
             if(cts.Token.IsCancellationRequested) break;
             await StartBreakPhase(cts.Token);
             if(cts.Token.IsCancellationRequested) break;
-            roundCount++;
-            if(roundCount >= 3) break;
+            if(koPlayer == 0){
+                p1KOCount++;
+                koPlayer = -1;
+            }else if(koPlayer == 1){
+                p2KOCount++;
+                koPlayer = -1;
+            }
+            if(p1KOCount >= 3 || p2KOCount >= 3) break;
         }
 
         await StartEndPhase();
@@ -148,13 +156,15 @@ public class GameStateManager : NetworkBehaviour
         // pre phase logic
         gameState = GameState.Break;
         // play zebra animation and shit
+        await UniTask.Delay(500); // delay for zebra animation
         _= judgeController.StartCounting(LocalModeGameManager.Instance.GetPlayer(koPlayer));
-        await UniTask.Delay(1000); // delay for zebra animation
+        await UniTask.Delay(500); // delay for zebra animation
+        
 
         Debug.Log("Break phase started");
         //questionBoard.SetActive(true);
         ShowQuestionBoard(true);
-        CursorController.Instance.Reset();
+        GamepadAnswerSelector.Instance.ResetSelections();
         Button correctAnswer = questionBoard.GetComponent<QuestionGenerator>().GenerateQuestion();
         ChangeState(GameState.Break, breakPhaseLength);
 
@@ -164,16 +174,19 @@ public class GameStateManager : NetworkBehaviour
         await WaitForPhaseEnd(breakPhaseLength, GameState.Break, token);
 
 
-        // post phase logic
+        /// post phase logic
+        // question board
         Debug.Log("Break phase ended");
-        //questionBoard.SetActive(false);
         ShowQuestionBoard(false);
-        Tuple<bool, bool> result = CursorController.Instance.CheckAnswerCorrectness(correctAnswer);
+        Tuple<bool, bool> result = GamepadAnswerSelector.Instance.CheckAnswerCorrectness(correctAnswer);
         bool player1Correct = result.Item1;
         bool player2Correct = result.Item2;
         Debug.Log($"Player 1: {player1Correct}, Player 2: {player2Correct}");
         if (!player1Correct) LocalModeGameManager.Instance.AddDamageToPlayer(0, 50);
         if (!player2Correct) LocalModeGameManager.Instance.AddDamageToPlayer(1, 50);
+
+        // zebra animation
+        _= judgeController.StartWatching();
 
         // delay before next phase, prevent instant phase switch that cause crash
         await UniTask.Delay(1500);

@@ -13,6 +13,8 @@ public class PlayerView : MonoBehaviour
     private Vector3 rGloveOrgPos;
     private Quaternion lGloveOrgRot;
     private Quaternion rGloveOrgRot;
+    private Vector3 playerOrgPos;
+    private Quaternion playerOrgRot;
     [Header("Glove Animation")]
     private Sequence leftGloveSequence;
     private Sequence rightGloveSequence;
@@ -62,6 +64,8 @@ public class PlayerView : MonoBehaviour
         rGloveOrgPos = rGlove.localPosition;
         lGloveOrgRot = lGlove.localRotation;
         rGloveOrgRot = rGlove.localRotation;
+        playerOrgPos = transform.position;
+        playerOrgRot = transform.rotation;
 
         // dotween sequence
         leftGloveSequence = DOTween.Sequence();
@@ -376,6 +380,26 @@ public class PlayerView : MonoBehaviour
                 duration
             ).SetEase(Ease.InBack));
     }
+    
+    public void AnimateKO(){
+        //// player fall back
+        Vector3 targetPos = playerOrgPos + new Vector3(-0.1f, 0, -0.5f);
+        Quaternion targetRot = playerOrgRot * Quaternion.Euler(0, 0, 90);
+
+        transform.DOMove(targetPos, 0.5f).SetEase(Ease.OutBack);
+        transform.DORotateQuaternion(targetRot, 0.5f).SetEase(Ease.OutBack);
+    }
+
+    public void AnimateKORecovery()
+    {
+        // player fall back
+        Vector3 targetPos = playerOrgPos;
+        Quaternion targetRot = playerOrgRot;
+
+        transform.DOMove(targetPos, 0.5f).SetEase(Ease.OutBack);
+        transform.DORotateQuaternion(targetRot, 0.5f).SetEase(Ease.OutBack);
+    }
+
 
     public void ResetGloves(string hand)
     {
