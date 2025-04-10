@@ -3,7 +3,37 @@ guid: 84b1f596003f71249ad0d1047ffd57ba
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: PM3D_Sphere3D1_SeamsColor
+    second: {fileID: 2100000, guid: 477adad2469cdd04897f301eafa1a0d4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: body_SeamsColor
+    second: {fileID: 2100000, guid: f475b3f4b81341647853dfd10d014a9e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: eye
+    second: {fileID: 2100000, guid: 528a247499bf8654aa7b24a2c6b99f0a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: head_SeamsColor
+    second: {fileID: 2100000, guid: 65733ad955fe74043a744c370c3ccb1b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pupil
+    second: {fileID: 2100000, guid: 4bbc9c329f49e3d4796c226bc6d3ee83, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: uniform1
+    second: {fileID: 2100000, guid: 4bbc9c329f49e3d4796c226bc6d3ee83, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -24,7 +54,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -81,8 +111,446 @@ ModelImporter:
   importAnimation: 1
   humanDescription:
     serializedVersion: 3
-    human: []
-    skeleton: []
+    human:
+    - boneName: horse_Hips
+      humanName: Hips
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: horse_LeftUpLeg
+      humanName: LeftUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: horse_RightUpLeg
+      humanName: RightUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: horse_LeftLeg
+      humanName: LeftLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: horse_RightLeg
+      humanName: RightLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: horse_LeftFoot
+      humanName: LeftFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: horse_RightFoot
+      humanName: RightFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: horse_Spine1
+      humanName: Spine
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: horse_Spine2
+      humanName: Chest
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: horse_Neck
+      humanName: Neck
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: horse_Head
+      humanName: Head
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: horse_LeftShoulder
+      humanName: LeftShoulder
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: horse_RightShoulder
+      humanName: RightShoulder
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: horse_LeftArm
+      humanName: LeftUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: horse_RightArm
+      humanName: RightUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: horse_LeftForeArm
+      humanName: LeftLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: horse_RightForeArm
+      humanName: RightLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: horse_LeftHand
+      humanName: LeftHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: horse_RightHand
+      humanName: RightHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: horse_LeftToeBase
+      humanName: LeftToes
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: horse_RightToeBase
+      humanName: RightToes
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    skeleton:
+    - name: Horse(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: pupil
+      parentName: Horse(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: eye
+      parentName: Horse(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: body
+      parentName: Horse(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: tie
+      parentName: Horse(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: head
+      parentName: Horse(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: hair
+      parentName: Horse(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: horse_Guides
+      parentName: Horse(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Head
+      parentName: horse_Guides
+      position: {x: -0, y: 0.008001522, z: -0.0033894537}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Hips
+      parentName: horse_Guides
+      position: {x: -0, y: -0.034958687, z: -0.0011124902}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: LeftArm
+      parentName: horse_Guides
+      position: {x: -0.013157292, y: -0.00834317, z: -0.0061732912}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: LeftFoot
+      parentName: horse_Guides
+      position: {x: -0.0043965736, y: -0.06615654, z: -0.00022858455}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: LeftForeArm
+      parentName: horse_Guides
+      position: {x: -0.026355207, y: -0.011829368, z: -0.0072250674}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: LeftHand
+      parentName: horse_Guides
+      position: {x: -0.042032886, y: -0.01630152, z: -0.009031543}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: LeftLeg
+      parentName: horse_Guides
+      position: {x: -0.003699746, y: -0.048387654, z: -0.0015306332}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: LeftShoulder
+      parentName: horse_Guides
+      position: {x: -0.0075038383, y: -0.007866158, z: -0.0061732912}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: LeftToeBase
+      parentName: horse_Guides
+      position: {x: -0.0050912974, y: -0.06562695, z: 0.0057167634}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: LeftUpLeg
+      parentName: horse_Guides
+      position: {x: -0.003477365, y: -0.035093904, z: -0.0020910548}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Neck
+      parentName: horse_Guides
+      position: {x: -0, y: 0.0008761239, z: -0.0044117295}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Reference
+      parentName: horse_Guides
+      position: {x: -0, y: -0.06755087, z: 0.0006401032}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: RightArm
+      parentName: horse_Guides
+      position: {x: 0.013157292, y: -0.00834317, z: -0.0061732912}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: RightFoot
+      parentName: horse_Guides
+      position: {x: 0.0043965736, y: -0.06615654, z: -0.00022858455}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: RightForeArm
+      parentName: horse_Guides
+      position: {x: 0.026355207, y: -0.011829368, z: -0.0072250674}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: RightHand
+      parentName: horse_Guides
+      position: {x: 0.042032886, y: -0.01630152, z: -0.009031543}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: RightLeg
+      parentName: horse_Guides
+      position: {x: 0.003699746, y: -0.048387654, z: -0.0015306332}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: RightShoulder
+      parentName: horse_Guides
+      position: {x: 0.0075038383, y: -0.007866158, z: -0.0061732912}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: RightToeBase
+      parentName: horse_Guides
+      position: {x: 0.0050912974, y: -0.06562695, z: 0.0057167634}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: RightUpLeg
+      parentName: horse_Guides
+      position: {x: 0.003477365, y: -0.035093904, z: -0.0020910548}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Spine
+      parentName: horse_Guides
+      position: {x: -0, y: -0.02776515, z: -0.0023385403}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Spine1
+      parentName: horse_Guides
+      position: {x: -0, y: -0.019810468, z: -0.0029584544}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Spine2
+      parentName: horse_Guides
+      position: {x: -0, y: -0.010866482, z: -0.0035783683}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: horse_Reference
+      parentName: Horse(Clone)
+      position: {x: -0, y: -0.06755087, z: 0.0006401032}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: horse_Hips
+      parentName: horse_Reference
+      position: {x: 0, y: 0.09913514, z: -0.0017525931}
+      rotation: {x: 0.4560661, y: -0.5403737, z: -0.4560661, w: 0.5403737}
+      scale: {x: 1, y: 1, z: 1}
+    - name: horse_Spine
+      parentName: horse_Hips
+      position: {x: -0.0072972714, y: 2.0041904e-11, z: 0}
+      rotation: {x: 0, y: -0, z: -0.04550532, w: 0.99896413}
+      scale: {x: 1, y: 1, z: 1}
+    - name: horse_Spine1
+      parentName: horse_Spine
+      position: {x: -0.007978802, y: 8.832389e-11, z: 0}
+      rotation: {x: 0, y: -0, z: -0.004286724, w: 0.9999908}
+      scale: {x: 1, y: 1, z: 1}
+    - name: horse_Spine2
+      parentName: horse_Spine1
+      position: {x: -0.008965443, y: 1.872457e-12, z: -5.667873e-18}
+      rotation: {x: 0, y: 0, z: 0.00082510035, w: 0.9999997}
+      scale: {x: 1, y: 1, z: 1}
+    - name: horse_LeftShoulder
+      parentName: horse_Spine2
+      position: {x: -0.0031764936, y: -0.002376017, z: 0.0075038383}
+      rotation: {x: -0.45978096, y: 0.5372164, z: 0.5033203, w: 0.49665752}
+      scale: {x: 1, y: 1, z: 1}
+    - name: horse_LeftArm
+      parentName: horse_LeftShoulder
+      position: {x: -0.0056735426, y: -1.2596192e-10, z: 0}
+      rotation: {x: 0.70762354, y: -0.016612766, z: 0.004070222, w: 0.7063827}
+      scale: {x: 1, y: 1, z: 1}
+    - name: horse_LeftForeArm
+      parentName: horse_LeftArm
+      position: {x: -0.01369104, y: 0.000000807732, z: 0.00000033347254}
+      rotation: {x: -0.000059731457, y: 0.00025439594, z: -0.019399531, w: 0.99981177}
+      scale: {x: 1, y: 1, z: 1}
+    - name: horse_LeftHand
+      parentName: horse_LeftForeArm
+      position: {x: -0.016402846, y: -0.000000045544336, z: 0.0000000016747631}
+      rotation: {x: 0, y: 0, z: 0.00002918393, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: horse_RightShoulder
+      parentName: horse_Spine2
+      position: {x: -0.0031764936, y: -0.002376017, z: -0.0075038383}
+      rotation: {x: 0.5372164, y: 0.45978096, z: -0.49665752, w: 0.5033203}
+      scale: {x: 1, y: 1, z: 1}
+    - name: horse_RightArm
+      parentName: horse_RightShoulder
+      position: {x: 0.0056735426, y: 1.2596192e-10, z: 0}
+      rotation: {x: 0.7076258, y: -0.016616685, z: 0.0040717195, w: 0.70638025}
+      scale: {x: 1, y: 1, z: 1}
+    - name: horse_RightForeArm
+      parentName: horse_RightArm
+      position: {x: 0.0136910435, y: -0.000000797887, z: -0.0000003218431}
+      rotation: {x: -0.000060615177, y: 0.0002545363, z: -0.019436255, w: 0.99981105}
+      scale: {x: 1, y: 1, z: 1}
+    - name: horse_RightHand
+      parentName: horse_RightForeArm
+      position: {x: 0.016402842, y: 0.00000004791023, z: -0.0000000021440851}
+      rotation: {x: 2.7208584e-11, y: -0.00000092461084, z: 0.000029427067, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: horse_Neck
+      parentName: horse_Spine2
+      position: {x: -0.01177214, y: 1.3213601e-10, z: -7.447866e-18}
+      rotation: {x: 0, y: -0, z: -0.10647138, w: 0.9943158}
+      scale: {x: 1, y: 1, z: 1}
+    - name: horse_Head
+      parentName: horse_Neck
+      position: {x: -0.007198358, y: -2.2587851e-10, z: -7.515243e-18}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: horse_LeftUpLeg
+      parentName: horse_Hips
+      position: {x: -0.00003111655, y: -0.0009873727, z: 0.003477365}
+      rotation: {x: -0.015004956, y: -0.0032632211, z: 0.9989362, w: 0.04348302}
+      scale: {x: 1, y: 1, z: 1}
+    - name: horse_LeftLeg
+      parentName: horse_LeftUpLeg
+      position: {x: -0.013307428, y: -0.00000048837256, z: 0.000000017724153}
+      rotation: {x: -0.031811725, y: 0.0006139666, z: -0.019034246, w: 0.99931246}
+      scale: {x: 1, y: 1, z: 1}
+    - name: horse_LeftFoot
+      parentName: horse_LeftLeg
+      position: {x: -0.017830132, y: 0.000000105711685, z: 0.0000000015177279}
+      rotation: {x: -0.02736352, y: 0.0036895787, z: 0.72162604, w: 0.6917322}
+      scale: {x: 1, y: 1, z: 1}
+    - name: horse_LeftToeBase
+      parentName: horse_LeftFoot
+      position: {x: -0.0060091806, y: -0.0000000045166275, z: 0.0000000029398741}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: horse_RightUpLeg
+      parentName: horse_Hips
+      position: {x: -0.00003111655, y: -0.0009873727, z: -0.003477365}
+      rotation: {x: -0.003262989, y: 0.0150061995, z: -0.043452866, w: 0.9989374}
+      scale: {x: 1, y: 1, z: 1}
+    - name: horse_RightLeg
+      parentName: horse_RightUpLeg
+      position: {x: 0.013307437, y: 0.00000067342154, z: -0.0000000122923245}
+      rotation: {x: -0.031787228, y: 0.00061325554, z: -0.019092398, w: 0.9993121}
+      scale: {x: 1, y: 1, z: 1}
+    - name: horse_RightFoot
+      parentName: horse_RightLeg
+      position: {x: 0.017830133, y: -0.00000010589125, z: -0.000000009767623}
+      rotation: {x: -0.027380627, y: 0.0037064771, z: 0.7216455, w: 0.6917112}
+      scale: {x: 1, y: 1, z: 1}
+    - name: horse_RightToeBase
+      parentName: horse_RightFoot
+      position: {x: 0.006009177, y: 0.0000000052277906, z: -5.373157e-10}
+      rotation: {x: 0.000025417978, y: 0.0000000032397758, z: -8.234855e-14, w: 1}
+      scale: {x: 1, y: 1, z: 1}
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5
@@ -93,13 +561,13 @@ ModelImporter:
     globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
-  animationType: 2
+  animationType: 3
   humanoidOversampling: 1
-  avatarSetup: 0
+  avatarSetup: 1
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
   importBlendShapeDeformPercent: 1
   remapMaterialsIfMaterialImportModeIsNone: 0

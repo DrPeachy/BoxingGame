@@ -342,6 +342,19 @@ public class LocalModeGameManager : MonoBehaviour
         }
     }
 
+    // -1: no KO, 0: player 0 KO, 1: player 1 KO
+    public int CheckKOPlayer(){
+        if(playerStates[0].damageTaken < 100 && playerStates[1].damageTaken < 100){
+            return -1;
+        }
+
+        return playerStates[0].damageTaken > playerStates[1].damageTaken ? 0 : 1;
+    }
+
+    public Transform GetPlayer(int playerIndex){
+        return players[playerIndex].transform;
+    }
+
     public int GetPlayerWithLessDamageTaken(){
         if(playerStates[0].damageTaken < playerStates[1].damageTaken){
             return 0;
