@@ -10,6 +10,7 @@ public class UIMainMenu : MonoBehaviour
     public Transform settingPanel;
     public Transform storePanel;
     public Transform lockerPanel;
+    public Transform tutorialPanel;
 
     public Camera lockerCam;
     public Camera storeCam;
@@ -39,6 +40,7 @@ public class UIMainMenu : MonoBehaviour
         settingPanel.gameObject.SetActive(false);
         storePanel.gameObject.SetActive(false);
         lockerPanel.gameObject.SetActive(false);
+        tutorialPanel.gameObject.SetActive(false);
 
         lockerCam.gameObject.SetActive(false);
         storeCam.gameObject.SetActive(false);
@@ -80,5 +82,10 @@ public class UIMainMenu : MonoBehaviour
         lockerPreview?.gameObject.SetActive(true);
         
         if(isPPLoaded) ppController.EnableVolumeBlur();
+    }
+
+    public void OnClickTutorial(){
+        DisableAllPanel();
+        tutorialPanel.gameObject.SetActive(true);
     }
 }
