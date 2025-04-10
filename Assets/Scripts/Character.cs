@@ -10,13 +10,14 @@ public class CharacterSetting{
     public NC_Float straightPunchRecovery;
     public NC_Float straightBlockedRecovery;
     public NC_Float straightPunchDamage;
-    public NC_Float straightInterruptTime;
+    public NC_Float straightInterruptTime; // time for opponent to recover when interruptting a charge hook
 
     [Header("Hook Punch Settings")]
     public NC_Float hookChargeDuration;
     public NC_Float hookPunchWindup;
     public NC_Float hookPunchRecovery;
     public NC_Float hookPunchDamage;
+    public NC_Float hookInterruptTime; // time for opponent to recover when interruptting a block
 
     [Header("Block Settings")]
     public NC_Float blockRecovery;
@@ -37,6 +38,7 @@ public class CharacterSetting{
         hookPunchWindup = character.hookPunchWindup;
         hookPunchRecovery = character.hookPunchRecovery;
         hookPunchDamage = character.hookPunchDamage;
+        hookInterruptTime = character.hookInterruptTime;
 
         blockRecovery = character.blockRecovery;
         parryDuration = character.parryDuration;
@@ -55,6 +57,7 @@ public class CharacterSetting{
         hookPunchWindup = other.hookPunchWindup;
         hookPunchRecovery = other.hookPunchRecovery;
         hookPunchDamage = other.hookPunchDamage;
+        hookInterruptTime = other.hookInterruptTime;
 
         blockRecovery = other.blockRecovery;
         parryDuration = other.parryDuration;
@@ -73,6 +76,7 @@ public class CharacterSetting{
         hookPunchWindup.addEffect(equipmentEffect.hookPunchWindup);
         hookPunchRecovery.addEffect(equipmentEffect.hookPunchRecovery);
         hookPunchDamage.addEffect(equipmentEffect.hookPunchDamage);
+        hookInterruptTime.addEffect(equipmentEffect.hookInterruptTime);
 
         blockRecovery.addEffect(equipmentEffect.blockRecovery);
         parryDuration.addEffect(equipmentEffect.parryDuration);
@@ -102,6 +106,7 @@ public class Character{
     public float hookPunchWindup = 0.7f;
     public float hookPunchRecovery = 0.4f;
     public float hookPunchDamage = 7f;
+    public float hookInterruptTime = 0.2f;
 
     [Header("Block Settings")]
     public float blockRecovery = 0.25f;

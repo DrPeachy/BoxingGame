@@ -22,26 +22,7 @@ public class LocalModeGameManager : MonoBehaviour
     public Transform playerStateTexts;
     private Dictionary<int, TMP_Text> playerStateTextsDict = new Dictionary<int, TMP_Text>();
 
-    // [Header("Straight Punch Settings")]
-    // public float straightPunchWindup = 0.5f;
-    // public float straightPunchRecovery = 0.3f;
-    // public float straightPunchDamage = 5f;
-    // public float straightInterruptTime = 0.5f;
 
-    // [Header("Hook Punch Settings")]
-    // public float hookChargeDuration = 0.8f;
-    // public float hookPunchWindup = 0.7f;
-    // public float hookPunchRecovery = 0.4f;
-    // public float hookPunchDamage = 7f;
-
-    // [Header("Block Settings")]
-    // public float blockRecovery = 0.25f;
-    // public float parryDuration = 0.25f;
-    // public float parryRecovery = 0.9f;
-    // public float blockDamageReduction = 4f;
-
-    //public Dictionary<int, CharacterSetting> playerCharacters = new Dictionary<int, CharacterSetting>();
-    //public Dictionary<int, CharacterSetting> playerCharacterSettings = new Dictionary<int, CharacterSetting>();
     public Dictionary<int, Dictionary<int, CharacterSetting>> playerCharacterSettings = new Dictionary<int, Dictionary<int, CharacterSetting>>();
     // DEBUG
     public CharacterSetting DEBUG_PLAYER0_LEFT = new CharacterSetting();
@@ -218,7 +199,7 @@ public class LocalModeGameManager : MonoBehaviour
 
             // start charge
             while(playerStates[playerIndex].punchStates[handIndex] == PunchState.HookCharge && 
-                playerStates[playerIndex].chargeTimes[handIndex] < playerCharacterSettings[playerIndex][handIndex].hookChargeDuration){
+                playerStates[playerIndex].chargeTimes[handIndex] < playerCharacterSettings[playerIndex][handIndex].hookChargeDuration.finalValue){
                 playerStates[playerIndex].chargeTimes[handIndex] += Time.deltaTime;
                 await UniTask.Yield();
             }
@@ -241,93 +222,93 @@ public class LocalModeGameManager : MonoBehaviour
                 playerStates[playerIndex].punchStates[handIndex] = PunchState.StraightPunch;
                 Debug.Log($"玩家 {playerIndex} 的 {handIndex} 手发动了直拳");
                 AudioManager.Instance.PlayWave(playerIndex);
-                NotifyAllPlayers($"{playerIndex}-{hand}-Straight", playerCharacterSettings[playerIndex][handIndex].straightPunchWindup * 0.9f);
+                NotifyAllPlayers($"{playerIndex}-{hand}-Straight", playerCharacterSettings[playerIndex][handIndex].straightPunchWindup.finalValue * 0.9f);
                 AudioManager.Instance.StopCharge(playerIndex);
-                Debug.Log("____NCFLOATDEBUG____" + playerCharacterSettings[playerIndex][handIndex].straightPunchWindup * 0.9f);
+                Debug.Log("____NCFLOATDEBUG____" + playerCharacterSettings[playerIndex][handIndex].straightPunchWindup.finalValue * 0.9f);
 
-                await UniTask.Delay((int)(playerCharacterSettings[playerIndex][handIndex].straightPunchWindup * 1000));
+                await UniTask.Delay((int)(playerCharacterSettings[playerIndex][handIndex].straightPunchWindup.finalValue * 1000));
                 opponentPunchState = playerStates[opponentIndex].punchStates[opponentHandIndex];
                 Debug.Log($"对手状态：{opponentPunchState}");
                 // dealing damage
                 if(opponentPunchState != PunchState.Block && opponentPunchState != PunchState.Parry){
                     // take damage
-                    playerStates[opponentIndex].damageTaken += playerCharacterSettings[playerIndex][handIndex].straightPunchDamage;
+                    playerStates[opponentIndex].damageTaken += playerCharacterSettings[playerIndex][handIndex].straightPunchDamage.finalValue;
                     AudioManager.Instance.PlayPunch(playerIndex);
                     AudioManager.Instance.PlayGetHit(opponentIndex, 0);
                     playerEffects[playerIndex].TriggerCameraShake();
-                    playerEffects[opponentIndex].TriggerFlash(playerCharacterSettings[playerIndex][handIndex].straightPunchDamage / 10);
+                    playerEffects[opponentIndex].TriggerFlash(playerCharacterSettings[playerIndex][handIndex].straightPunchDamage.finalValue / 10);
                     playerEffects[playerIndex].TriggerRipple(hand);
                     playerEffects[opponentIndex].TriggerInjuryPPEffect();
                 }else if(opponentPunchState == PunchState.Parry){
                     // parry
-                    _= SetToRecovery(playerIndex, hand, playerCharacterSettings[playerIndex][handIndex].parryRecovery);
+                    _= SetToRecovery(playerIndex, hand, playerCharacterSettings[playerIndex][handIndex].parryRecovery.finalValue);
                     AudioManager.Instance.PlayParry(playerIndex);
                     // to do: add parry effect
                     return;
                 }else if(opponentPunchState == PunchState.Block){
                     // block
-                    float calculatedDamage = playerCharacterSettings[playerIndex][handIndex].straightPunchDamage - playerCharacterSettings[opponentIndex][handIndex].blockDamageReduction;
+                    float calculatedDamage = playerCharacterSettings[playerIndex][handIndex].straightPunchDamage.finalValue - playerCharacterSettings[opponentIndex][handIndex].blockDamageReduction.finalValue;
                     if(calculatedDamage < 0) calculatedDamage = 0;
                     playerStates[opponentIndex].damageTaken += calculatedDamage;
-                    Debug.Log($"====blockdamage===={playerCharacterSettings[playerIndex][handIndex].blockDamageReduction}");
+                    Debug.Log($"====blockdamage===={playerCharacterSettings[playerIndex][handIndex].blockDamageReduction.finalValue}");
                     AudioManager.Instance.PlayPunchBlocked(playerIndex);
                     playerEffects[playerIndex].TriggerCameraShake(0.2f);
                     playerEffects[playerIndex].TriggerRipple(hand);
-                    _= SetToRecovery(playerIndex, hand, playerCharacterSettings[playerIndex][handIndex].straightBlockedRecovery);
+                    _= SetToRecovery(playerIndex, hand, playerCharacterSettings[playerIndex][handIndex].straightBlockedRecovery.finalValue);
                     return;
                 }
 
                 // interrupt opponent's hook charge
                 if(opponentPunchState == PunchState.HookCharge || opponentPunchState == PunchState.HookChargeComplete){
                     
-                    _ = SetToRecovery(opponentIndex, opponentHandIndex == 0 ? "l" : "r", playerCharacterSettings[playerIndex][handIndex].straightInterruptTime);
-                    Debug.Log($"====interrupt===={playerCharacterSettings[playerIndex][handIndex].straightInterruptTime}");
+                    _ = SetToRecovery(opponentIndex, opponentHandIndex == 0 ? "l" : "r", playerCharacterSettings[playerIndex][handIndex].straightInterruptTime.finalValue);
+                    Debug.Log($"====interrupt===={playerCharacterSettings[playerIndex][handIndex].straightInterruptTime.finalValue}");
                 }
 
                 //_= Interrupt(opponentIndex, opponentHandIndex == 0 ? "l" : "r");
 
                 // recovery
-                _= SetToRecovery(playerIndex, hand, playerCharacterSettings[playerIndex][handIndex].straightPunchRecovery);
+                _= SetToRecovery(playerIndex, hand, playerCharacterSettings[playerIndex][handIndex].straightPunchRecovery.finalValue);
 
             }else if(playerStates[playerIndex].punchStates[handIndex] == PunchState.HookChargeComplete){
                 playerStates[playerIndex].punchStates[handIndex] = PunchState.HookPunch;
                 Debug.Log($"玩家 {playerIndex} 的 {hand} 手发动了钩拳");
                 AudioManager.Instance.PlayWave(playerIndex);
-                NotifyAllPlayers($"{playerIndex}-{hand}-Hook", playerCharacterSettings[playerIndex][handIndex].hookPunchWindup * 0.9f);
+                NotifyAllPlayers($"{playerIndex}-{hand}-Hook", playerCharacterSettings[playerIndex][handIndex].hookPunchWindup.finalValue * 0.9f);
 
                 // windup
-                await UniTask.Delay((int)(playerCharacterSettings[playerIndex][handIndex].hookPunchWindup * 1000));
+                await UniTask.Delay((int)(playerCharacterSettings[playerIndex][handIndex].hookPunchWindup.finalValue * 1000));
 
                 // dealing damage
                 opponentPunchState = playerStates[opponentIndex].punchStates[opponentHandIndex];
                 if(opponentPunchState != PunchState.Block && opponentPunchState != PunchState.Parry){
                     // take damage
-                    playerStates[opponentIndex].damageTaken += playerCharacterSettings[playerIndex][handIndex].hookPunchDamage;
+                    playerStates[opponentIndex].damageTaken += playerCharacterSettings[playerIndex][handIndex].hookPunchDamage.finalValue;
                     AudioManager.Instance.PlayPunch(playerIndex);
                     AudioManager.Instance.PlayGetHit(opponentIndex, 1);
                     playerEffects[playerIndex].TriggerCameraShake(playerEffects[playerIndex].cameraShakeDuration * 1.2f, playerEffects[playerIndex].cameraShakeMagnitude * 2f);
-                    playerEffects[opponentIndex].TriggerFlash(playerCharacterSettings[playerIndex][handIndex].hookPunchDamage / 10);
+                    playerEffects[opponentIndex].TriggerFlash(playerCharacterSettings[playerIndex][handIndex].hookPunchDamage.finalValue / 10);
                     playerEffects[playerIndex].TriggerRipple(hand, 15f);
                     playerEffects[opponentIndex].TriggerInjuryPPEffect(0.5f);
                 }else if(opponentPunchState == PunchState.Parry){
                     // parry
-                    _= SetToRecovery(playerIndex, hand, playerCharacterSettings[playerIndex][handIndex].parryRecovery);
+                    _= SetToRecovery(playerIndex, hand, playerCharacterSettings[playerIndex][handIndex].parryRecovery.finalValue);
                     AudioManager.Instance.PlayParry(playerIndex);
                     // to do: add parry effect
                     return;
                 }else if(opponentPunchState == PunchState.Block){
                     // block
-                    playerStates[opponentIndex].damageTaken += (playerCharacterSettings[playerIndex][handIndex].hookPunchDamage - playerCharacterSettings[playerIndex][handIndex].blockDamageReduction);
-                    Debug.Log($"====blockdamage===={playerCharacterSettings[playerIndex][handIndex].blockDamageReduction}");
+                    playerStates[opponentIndex].damageTaken += (playerCharacterSettings[playerIndex][handIndex].hookPunchDamage.finalValue - playerCharacterSettings[playerIndex][handIndex].blockDamageReduction.finalValue);
+                    Debug.Log($"====blockdamage===={playerCharacterSettings[playerIndex][handIndex].blockDamageReduction.finalValue}");
                     AudioManager.Instance.PlayPunchBlocked(playerIndex);
                     playerEffects[playerIndex].TriggerCameraShake(0.6f);
                     playerEffects[playerIndex].TriggerRipple(hand);
                     // interrupt opponent's block
-                    _ = SetToRecovery(opponentIndex, opponentHandIndex == 0 ? "l" : "r", playerCharacterSettings[playerIndex][handIndex].blockRecovery);
+                    _ = SetToRecovery(opponentIndex, opponentHandIndex == 0 ? "l" : "r", playerCharacterSettings[playerIndex][handIndex].hookInterruptTime.finalValue);
                     players[opponentIndex].inputCache.ResetHold(); // reset input cache for opponent to prevent immediate block again
                 }
 
-                _ = SetToRecovery(playerIndex, hand, playerCharacterSettings[playerIndex][handIndex].hookPunchRecovery);
+                _ = SetToRecovery(playerIndex, hand, playerCharacterSettings[playerIndex][handIndex].hookPunchRecovery.finalValue);
             }
         }
 
@@ -344,12 +325,12 @@ public class LocalModeGameManager : MonoBehaviour
             action == "CancelCharge"
         ){
             AudioManager.Instance.StopCharge(playerIndex);
-            _ = SetToRecovery(playerIndex, hand, playerCharacterSettings[playerIndex][handIndex].blockRecovery);
+            _ = SetToRecovery(playerIndex, hand, playerCharacterSettings[playerIndex][handIndex].blockRecovery.finalValue);
         }
 
         // handle end block
         else if((punchState == PunchState.Block || punchState == PunchState.Parry) && action == "CancelBlock"){
-            _ = SetToRecovery(playerIndex, hand, playerCharacterSettings[playerIndex][handIndex].blockRecovery);
+            _ = SetToRecovery(playerIndex, hand, playerCharacterSettings[playerIndex][handIndex].blockRecovery.finalValue);
         }
     }
 
@@ -395,7 +376,7 @@ public class LocalModeGameManager : MonoBehaviour
     private async UniTaskVoid StartParry(int player, string hand)
     {
         var handIndex = hand == "l" ? 0 : 1;
-        await UniTask.Delay((int)(playerCharacterSettings[player][handIndex].parryDuration * 1000));
+        await UniTask.Delay((int)(playerCharacterSettings[player][handIndex].parryDuration.finalValue * 1000));
 
         if (playerStates[player].punchStates[handIndex] == PunchState.Parry)
         {
@@ -423,7 +404,7 @@ public class LocalModeGameManager : MonoBehaviour
         int handIndex = hand == "l" ? 0 : 1;
         // interrupt player's hook charge
         if(playerStates[player].punchStates[handIndex] == PunchState.HookCharge || playerStates[player].punchStates[handIndex] == PunchState.HookChargeComplete){
-            await SetToRecovery(player, hand, playerCharacterSettings[player][handIndex].straightInterruptTime);
+            await SetToRecovery(player, hand, playerCharacterSettings[player][handIndex].straightInterruptTime.finalValue);
         }
         
         await UniTask.Yield();
