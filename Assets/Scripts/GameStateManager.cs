@@ -41,8 +41,8 @@ public class GameStateManager : NetworkBehaviour
 
     [Header("Break phase")]
     public GameObject questionBoard;
-
     private CancellationTokenSource cts;
+    public JudgeController judgeController;
 
     private void Awake()
     {
@@ -184,29 +184,25 @@ public class GameStateManager : NetworkBehaviour
         SceneLoader.Instance.StartLoadingSceneAsync("MainMenu");
     }
 
-    private async UniTask WaitForPhaseEnd(float phaseLength, string phaseName, CancellationToken token){
-        float elapsedTime = 0f;
+    private async UniTask WaitForPhaseEnd(float duration, string phaseName, CancellationToken token){
+        while(!token.IsCancellationRequested){
 
-        while(elapsedTime < phaseLength){
-            // if (timerText != null)
-            //     timerText.text = $"{phaseName} {phaseLength - elapsedTime:0.0}";
+            if(phaseName == "Fighting"){
+                // Call the external singleton function to check if the fighting phase should end
+                int koPlayer = LocalModeGameManager.Instance.CheckKOPlayer();
+                if(koPlayer != -1){
+                    await UniTask.Delay(3000);
+                    _= judgeController.StartCounting(LocalModeGameManager.Instance.GetPlayer(koPlayer));
+                    await UniTask.Delay(3000);
+                    break;
+                }
 
-            // // debug - space key to skip phase
-            // if(Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame){
-            //     Debug.Log("Phase skipped");
-            //     if (timerText != null)
-            //         timerText.text = "Phase Skipped!";
-            //     return;
-            // }
+                // Optionally update timer text or other UI elements here if needed
 
-            if(token.IsCancellationRequested) return;
+            }
 
-            elapsedTime += Time.deltaTime;
             await UniTask.Yield();
         }
-
-        // if (timerText != null)
-        //     timerText.text = $"{phaseName} ended!";
     }
 
     public void EndGame(){

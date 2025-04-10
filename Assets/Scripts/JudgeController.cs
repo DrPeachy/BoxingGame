@@ -12,7 +12,7 @@ public class JudgeController : MonoBehaviour
         Counting,
         Ending
     }
-    public JudgeState judgeState = JudgeState.Watching;
+    public JudgeState judgeState = JudgeState.Counting;
     public GameObject judgeObject;
     public Animator judgeAnimator;
 
@@ -55,6 +55,7 @@ public class JudgeController : MonoBehaviour
         {
             // Move to the next position
             Transform targetPosition = judgePositions[currentPositionIndex];
+            targetPosition.position = new Vector3(targetPosition.position.x, judgeObject.transform.position.y, targetPosition.position.z);
             judgeObject.transform.DOMove(targetPosition.position, 1f).SetEase(Ease.Linear).OnUpdate(() =>
             {
                 judgeObject.transform.LookAt(new Vector3(moveCenter.position.x, judgeObject.transform.position.y, moveCenter.position.z));
@@ -62,7 +63,7 @@ public class JudgeController : MonoBehaviour
             {
                 judgeAnimator?.SetTrigger("Stop");
             });
-            judgeAnimator?.SetTrigger("Move");
+            judgeAnimator?.SetTrigger("Walk");
             await UniTask.Delay((int)(1000 * stopDuration)); // Wait for 1 second
 
             // Increment the index and loop back if necessary
@@ -84,13 +85,15 @@ public class JudgeController : MonoBehaviour
         {
             judgeAnimator?.SetTrigger("Stop");
         });
-        judgeAnimator?.SetTrigger("Move");
+        judgeAnimator?.SetTrigger("Walk");
 
         // start counting
+        AudioManager.Instance?.PlayZebraJudgeCountdown(0);
         await UniTask.Delay((int)(1000 * countDuration)); // Wait for 10 second
 
         // Move back to the next position
         Transform targetPosition2 = judgePositions[currentPositionIndex];
+        targetPosition2.position = new Vector3(targetPosition2.position.x, judgeObject.transform.position.y, targetPosition2.position.z);
         judgeObject.transform.DOMove(targetPosition2.position, 1f).SetEase(Ease.Linear).OnUpdate(() =>
         {
             judgeObject.transform.LookAt(new Vector3(targetPosition2.position.x, judgeObject.transform.position.y, targetPosition2.position.z));
