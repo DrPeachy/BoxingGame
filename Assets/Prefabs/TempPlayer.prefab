@@ -408,7 +408,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6338124357051345135}
-  - component: {fileID: 2140435719700690295}
+  - component: {fileID: 3626208149408044449}
+  - component: {fileID: 7703520126327701392}
+  - component: {fileID: 7117384107334935835}
   m_Layer: 0
   m_Name: PlayerVolume
   m_TagString: Untagged
@@ -431,7 +433,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 839788332577781733}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2140435719700690295
+--- !u!114 &3626208149408044449
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -443,11 +445,63 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_IsGlobal: 1
+  m_IsGlobal: 0
   priority: 0
   blendDistance: 0
   weight: 1
-  sharedProfile: {fileID: 11400000, guid: 2c60c32c0f5f05b40b33198e8fb90452, type: 2}
+  sharedProfile: {fileID: 0}
+--- !u!65 &7703520126327701392
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2685420036143085046}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.06, y: 3.62, z: 1.5896509}
+  m_Center: {x: 0, y: 0.50208205, z: -0.035365343}
+--- !u!114 &7117384107334935835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2685420036143085046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24228e6e1529db9469ffd74bfd957a05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volume: {fileID: 3626208149408044449}
+  volumeProfile: {fileID: 0}
+  focusDistanceWithBlurOn: 0.1
+  focusDistanceWithBlurOff: 7.68
+  apertureWithBlurOn: 0.5
+  apertureWithBlurOff: 7.1
+  injuryFocalLength: 80
+  normalFocalLength: 33
+  injuryVignetteColor: {r: 0.93207544, g: 0.3358989, b: 0.34758875, a: 1}
+  normalVignetteColor: {r: 0.1, g: 0.1, b: 0.2, a: 1}
+  injuryVignetteInt: 0.7
+  normalVignetteInt: 0.2
+  injuryBloomSweatValue: 140
+  normalBloomSweatValue: 0
+  injuryChromaticAberrationInt: 1
+  normalChromaticAberrationInt: 0
+  injuryLensDistortionValue: -0.4
+  normalLensDistortionValue: 0
+  injuryDecayTime: 5
 --- !u!1 &2833201711560583205
 GameObject:
   m_ObjectHideFlags: 0
@@ -5579,6 +5633,9 @@ MonoBehaviour:
   rippleRight: {fileID: 8975832468123957116}
   leftRippleTarget: {fileID: 3248041591060562747}
   rightRippleTarget: {fileID: 1507476751493827290}
+  postProcessingPath: PostProcessing
+  postProcessingName: PlayerProfile
+  ppController: {fileID: 7117384107334935835}
 --- !u!1 &3627253775514859703
 GameObject:
   m_ObjectHideFlags: 0

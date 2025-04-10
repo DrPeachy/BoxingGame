@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using UnityEngine.UI;
+using UnityEngine.Rendering;
 
 public class PlayerEffect : MonoBehaviour
 {
@@ -25,6 +26,11 @@ public class PlayerEffect : MonoBehaviour
     public Transform leftRippleTarget;
     public Transform rightRippleTarget;
 
+    [Header("Post Processing")]
+    public string postProcessingPath = "Assets/PostProcessing";
+    public string postProcessingName = "VolumeProfile";
+    public PostProcessingController ppController;
+
 
     void Start()
     {
@@ -37,7 +43,7 @@ public class PlayerEffect : MonoBehaviour
 
 
 
-
+    // Camera Shake
     public void TriggerCameraShake(float duration, float magnitude){
         _ = cameraShake.Shake(duration, magnitude);
     }
@@ -50,6 +56,7 @@ public class PlayerEffect : MonoBehaviour
         _ = cameraShake.Shake(cameraShakeDuration, cameraShakeMagnitude);
     }
 
+    // Flash
     public void TriggerFlash(float duration, float startAlpha){
         _ = TriggerFlashEffect(duration, startAlpha);
     }
@@ -77,9 +84,6 @@ public class PlayerEffect : MonoBehaviour
         }
     }
 
-
-
-
     public async UniTaskVoid TriggerFlashEffect(float flashDuration, float flashStartAlpha){
         flashStartAlpha = Mathf.Clamp(flashStartAlpha, 0, 1);
         Vector3 flashColorRGB = new Vector3(flashImage.color.r, flashImage.color.g, flashImage.color.b);
@@ -93,6 +97,19 @@ public class PlayerEffect : MonoBehaviour
             await UniTask.Yield();
         }
         flashImage.color = new Color(flashColorRGB.x, flashColorRGB.y, flashColorRGB.z, 0);
+    }
+
+    public void TriggerInjuryPPEffect(){
+        ppController.AddInjury(0.25f);
+    }
+
+
+
+
+    public void SetPlayerPostProcessingProfile(int playerIndex){
+        string assetPath = postProcessingPath + "/P" + (playerIndex + 1) + postProcessingName;
+        Debug.Log("Set Player Post Processing Profile: " + assetPath);
+        ppController.SetPostProcessingVolumeProfile(assetPath);
     }
 
 }

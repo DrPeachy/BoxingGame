@@ -75,6 +75,8 @@ public class LocalModeGameManager : MonoBehaviour
             CursorController.Instance.AddPlayerInput(player.PlayerIndex, playerInputs[player.PlayerIndex]);
             // register player audio sources
             AudioManager.Instance.audioEffectsPlayers[player.PlayerIndex] = new AudioEffectsPlayer(player.transform.Find("AudioSources").gameObject);
+            
+            // setup player effect
             playerEffects[player.PlayerIndex] = player.GetComponent<PlayerEffect>();  // register player effects
             Character c = (DataManager.Instance.equippedCharacterIds[player.PlayerIndex] == -1) ? 
                     DataManager.Instance.characters[0] : DataManager.Instance.characters[DataManager.Instance.equippedCharacterIds[player.PlayerIndex]];
@@ -103,6 +105,8 @@ public class LocalModeGameManager : MonoBehaviour
             }
          
 
+            playerEffects[player.PlayerIndex].SetPlayerPostProcessingProfile(player.PlayerIndex);
+            
             Debug.Log($"玩家 {player.PlayerIndex} 加入游戏");
 
             // 初始化玩家状态
@@ -253,6 +257,7 @@ public class LocalModeGameManager : MonoBehaviour
                     playerEffects[playerIndex].TriggerCameraShake();
                     playerEffects[opponentIndex].TriggerFlash(playerCharacterSettings[playerIndex][handIndex].straightPunchDamage / 10);
                     playerEffects[playerIndex].TriggerRipple(hand);
+                    playerEffects[opponentIndex].TriggerInjuryPPEffect();
                 }else if(opponentPunchState == PunchState.Parry){
                     // parry
                     _= SetToRecovery(playerIndex, hand, playerCharacterSettings[playerIndex][handIndex].parryRecovery);
