@@ -17,6 +17,7 @@ public class LocalModeGameManager : MonoBehaviour
     public Dictionary<int, PlayerEffect> playerEffects = new Dictionary<int, PlayerEffect>();
     public int PlayerCount => players.Count;
     public bool isGameModeLocal = true;
+    public int damageToKO = 100; // damage to KO a player
 
     [Header("UI")]
     public Transform playerStateTexts;
@@ -344,11 +345,16 @@ public class LocalModeGameManager : MonoBehaviour
 
     // -1: no KO, 0: player 0 KO, 1: player 1 KO
     public int CheckKOPlayer(){
-        if(playerStates[0].damageTaken < 100 && playerStates[1].damageTaken < 100){
+        if(playerStates[0].damageTaken < damageToKO && playerStates[1].damageTaken < damageToKO){
             return -1;
         }
 
         return playerStates[0].damageTaken > playerStates[1].damageTaken ? 0 : 1;
+    }
+
+    public void ResetPlayerDamage(){
+        int koPlayer = CheckKOPlayer();
+
     }
 
     public Transform GetPlayer(int playerIndex){

@@ -54,9 +54,9 @@ public class JudgeController : MonoBehaviour
         while (judgeState == JudgeState.Watching)
         {
             // Move to the next position
-            Transform targetPosition = judgePositions[currentPositionIndex];
-            targetPosition.position = new Vector3(targetPosition.position.x, judgeObject.transform.position.y, targetPosition.position.z);
-            judgeObject.transform.DOMove(targetPosition.position, 1f).SetEase(Ease.Linear).OnUpdate(() =>
+            Vector3 targetPosition = judgePositions[currentPositionIndex].position;
+            targetPosition.y = judgeObject.transform.position.y; // Keep the y position the same
+            judgeObject.transform.DOMove(targetPosition, 1f).SetEase(Ease.Linear).OnUpdate(() =>
             {
                 judgeObject.transform.LookAt(new Vector3(moveCenter.position.x, judgeObject.transform.position.y, moveCenter.position.z));
             }).OnComplete(() =>
@@ -71,13 +71,14 @@ public class JudgeController : MonoBehaviour
         }
     }
 
-    public async UniTask StartCounting(Transform player){
+    public async UniTaskVoid StartCounting(Transform player){
         // If already in Counting state, exit
         if (judgeState == JudgeState.Counting) return;
         judgeState = JudgeState.Counting;
 
         // Move to the player's position
         Vector3 targetPosition = player.forward * playerPosOffset + player.position;
+        targetPosition.y = judgeObject.transform.position.y; // Keep the y position the same
         judgeObject.transform.DOMove(targetPosition, 1f).SetEase(Ease.Linear).OnUpdate(() =>
         {
             judgeObject.transform.LookAt(player.position);
@@ -88,15 +89,15 @@ public class JudgeController : MonoBehaviour
         judgeAnimator?.SetTrigger("Walk");
 
         // start counting
-        AudioManager.Instance?.PlayZebraJudgeCountdown(0);
+        // AudioManager.Instance?.PlayZebraJudgeCountdown(0);
         await UniTask.Delay((int)(1000 * countDuration)); // Wait for 10 second
 
         // Move back to the next position
-        Transform targetPosition2 = judgePositions[currentPositionIndex];
-        targetPosition2.position = new Vector3(targetPosition2.position.x, judgeObject.transform.position.y, targetPosition2.position.z);
-        judgeObject.transform.DOMove(targetPosition2.position, 1f).SetEase(Ease.Linear).OnUpdate(() =>
+        Vector3 targetPosition2 = judgePositions[currentPositionIndex].position;
+        targetPosition2.y = judgeObject.transform.position.y; // Keep the y position the same
+        judgeObject.transform.DOMove(targetPosition2, 1f).SetEase(Ease.Linear).OnUpdate(() =>
         {
-            judgeObject.transform.LookAt(new Vector3(targetPosition2.position.x, judgeObject.transform.position.y, targetPosition2.position.z));
+            judgeObject.transform.LookAt(targetPosition2);
         }).OnComplete(() =>
         {
             judgeAnimator?.SetTrigger("Stop");

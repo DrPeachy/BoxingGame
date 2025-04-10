@@ -899,7 +899,7 @@ MonoBehaviour:
   moveCenter: {fileID: 563108561}
   stopDuration: 2.5
   countTarget: {fileID: 2101680658}
-  playerPosOffset: 0.5
+  playerPosOffset: 0.7
   countDuration: 10
 --- !u!1 &53596445
 GameObject:
@@ -10990,6 +10990,7 @@ MonoBehaviour:
   breakPhaseLength: 10
   timerText: {fileID: 885033064}
   questionBoard: {fileID: 1485669322}
+  judgeController: {fileID: 47964989}
 --- !u!4 &744788516
 Transform:
   m_ObjectHideFlags: 0
