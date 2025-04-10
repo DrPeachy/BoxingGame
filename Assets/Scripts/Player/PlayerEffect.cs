@@ -99,8 +99,8 @@ public class PlayerEffect : MonoBehaviour
         flashImage.color = new Color(flashColorRGB.x, flashColorRGB.y, flashColorRGB.z, 0);
     }
 
-    public void TriggerInjuryPPEffect(){
-        ppController.AddInjury(0.25f);
+    public void TriggerInjuryPPEffect(float magnitude = 0.25f){
+        ppController.AddInjury(magnitude);
     }
 
 

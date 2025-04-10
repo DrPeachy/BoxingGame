@@ -167,7 +167,7 @@ public class PostProcessingController : MonoBehaviour
         {
             currentInjury = x;
             UpdatePostProcessingEffects();
-        }, 0f, injuryDecayTime * currentInjury * currentInjury).SetEase(Ease.Linear);
+        }, 0f, injuryDecayTime * currentInjury * currentInjury).SetEase(Ease.OutQuad);
     }
 
     // update post processing effects

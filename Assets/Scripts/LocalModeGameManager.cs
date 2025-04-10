@@ -308,6 +308,7 @@ public class LocalModeGameManager : MonoBehaviour
                     playerEffects[playerIndex].TriggerCameraShake(playerEffects[playerIndex].cameraShakeDuration * 1.2f, playerEffects[playerIndex].cameraShakeMagnitude * 2f);
                     playerEffects[opponentIndex].TriggerFlash(playerCharacterSettings[playerIndex][handIndex].hookPunchDamage / 10);
                     playerEffects[playerIndex].TriggerRipple(hand, 15f);
+                    playerEffects[opponentIndex].TriggerInjuryPPEffect(0.5f);
                 }else if(opponentPunchState == PunchState.Parry){
                     // parry
                     _= SetToRecovery(playerIndex, hand, playerCharacterSettings[playerIndex][handIndex].parryRecovery);

@@ -485,11 +485,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   volume: {fileID: 3626208149408044449}
   volumeProfile: {fileID: 0}
-  focusDistanceWithBlurOn: 0.1
-  focusDistanceWithBlurOff: 7.68
-  apertureWithBlurOn: 0.5
-  apertureWithBlurOff: 7.1
-  injuryFocalLength: 80
+  blurOnFocusDistance: 0.1
+  blurOffFocusDistance: 15.84
+  blurOnAperture: 0.34
+  blurOffAperture: 7.1
+  injuryFocalLength: 200
   normalFocalLength: 33
   injuryVignetteColor: {r: 0.93207544, g: 0.3358989, b: 0.34758875, a: 1}
   normalVignetteColor: {r: 0.1, g: 0.1, b: 0.2, a: 1}
