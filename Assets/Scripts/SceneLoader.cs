@@ -30,6 +30,16 @@ public class SceneLoader : MonoBehaviour
         if (isLoadingSceneAsync) return;
 
         isLoadingSceneAsync = true;
+
+        if(sceneName == "MainMenu")
+        {
+            AudioManager.Instance.PlayBGM(AudioManager.Instance.MainmenuBGM, 0.25f);
+        }
+        else if(sceneName == "Local")
+        {
+            AudioManager.Instance.PlayBGM(AudioManager.Instance.IngameBGM, 0.25f);
+        }
+
         LoadSceneAsync(sceneName).Forget();
     }
 

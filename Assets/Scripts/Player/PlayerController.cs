@@ -304,7 +304,9 @@ public class PlayerController : MonoBehaviour
             myState.punchStates[handIndex] = PunchState.Idle;
             playerView.ResetGloves(hand);
         }else if(action == "KO"){
-            playerView.AnimateKO();
+            playerView.AnimateKO(PlayerIndex);
+        }else if(action == "ResetKO"){
+            playerView.AnimateKORecovery();
         }
 
         await UniTask.Yield();

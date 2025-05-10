@@ -1224,7 +1224,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 160919801}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: bf759c746cd56814abf165a49a1fbdcf, type: 3}
@@ -2793,6 +2793,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 322548935}
   m_CullTransparentMesh: 1
+--- !u!1 &323837991
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 323837992}
+  m_Layer: 0
+  m_Name: MainmenuBGM
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &323837992
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 323837991}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 829818639}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &327348797
 GameObject:
   m_ObjectHideFlags: 0
@@ -6945,6 +6976,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   general: {fileID: 808574656}
+  BGM: {fileID: 1480117325}
   startEndClip: {fileID: 8300000, guid: ae31c33489765e644bddefa7c23c4373, type: 3}
   punchClipsList:
   - {fileID: 8300000, guid: e5778f1b9aba9bc4d8ce0c3030ed5d17, type: 3}
@@ -6960,10 +6992,12 @@ MonoBehaviour:
   getHitClipsList:
   - {fileID: 8300000, guid: 25be3827755a21845a8831a0c573d6f9, type: 3}
   - {fileID: 8300000, guid: b86432a7f41f43c4997c59632db3404a, type: 3}
-  generalButtonClickedClip: {fileID: 8300000, guid: d970d03dd6c709541868867344ecc254,
+  generalButtonClickedClip: {fileID: 8300000, guid: 33dc608f1f82c064db377a6c4f860d27,
     type: 3}
   zebraJudgeSpeakingClip: {fileID: 8300000, guid: 1350939c4024db94a8d2433263dc5c57,
     type: 3}
+  MainmenuBGM: {fileID: 8300000, guid: 8d4b48abed1522a4e852b7e67ab0ce9f, type: 3}
+  IngameBGM: {fileID: 8300000, guid: 1c3b53de799c91a4dbfb8955cd107b0c, type: 3}
 --- !u!4 &791439795
 Transform:
   m_ObjectHideFlags: 0
@@ -7277,7 +7311,7 @@ PrefabInstance:
     - target: {fileID: 839788332577781733, guid: 93fc8335574dbae4789187677c8f7da6,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.5
+      value: -0.66
       objectReference: {fileID: 0}
     - target: {fileID: 839788332577781733, guid: 93fc8335574dbae4789187677c8f7da6,
         type: 3}
@@ -9637,6 +9671,8 @@ Transform:
   - {fileID: 1239298274}
   - {fileID: 99856400}
   - {fileID: 398011351}
+  - {fileID: 323837992}
+  - {fileID: 1524914122}
   m_Father: {fileID: 791439795}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &837396408
@@ -9822,7 +9858,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   money: 9999
   equippedEquipmentIds: ffffffffffffffffffffffffffffffff
-  equippedCharacterIds: 0000000001000000
+  equippedCharacterIds: ffffffffffffffff
   equipments:
   - id: 0
     name: Cactus
@@ -18380,7 +18416,7 @@ PrefabInstance:
     - target: {fileID: 839788332577781733, guid: 93fc8335574dbae4789187677c8f7da6,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.5
+      value: -0.66
       objectReference: {fileID: 0}
     - target: {fileID: 839788332577781733, guid: 93fc8335574dbae4789187677c8f7da6,
         type: 3}
@@ -20873,7 +20909,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Boxing Game
+  m_text: The Boxing Game
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
   m_sharedMaterial: {fileID: 2140474, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
@@ -20910,7 +20946,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: 14
+  m_characterSpacing: 3.1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -21026,7 +21062,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: abfcc8fdf9992a045a0e8d78992856c2, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 8d4b48abed1522a4e852b7e67ab0ce9f, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.092
   m_Pitch: 1
@@ -21556,6 +21592,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1516855860}
   m_CullTransparentMesh: 1
+--- !u!1 &1524914121
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1524914122}
+  m_Layer: 0
+  m_Name: IngameBGM
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1524914122
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1524914121}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 829818639}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1531219537 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5318728339557916479, guid: f56ade4745ffc7242a4edcc05a3fa0e0,

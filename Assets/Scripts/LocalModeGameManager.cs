@@ -341,10 +341,16 @@ public class LocalModeGameManager : MonoBehaviour
     }
 
     public void AddDamageToPlayer(int playerIndex, float damage){
-        playerStates[playerIndex].damageTaken += damage;
+        playerStates[playerIndex].damageTaken = Mathf.Clamp(playerStates[playerIndex].damageTaken + damage, 0, damageToKO);
         foreach (var pair in playerStates)
         {
-            playerStateTextsDict[pair.Key].text = $"Player {pair.Key + 1} - {pair.Value.punchStates[0]} - {pair.Value.punchStates[1]}\n Stun Gauge: {pair.Value.damageTaken}";
+            playerStateTextsDict[pair.Key].text = $"Player {pair.Key + 1} - {pair.Value.punchStates[0]} - {pair.Value.punchStates[1]}\n STUN: {pair.Value.damageTaken}";
+        }
+
+        // update stun value on slider
+        foreach (var pair in playerStates)
+        {
+            playerStunValueDict[pair.Key].value = pair.Value.damageTaken / 100f;
         }
     }
 
@@ -353,6 +359,9 @@ public class LocalModeGameManager : MonoBehaviour
         if(playerStates[0].damageTaken < damageToKO && playerStates[1].damageTaken < damageToKO){
             return -1;
         }
+
+        // play sound
+        AudioManager.Instance.PlayKO(0);
 
         // animate KO player
         if(playerStates[0].damageTaken >= damageToKO && playerStates[1].damageTaken < damageToKO){
@@ -363,6 +372,10 @@ public class LocalModeGameManager : MonoBehaviour
             return 1;
         }
         return playerStates[0].damageTaken > playerStates[1].damageTaken ? 0 : 1;
+    }
+
+    public void ResetKOPlayer(int PlayerIndex){
+        NotifyAllPlayers($"{PlayerIndex}- -ResetKO", 0.5f);
     }
 
     public void ResetPlayerDamage(){

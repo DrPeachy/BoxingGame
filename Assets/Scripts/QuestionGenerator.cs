@@ -68,28 +68,98 @@ public class QuestionGenerator : MonoBehaviour
             },
             new TriviaQuestion() {
                 question = "Which planet is known as the Red Planet?",
-                options = new string[] { "Earth", "Mars", "Jupiter", "Saturn" },
+                options = new string[] { "Jupiter", "Mars", "Earth", "Saturn" },
                 correctOption = 1
-            },
-            new TriviaQuestion() {
-                question = "Who wrote 'Romeo and Juliet'?",
-                options = new string[] { "Charles Dickens", "William Shakespeare", "Leo Tolstoy", "Mark Twain" },
-                correctOption = 1
-            },
-            new TriviaQuestion() {
-                question = "What is the chemical symbol for water?",
-                options = new string[] { "H2O", "CO2", "NaCl", "O2" },
-                correctOption = 0
             },
             new TriviaQuestion() {
                 question = "What is the largest mammal in the world?",
-                options = new string[] { "Elephant", "Blue Whale", "Giraffe", "Great White Shark" },
+                options = new string[] { "Elephant", "Giraffe", "Blue Whale", "Great White Shark" },
+                correctOption = 2
+            },
+            new TriviaQuestion() {
+                question = "What is the chemical symbol for water?",
+                options = new string[] { "CO2", "NaCl", "O2", "H2O" },
+                correctOption = 3
+            },
+            new TriviaQuestion() {
+                question = "Which language is primarily used for Android app development?",
+                options = new string[] { "Java", "Swift", "C#", "Python" },
+                correctOption = 0
+            },
+            new TriviaQuestion() {
+                question = "Which gas do plants absorb from the atmosphere?",
+                options = new string[] { "Oxygen", "Carbon Dioxide", "Nitrogen", "Hydrogen" },
                 correctOption = 1
             },
             new TriviaQuestion() {
-                question = "What is the speed of light?",
-                options = new string[] { "300,000 km/s", "150,000 km/s", "1,000,000 km/s", "3,000 km/s" },
+                question = "What is the smallest prime number?",
+                options = new string[] { "3", "7", "2", "11" },
+                correctOption = 2
+            },
+            new TriviaQuestion() {
+                question = "Who painted the Mona Lisa?",
+                options = new string[] { "Pablo Picasso", "Vincent van Gogh", "Claude Monet", "Leonardo da Vinci" },
+                correctOption = 3
+            },
+            new TriviaQuestion() {
+                question = "How many continents are there on Earth?",
+                options = new string[] { "7", "5", "6", "4" },
                 correctOption = 0
+            },
+            new TriviaQuestion() {
+                question = "Which element has the chemical symbol 'Fe'?",
+                options = new string[] { "Gold", "Iron", "Silver", "Copper" },
+                correctOption = 1
+            },
+            new TriviaQuestion() {
+                question = "Which ocean is the largest?",
+                options = new string[] { "Atlantic", "Indian", "Arctic", "Pacific" },
+                correctOption = 3
+            },
+            new TriviaQuestion() {
+                question = "Who wrote '1984'?",
+                options = new string[] { "George Orwell", "Aldous Huxley", "Mark Twain", "J.K. Rowling" },
+                correctOption = 0
+            },
+            new TriviaQuestion() {
+                question = "What is the hottest planet in our solar system?",
+                options = new string[] { "Mercury", "Venus", "Mars", "Jupiter" },
+                correctOption = 1
+            },
+            new TriviaQuestion() {
+                question = "In computing, what does 'CPU' stand for?",
+                options = new string[] { "Central Processing Unit", "Computer Personal Unit", "Central Performance Utility", "Control Processing Unit" },
+                correctOption = 0
+            },
+            new TriviaQuestion() {
+                question = "Which country gifted the Statue of Liberty to the USA?",
+                options = new string[] { "France", "England", "Germany", "Spain" },
+                correctOption = 0
+            },
+            new TriviaQuestion() {
+                question = "What year did World War II end?",
+                options = new string[] { "1945", "1939", "1918", "1963" },
+                correctOption = 0
+            },
+            new TriviaQuestion() {
+                question = "Which artist is famous for the sculpture 'The Thinker'?",
+                options = new string[] { "Auguste Rodin", "Michelangelo", "Donatello", "Leonardo da Vinci" },
+                correctOption = 0
+            },
+            new TriviaQuestion() {
+                question = "What is the hardest natural substance?",
+                options = new string[] { "Gold", "Diamond", "Iron", "Quartz" },
+                correctOption = 1
+            },
+            new TriviaQuestion() {
+                question = "Which device is used to measure atmospheric pressure?",
+                options = new string[] { "Thermometer", "Barometer", "Hygrometer", "Anemometer" },
+                correctOption = 1
+            },
+            new TriviaQuestion() {
+                question = "Which country is known as the Land of the Rising Sun?",
+                options = new string[] { "China", "Japan", "South Korea", "Thailand" },
+                correctOption = 1
             },
         };
     }

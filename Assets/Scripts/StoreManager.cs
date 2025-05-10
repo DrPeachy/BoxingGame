@@ -46,13 +46,13 @@ public class StoreManager : MonoBehaviour
         equipments = DataManager.Instance.equipments;
         characters = DataManager.Instance.characters;
         index = 0;
-        if (prefabDisplayTransform == null)
-        {
-            prefabDisplayTransform.position = new Vector3(0, 0, 0);
-            prefabDisplayTransform.rotation = Quaternion.identity;
-            prefabDisplayTransform.localScale = new Vector3(1, 1, 1);
-        }
-        LoadPrefabToDisplay();
+        // if (prefabDisplayTransform == null)
+        // {
+        //     prefabDisplayTransform.position = new Vector3(0, 0, 0);
+        //     prefabDisplayTransform.rotation = Quaternion.identity;
+        //     prefabDisplayTransform.localScale = new Vector3(1, 1, 1);
+        // }
+        // LoadPrefabToDisplay();
     }
 
     public void NextEquipment()

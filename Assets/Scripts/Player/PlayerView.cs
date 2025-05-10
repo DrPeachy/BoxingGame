@@ -381,9 +381,9 @@ public class PlayerView : MonoBehaviour
             ).SetEase(Ease.InBack));
     }
     
-    public void AnimateKO(){
+    public void AnimateKO(int playerIndex){
         //// player fall back
-        Vector3 targetPos = playerOrgPos + new Vector3(-0.1f, 0, -0.5f);
+        Vector3 targetPos = playerOrgPos + new Vector3((-1) * (0.5f - playerIndex), 0.2f, playerIndex == 0 ? 0.7f : -0.7f);
         Quaternion targetRot = playerOrgRot * Quaternion.Euler(0, 0, 90);
 
         transform.DOMove(targetPos, 0.5f).SetEase(Ease.OutBack);

@@ -1,21 +1,18 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using UnityEngine.InputSystem;
 using TMPro;
 using UnityEngine.UI;
-using System.Threading.Tasks;
-using UnityEngine.SocialPlatforms;
+using System.Threading;
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
-using System;
-using Cysharp.Threading.Tasks.CompilerServices;
-using System.Threading;
 
 public class GameStateManager : NetworkBehaviour
 {
-    public enum GameState{
+    public enum GameState
+    {
         Matching,
         Fighting,
         Break,
@@ -25,16 +22,18 @@ public class GameStateManager : NetworkBehaviour
     public static GameStateManager Instance { get; private set; }
 
     public bool isGameModeLocal = true;
-
-    //[SyncVar(OnChange = nameof(OnGameStateChange))]
+    // [SyncVar(OnChange = nameof(OnGameStateChange))]
     public GameState gameState = GameState.Matching;
 
     public int playerCount = 0;
-    public int roundCount = 0;
-    public int p1KOCount = 0;
-    public int p2KOCount = 0;
+    public int p1KOCount = 0; // Number of times player1 has been KOed
+    public int p2KOCount = 0; // Number of times player2 has been KOed
+    public int koWrongAnswer = -50; // Stun removal for wrong answer during break phase when player is KOed
+    public int koCorrectAnswer = -80; // Stun removal for correct answer during break phase when player is KOed
+    public int notKoWrongAnswer = -20; // Stun removal for wrong answer during break phase when player is not KOed
+    public int notKoCorrectAnswer = -30; // Stun removal for correct answer during break phase when player is not KOed
 
-    [Header("phase length")]
+    [Header("Phase Length")]
     public float fightingPhaseLength = 30f;
     public float breakPhaseLength = 15f;
 
@@ -46,11 +45,11 @@ public class GameStateManager : NetworkBehaviour
 
     [Header("Break phase")]
     public GameObject questionBoard;
-    private CancellationTokenSource cts;
     public JudgeController judgeController;
 
     private void Awake()
     {
+        // Singleton pattern implementation
         if (Instance == null)
         {
             Instance = this;
@@ -61,216 +60,257 @@ public class GameStateManager : NetworkBehaviour
         }
     }
 
-    private void Start(){
-        //this.enabled = true;
+    private void Start()
+    {
         RunGameStateLoop().Forget();
     }
 
-    public override void OnStartServer(){
-        if(Instance == null) Instance = this;
-
+    public override void OnStartServer()
+    {
+        if (Instance == null) Instance = this;
         base.OnStartServer();
         gameState = GameState.Matching;
         RunGameStateLoop().Forget();
     }
 
+    // Main game loop
+    private async UniTaskVoid RunGameStateLoop()
+    {
+        // Audio
+        AudioManager.Instance.PlayIngameBGM();
 
-    private async UniTaskVoid RunGameStateLoop(){
-        // delay before starting the loop
+        // Delay before starting the loop
         await UniTask.Delay(500);
-        cts = new CancellationTokenSource();
-
         await PlayerGatheringPhase();
-        
-        // DebugEndGame().Forget(); // end game after 5 seconds
 
-        while(!cts.Token.IsCancellationRequested){
-            await StartFightingPhase(cts.Token);
-            if(cts.Token.IsCancellationRequested) break;
-            await StartBreakPhase(cts.Token);
-            if(cts.Token.IsCancellationRequested) break;
-            if(koPlayer == 0){
-                p1KOCount++;
-                koPlayer = -1;
-            }else if(koPlayer == 1){
-                p2KOCount++;
-                koPlayer = -1;
+        // Main game loop
+        while (true)
+        {
+            // Create a new CancellationTokenSource for the fighting phase
+            using (CancellationTokenSource battleCTS = new CancellationTokenSource())
+            {
+                await StartFightingPhase(battleCTS.Token);
             }
-            if(p1KOCount >= 3 || p2KOCount >= 3) break;
+
+            // Check if game should end based on KO counts
+            if (p1KOCount >= 3 || p2KOCount >= 3)
+                break;
+
+            // Break phase runs for full duration without cancellation
+            await StartBreakPhase();
+
+            await StartRoundEndPhase();
         }
 
         await StartEndPhase();
     }
-    
-    public void PlayerJoined(){
+
+    public void PlayerJoined()
+    {
         playerCount++;
     }
 
-    private async UniTask PlayerGatheringPhase(){
-        // pre phase logic
+    private async UniTask PlayerGatheringPhase()
+    {
+        // Pre-phase logic: matching state
         gameState = GameState.Matching;
         Debug.Log("Player gathering phase started");
-        //timerText.text = "Waiting for players..."; // debug
 
-        // wait for phase end
+        // Wait until two players have joined
         await UniTask.WaitUntil(() => playerCount == 2);
 
-        // post phase logic
+        // Post-phase logic: reset player input caches and disable inputs during transition
         Debug.Log("Player gathering phase ended");
-        foreach(var player in LocalModeGameManager.Instance.playerInputs){
+        foreach (var player in LocalModeGameManager.Instance.playerInputs)
+        {
             Debug.Log($"Resetting input cache for player {player.Key}");
-            player.Value.GetComponent<InputCache>().ResetHold(); // reset input cache for all players
+            player.Value.GetComponent<InputCache>().ResetHold();
         }
-        LocalModeGameManager.Instance.DisablePlayersInput(); // disable input while transitioning to next phase
-        
+        LocalModeGameManager.Instance.DisablePlayersInput();
 
-        // delay before next phase, prevent instant phase switch that cause crash
+        // Small delay to prevent instant phase switch issues
         await UniTask.Delay(500);
     }
 
-    private async UniTask StartFightingPhase(CancellationToken token){
-        // pre phase logic
+    // Fighting phase: either lasts for the full duration or ends early if a player is KOed.
+    private async UniTask StartFightingPhase(CancellationToken token)
+    {
+        // Pre-phase logic
         gameState = GameState.Fighting;
         Debug.Log("Fighting phase started");
         GameStateClientHandler.Instance.timerText.text = "Fighting!";
         AudioManager.Instance.PlayStartEnd();
-        await UniTask.Delay(1500); // delay before starting the phase
+
+        // Delay before starting the actual phase
+        await UniTask.Delay(1500);
         LocalModeGameManager.Instance.EnablePlayersInput();
         ChangeState(GameState.Fighting, fightingPhaseLength);
-        
 
-        // wait for phase end
+        // Wait for either the phase duration to complete or a KO event to occur
         await WaitForPhaseEnd(fightingPhaseLength, GameState.Fighting, token);
-        //if(token.IsCancellationRequested) return;
 
-        // post phase logic
+        // Post-phase logic
         Debug.Log("Fighting phase ended");
         LocalModeGameManager.Instance.DisablePlayersInput();
         AudioManager.Instance.PlayStartEnd();
-
-        // delay before next phase, prevent instant phase switch that cause crash
-        await UniTask.Delay(1500); // longer delay for creating a gap between phases
+        // Additional delay before transitioning to the next phase
+        await UniTask.Delay(1500);
     }
 
-    private async UniTask StartBreakPhase(CancellationToken token){
-        // pre phase logic
+    // Break phase: always waits until the countdown finishes.
+    private async UniTask StartBreakPhase()
+    {
+        // Pre-phase logic
         gameState = GameState.Break;
-        // play zebra animation and shit
-        await UniTask.Delay(500); // delay for zebra animation
-        _= judgeController.StartCounting(LocalModeGameManager.Instance.GetPlayer(koPlayer));
-        await UniTask.Delay(500); // delay for zebra animation
-        
+        // Play zebra animation (or similar) before counting
+        await UniTask.Delay(500);
+        _ = judgeController.StartCounting(LocalModeGameManager.Instance.GetPlayer(koPlayer));
+        await UniTask.Delay(500);
 
         Debug.Log("Break phase started");
-        //questionBoard.SetActive(true);
         ShowQuestionBoard(true);
         GamepadAnswerSelector.Instance.ResetSelections();
         Button correctAnswer = questionBoard.GetComponent<QuestionGenerator>().GenerateQuestion();
         ChangeState(GameState.Break, breakPhaseLength);
 
+        // Wait for the break phase duration to complete (no cancellation)
+        await WaitForPhaseEnd(breakPhaseLength, GameState.Break, CancellationToken.None);
 
-
-        // wait for phase end
-        await WaitForPhaseEnd(breakPhaseLength, GameState.Break, token);
-
-
-        /// post phase logic
-        // question board
+        // Post-phase logic
         Debug.Log("Break phase ended");
         ShowQuestionBoard(false);
+
         Tuple<bool, bool> result = GamepadAnswerSelector.Instance.CheckAnswerCorrectness(correctAnswer);
         bool player1Correct = result.Item1;
         bool player2Correct = result.Item2;
         Debug.Log($"Player 1: {player1Correct}, Player 2: {player2Correct}");
-        if (!player1Correct) LocalModeGameManager.Instance.AddDamageToPlayer(0, 50);
-        if (!player2Correct) LocalModeGameManager.Instance.AddDamageToPlayer(1, 50);
 
-        // zebra animation
-        _= judgeController.StartWatching();
+        // Apply damage based on answer correctness and KO status
+        LocalModeGameManager.Instance.AddDamageToPlayer(0,
+            koPlayer == 0 ? (player1Correct ? koCorrectAnswer : koWrongAnswer)
+                          : (player1Correct ? notKoCorrectAnswer : notKoWrongAnswer));
+        LocalModeGameManager.Instance.AddDamageToPlayer(1,
+            koPlayer == 1 ? (player2Correct ? koCorrectAnswer : koWrongAnswer)
+                          : (player2Correct ? notKoCorrectAnswer : notKoWrongAnswer));
 
-        // delay before next phase, prevent instant phase switch that cause crash
+        // Resume judge watching animation
+        _ = judgeController.StartWatching();
+
+        // Delay before transitioning to next phase
         await UniTask.Delay(1500);
     }
 
-    private async UniTask StartEndPhase(){
-        // pre phase logic
+    private async UniTask StartRoundEndPhase()
+    {
+        // Update KO count and reset KO player status based on which player was KOed
+        if (koPlayer == 0)
+        {
+            p1KOCount++;
+            LocalModeGameManager.Instance.ResetKOPlayer(0);
+            koPlayer = -1;
+        }
+        else if (koPlayer == 1)
+        {
+            p2KOCount++;
+            LocalModeGameManager.Instance.ResetKOPlayer(1);
+            koPlayer = -1;
+        }
+
+        Debug.Log($"Player 1 KO count: {p1KOCount}, Player 2 KO count: {p2KOCount}");
+        // Delay for any transition animations (e.g., zebra animation)
+        await UniTask.Delay(2000);
+    }
+
+    private async UniTask StartEndPhase()
+    {
+        // Pre-phase logic for the end phase
         gameState = GameState.End;
         Debug.Log("End phase started");
 
-        //ShowEndGameScreen($"Player {OnlineModeGameManager.Instance.GetWinner() + 1} wins!");
-        int winner = LocalModeGameManager.Instance.GetPlayerWithLessDamageTaken() + 1;
-        if(winner == 0) ShowEndGameScreen("It's a draw!");
-        else ShowEndGameScreen($"Player {winner} wins!");
+        // Determine the winner based on KO counts
+        int winner = (p1KOCount > p2KOCount) ? 2 : (p1KOCount < p2KOCount) ? 1 : 0;
+        string resultText = (winner == 0) ? "It's a draw!" : $"Player {winner} wins!";
 
+        // Stop any active phase timer to prevent further UI updates
+        GameStateClientHandler.Instance.StopPhaseTimer();
+
+        // Show end game screen with the final text
+        GameStateClientHandler.Instance.ShowEndGameScreen(resultText);
+        Debug.Log(resultText);
+
+        // Wait for a period before returning to the main menu
         await UniTask.Delay(5000);
         SceneLoader.Instance.StartLoadingSceneAsync("MainMenu");
+        AudioManager.Instance.PlayMainmenuBGM();
     }
 
-    private async UniTask WaitForPhaseEnd(float duration, GameState phaseName, CancellationToken token){
+    // WaitForPhaseEnd: For Fighting phase, it exits early if a KO is detected; for Break phase, waits for full duration.
+    private async UniTask WaitForPhaseEnd(float duration, GameState phaseName, CancellationToken token)
+    {
         float elapsedTime = 0f;
-        while(!token.IsCancellationRequested){
-
-            if(phaseName == GameState.Fighting){
-                // Call the external singleton function to check if the fighting phase should end
+        while (true)
+        {
+            if (phaseName == GameState.Fighting)
+            {
+                // Check if any player is KOed
                 koPlayer = LocalModeGameManager.Instance.CheckKOPlayer();
-                if(koPlayer != -1){
+                if (koPlayer != -1)
+                {
+                    // Exit early if a player is KOed
                     break;
                 }
-
-                // Optionally update timer text or other UI elements here if needed
-            }else if(phaseName == GameState.Break){
-                // counting duration
+            }
+            else if (phaseName == GameState.Break)
+            {
+                // Increase elapsed time for break phase countdown
                 elapsedTime += Time.deltaTime;
-                if(elapsedTime >= duration){
+                if (elapsedTime >= duration)
+                {
                     break;
                 }
             }
 
+            // If a cancellation token (for fighting phase) is provided and is canceled, exit early
+            if (token != CancellationToken.None && token.IsCancellationRequested)
+            {
+                break;
+            }
             await UniTask.Yield();
         }
     }
 
-    public void EndGame(){
-        if(cts != null && !cts.Token.IsCancellationRequested){
-            cts.Cancel();
-            Debug.Log("Game ended");
-        }
-    }
-
-    public async UniTaskVoid DebugEndGame(){
-        await UniTask.Delay(5000);
-        EndGame();
-    }
-
-    // local
-    public void ChangeState(GameState state, float phaseLength){
+    // Local UI and state change methods
+    public void ChangeState(GameState state, float phaseLength)
+    {
         GameStateClientHandler.Instance.StartNewPhase(phaseLength, state.ToString());
     }
 
-    public void ShowQuestionBoard(bool show){
+    public void ShowQuestionBoard(bool show)
+    {
         UIManager.Instance.ToggleQuestionBoard(show);
     }
 
-    public void ShowEndGameScreen(string txt){
+    public void ShowEndGameScreen(string txt)
+    {
         GameStateClientHandler.Instance.ShowEndGameScreen(txt);
     }
 
-
-    // networked
+    // Networked RPC calls to update clients
     [ObserversRpc]
-    public void ChangeStateRPC(GameState state, float phaseLength){
+    public void ChangeStateRPC(GameState state, float phaseLength)
+    {
         GameStateClientHandler.Instance.StartNewPhase(phaseLength, state.ToString());
     }
 
     [ObserversRpc]
-    public void ShowQuestionBoardRPC(bool show){
+    public void ShowQuestionBoardRPC(bool show)
+    {
         UIManager.Instance.ToggleQuestionBoard(show);
     }
 
     [ObserversRpc]
-    public void ShowEndGameScreenRPC(string txt){
+    public void ShowEndGameScreenRPC(string txt)
+    {
         GameStateClientHandler.Instance.ShowEndGameScreen(txt);
     }
-
-
 }

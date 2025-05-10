@@ -10,7 +10,9 @@ public struct AudioEffectsPlayer{
     public AudioSource parry;
     public AudioSource punchBlocked;
     public AudioSource getHit;
+    public AudioSource KOsound;
     public AudioSource general;
+    //public AudioSource BGM;
 
     public AudioEffectsPlayer(GameObject audioEffectsPlayer){
         this.audioEffectsPlayer = audioEffectsPlayer;
@@ -20,7 +22,9 @@ public struct AudioEffectsPlayer{
         parry = audioEffectsPlayer.transform.Find("Parry").GetComponent<AudioSource>();
         punchBlocked = audioEffectsPlayer.transform.Find("PunchBlocked").GetComponent<AudioSource>();
         getHit = audioEffectsPlayer.transform.Find("GetHit").GetComponent<AudioSource>();
+        KOsound = audioEffectsPlayer.transform.Find("KO").GetComponent<AudioSource>();
         general = audioEffectsPlayer.transform.Find("General").GetComponent<AudioSource>();
+        //BGM = audioEffectsPlayer.transform.Find("BGM").GetComponent<AudioSource>();
     }
 }
 
@@ -31,6 +35,7 @@ public class AudioManager : MonoBehaviour
 
     [Header("Audio Sources")]
     [SerializeField] private AudioSource general;
+    [SerializeField] private AudioSource BGM;
     // [SerializeField] private AudioSource wave;
     // [SerializeField] private AudioSource punch;
     // [SerializeField] private AudioSource charge;
@@ -52,6 +57,9 @@ public class AudioManager : MonoBehaviour
     public AudioClip generalButtonClickedClip;
     public AudioClip zebraJudgeSpeakingClip;
 
+    public AudioClip MainmenuBGM;
+    public AudioClip IngameBGM;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -72,11 +80,25 @@ public class AudioManager : MonoBehaviour
         general.Play();
     }
 
+    public void PlayBGM(AudioClip clip, float volume = 1f)
+    {
+        BGM.volume = volume;
+        BGM.clip = clip;
+        BGM.Play();
+    }
+
     public void PlayStartEnd()
     {
         PlayGeneral(startEndClip, 0.2f);
     }
 
+    public void PlayMainmenuBGM(){
+        PlayBGM(MainmenuBGM, 0.2f);
+    }
+
+    public void PlayIngameBGM(){
+        PlayBGM(IngameBGM, 0.2f);
+    }
 
     public void PlayWave(int playerID)
     {
@@ -127,6 +149,11 @@ public class AudioManager : MonoBehaviour
         audioEffectsPlayers[playerID].getHit.Play();
     }
 
+    public void PlayKO(int playerID)
+    {
+        audioEffectsPlayers[playerID].KOsound.Play();
+    }
+
     public void PlayZebraJudgeCountdown(int playerID){
         audioEffectsPlayers[playerID].general.clip = zebraJudgeSpeakingClip;
         audioEffectsPlayers[playerID].general.Play();
@@ -136,4 +163,6 @@ public class AudioManager : MonoBehaviour
     {
         PlayGeneral(generalButtonClickedClip);
     }
+
+
 }
